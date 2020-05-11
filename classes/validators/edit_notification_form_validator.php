@@ -50,6 +50,7 @@ class edit_notification_form_validator extends validator {
         $this->validate_message_body();
         $this->validate_message_body_codes();
         $this->validate_message_type();
+        $this->validate_schedule_params();
     }
 
     /**
