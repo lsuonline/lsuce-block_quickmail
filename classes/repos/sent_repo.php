@@ -126,7 +126,11 @@ class sent_repo extends repo implements sent_repo_interface {
             $sql .= ' AND m.course_id = :course_id';
         }
 
-        $sql .= ' AND m.is_draft = 0 AND m.timedeleted = 0 AND m.sent_at > 0 ORDER BY ' . $sortby . ' ' . $sortdir;
+        $sql .= ' AND m.is_draft = 0 AND m.timedeleted = 0 AND m.sent_at > 0';
+
+        if (!$ascount) {
+            $sql .= ' ORDER BY ' . $sortby . ' ' . $sortdir;
+        }
 
         return $sql;
     }
