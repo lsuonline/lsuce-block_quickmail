@@ -192,8 +192,11 @@ class queued_repo extends repo implements queued_repo_interface {
         $sql .= ' AND m.to_send_at <> 0
                   AND m.timedeleted = 0
                   AND m.sent_at = 0
-                  AND m.is_draft = 0
-                  ORDER BY ' . $sortby . ' ' . $sortdir;
+                  AND m.is_draft = 0';
+
+        if (!$ascount) {
+            $sql .= ' ORDER BY ' . $sortby . ' ' . $sortdir;
+        }
 
         return $sql;
     }
