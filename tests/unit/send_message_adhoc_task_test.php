@@ -49,11 +49,23 @@ class block_quickmail_send_message_adhoc_task_testcase extends advanced_testcase
         // Specify recipients.
         $recipients['included']['user'] = $this->get_user_ids_from_user_array($userstudents);
 
-        $now = time();
+        $sendtime = time() + 10000;
+
+
+        /*
+         *  Segun Babalola, 2020-10-31
+         *
+         *  Since the very action of creating messages with a "to_send_at" value of "now" will mean the messages are sent
+         *  immediately after creation (see call chain $this->create_messages() => messenger::compose() => self::send_message_to_recipients()),
+         *  some of the assertions below is failing.
+         *
+         *  I'm modifying this test to create the message for a future send time so that the test is more appropriate.
+         *
+         */
 
         // Get a compose form submission, sending message now.
         $composeformdata = $this->get_compose_message_form_submission($recipients, 'email', [
-            'to_send_at' => $now
+            'to_send_at' => $sendtime
         ]);
 
         // Schedule an email from the teacher to the students (as queued adhoc tasks).

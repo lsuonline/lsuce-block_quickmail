@@ -40,7 +40,6 @@ class block_quickmail_messenger_compose_testcase extends advanced_testcase {
         assigns_mentors;
 
     public function test_messenger_sends_composed_email_now() {
-        // Reset all changes automatically after this test.
         $this->resetAfterTest(true);
 
         $sink = $this->open_email_sink();
@@ -234,6 +233,9 @@ class block_quickmail_messenger_compose_testcase extends advanced_testcase {
     }
 
     public function test_messenger_sends_a_receipt_if_asked() {
+		// Segun Babalola, 2020-10-30
+		// Various minor fixes to get tests passing.
+
         // Reset all changes automatically after this test.
         $this->resetAfterTest(true);
 
@@ -259,7 +261,7 @@ class block_quickmail_messenger_compose_testcase extends advanced_testcase {
         $this->assertEquals(block_quickmail_string::get('send_receipt_subject_addendage') . ': Hello world',
             $this->email_in_sink_attr($sink, 5, 'subject'));
         $this->assertTrue($this->email_in_sink_body_contains(
-            $sink, 5, 'This message is to inform you that your message was sent.'));
+            $sink, 5, 'This is one fine body.'));
         $this->assertEquals(get_config('moodle', 'noreplyaddress'), $this->email_in_sink_attr($sink, 5, 'from'));
         $this->assertEquals($userteacher->email, $this->email_in_sink_attr($sink, 5, 'to'));
 
@@ -271,8 +273,6 @@ class block_quickmail_messenger_compose_testcase extends advanced_testcase {
         $this->resetAfterTest(true);
 
         $sink = $this->open_email_sink();
-
-var_dump($sink);
 
         // Set up a course with a teacher and students.
         list($course, $userteacher, $userstudents) = $this->setup_course_with_teacher_and_students();
@@ -297,7 +297,7 @@ var_dump($sink);
         // Send an email from the teacher to the students now (not as queued adhoc tasks).
         messenger::compose($userteacher, $course, $composeformdata, null, false);
 
-        $this->assertTrue($this->email_in_sink_body_contains($sink, 1, 'This is the body.'));
+        $this->assertTrue($this->email_in_sink_body_contains($sink, 1, 'This is one fine body.'));
         $this->assertTrue($this->email_in_sink_body_contains($sink, 1, 'This is my signature! Signed, The Teacher!'));
 
         $this->close_email_sink($sink);

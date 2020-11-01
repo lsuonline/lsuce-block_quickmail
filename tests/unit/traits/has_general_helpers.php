@@ -132,7 +132,11 @@ trait has_general_helpers {
     }
 
     public function get_future_time() {
-        return $this->get_timestamp_for_date('nov 30 2018');
+        // return $this->get_timestamp_for_date('nov 30 2018');
+
+        // 2020-10-30, Segun Babalola
+        // The hardcoded, date above is now in the past. Modifying this method to always return a future date
+        return strtotime("+10 years");
     }
 
 }

@@ -86,10 +86,15 @@ class block_quickmail_message_persistent_testcase extends advanced_testcase {
                       in amet culpa nulla duis id velit in ut officia.',
         ]);
 
+		// Segun Babalola, 2020-10-30
+		// Actual dates are using config format, so use the same format here to prevent test failure.
+        $datetimeformat = get_string('strftimedatetime', 'langconfig');
+
         $this->assertEquals('Id dolore irure...', $message->get_subject_preview(20));
         $this->assertEquals('Id dolore irure nostrud dolor eu elit et...', $message->get_body_preview(40));
-        $this->assertEquals(date('Y-m-d g:i a', $message->get('timecreated')), $message->get_readable_created_at());
-        $this->assertEquals(date('Y-m-d g:i a', $message->get('timemodified')), $message->get_readable_last_modified_at());
+
+        $this->assertEquals(userdate($message->get('timecreated'), $datetimeformat), $message->get_readable_created_at());
+        $this->assertEquals(userdate($message->get('timemodified'), $datetimeformat), $message->get_readable_last_modified_at());
         $this->assertEquals(block_quickmail_string::get('never'), $message->get_readable_sent_at());
         $this->assertEquals(block_quickmail_string::get('never'), $message->get_readable_to_send_at());
     }

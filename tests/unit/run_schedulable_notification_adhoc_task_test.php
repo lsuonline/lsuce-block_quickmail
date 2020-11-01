@@ -71,6 +71,7 @@ class block_quickmail_run_schedulable_notification_adhoc_task_testcase extends a
         // Queue and run job.
         task_manager::queue_adhoc_task($task);
         \phpunit_util::run_all_adhoc_tasks();
+        $this->dispatch_queued_messages();
 
         // Get the updated reminder notification for checking calculating run times.
         $updatedremindernotification = reminder_notification::find_or_null($remindernotification->get('id'));

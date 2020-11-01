@@ -79,6 +79,14 @@ class block_quickmail_sent_repo_testcase extends advanced_testcase {
 
         $this->create_test_sents();
 
+        /*
+         *  Segun Babalola, 2020-10-30
+         *  This test has assertions that checks hard-coded DB id values.
+         *  The DB tables used depend on auto-increment ID values, so not sure how the values are guaranteed to retain
+         *  their specific hard-coded vlaues over the years this test has existed for.
+         *
+         *  I'm changing the tests to look for minimum and maximums where appropriate instead.
+         */
         // Get all sents for user: 1.
         $sents = sent_repo::get_for_user(1);
 
@@ -90,13 +98,13 @@ class block_quickmail_sent_repo_testcase extends advanced_testcase {
             'sort' => 'id',
             'dir' => 'asc'
         ]);
-        $this->assertEquals(144000, $sents->data[0]->get('id'));
+        $this->assertEquals(min($this->extract_ids($sents->data)), $sents->data[0]->get('id'));
 
         $sents = sent_repo::get_for_user(1, 0, [
             'sort' => 'id',
             'dir' => 'desc'
         ]);
-        $this->assertEquals(144006, $sents->data[0]->get('id'));
+        $this->assertEquals(max($this->extract_ids($sents->data)), $sents->data[0]->get('id'));
 
         // Sort by course.
         $sents = sent_repo::get_for_user(1, 0, [
@@ -166,13 +174,13 @@ class block_quickmail_sent_repo_testcase extends advanced_testcase {
             'sort' => 'id',
             'dir' => 'asc'
         ]);
-        $this->assertEquals(144000, $sents->data[0]->get('id'));
+        $this->assertEquals(min($this->extract_ids($sents->data)), $sents->data[0]->get('id'));
 
         $sents = sent_repo::get_for_user(1, 1, [
             'sort' => 'id',
             'dir' => 'desc'
         ]);
-        $this->assertEquals(144006, $sents->data[0]->get('id'));
+        $this->assertEquals(max($this->extract_ids($sents->data)), $sents->data[0]->get('id'));
 
         // Sort by course.
         $sents = sent_repo::get_for_user(1, 1, [
@@ -267,6 +275,9 @@ class block_quickmail_sent_repo_testcase extends advanced_testcase {
     }
 
     // Helpers.
+    private function extract_ids(array $p_sents) {
+        return array_map( function($sent) { return $sent->get('id'); }, $p_sents);
+    }
     private function create_message($issent = true) {
         return message::create_new([
             'course_id' => 1,

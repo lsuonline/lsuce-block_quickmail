@@ -85,7 +85,11 @@ class block_quickmail_persistent_concerns_testcase extends advanced_testcase {
 
         $timestamp = $message->get('timecreated');
 
-        $this->assertEquals(date('Y-m-d g:i a', $timestamp), $message->get_readable_date('timecreated'));
+		// Segun Babalola, 2020-10-30
+		// Actual dates are using config format, so use the same format here to prevent test failure.
+        $datetimeformat = get_string('strftimedatetime', 'langconfig');
+
+        $this->assertEquals(userdate($timestamp, $datetimeformat), $message->get_readable_date('timecreated'));
     }
 
     public function test_supports_soft_deletes() {
