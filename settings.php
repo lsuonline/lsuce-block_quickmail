@@ -247,4 +247,14 @@ if ($ADMIN->fulltree) {
         )
     );
 
+    // Allow additional external emaili addresses to be used.
+    $settings->add(
+        new admin_setting_configcheckbox(
+            'altsendfrom',
+            block_quickmail_string::get('altsendfrom'),
+            block_quickmail_string::get('altsendfrom_desc'),
+            0   // Default.
+        )
+    );
+
 }

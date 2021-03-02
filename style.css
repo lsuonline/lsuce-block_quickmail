@@ -161,7 +161,7 @@
 
 #page-block-quickmail div.msflex {
    display: flex;
-   justify-content: center;
+   justify-content: left;
    align-items: center;
    flex-wrap: nowrap;
    width: 90%;

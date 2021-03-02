@@ -78,6 +78,13 @@ class email_recipient_send_factory extends recipient_send_factory implements rec
             $user = $this->message_params->userto;
         }
 
+        if(isset($this->alternate_email)) {
+            $alt = $this->alternate_email->get('email');
+            $this->message_params->userfrom->email = $alt;
+            $this->message_params->replyto = $alt;
+            $this->message_params->usetrueaddress = true;
+        }
+
         $success = email_to_user(
             $user,
             $this->message_params->userfrom,

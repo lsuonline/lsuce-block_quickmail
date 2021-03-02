@@ -85,7 +85,7 @@ class role_repo extends repo implements role_repo_interface {
 
         return array_reduce($roles, function ($carry, $role) use ($allowedroleids) {
             if (in_array($role->id, $allowedroleids)) {
-                $carry[$role->id] = $role->name;
+                $carry[$role->id] = empty($role->name) ? $role->shortname : $role->name;
             }
 
             return $carry;

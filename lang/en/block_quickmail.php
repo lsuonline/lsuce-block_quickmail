@@ -324,6 +324,8 @@ $string['reset_success_message'] = 'Quickmail default settings have been restore
 // Configuration.
 $string['allowstudents'] = 'Allow students to use Quickmail';
 $string['allowstudents_desc'] = 'Allow students to use Quickmail. If you choose "Never", the block cannot be configured to allow students access at the course level.';
+$string['altsendfrom'] = 'Allow alt from emails';
+$string['altsendfrom_desc'] = 'Allow alternate from emails (needs a core change for this).';
 $string['selectable_roles'] = 'Selectable roles';
 $string['selectable_roles_desc'] = 'These roles will be available for selection when composing a message. This setting is overridable by course configuration.';
 $string['selectable_roles_configuration'] = 'These roles will be available for selection when composing a message.';
