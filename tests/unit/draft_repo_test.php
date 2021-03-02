@@ -152,7 +152,7 @@ class block_quickmail_draft_repo_testcase extends advanced_testcase {
     public function test_sorts_get_for_user() {
         $this->resetAfterTest(true);
 
-        $this->create_test_drafts();
+        $testdrafts = $this->create_test_drafts();
 
         // Get all drafts for user: 1.
         $drafts = draft_repo::get_for_user(1, 0);
@@ -164,13 +164,13 @@ class block_quickmail_draft_repo_testcase extends advanced_testcase {
             'sort' => 'id',
             'dir' => 'asc'
         ]);
-        $this->assertEquals(144000, $drafts->data[0]->get('id'));
+        $this->assertEquals($testdrafts[1]->id, $drafts->data[0]->get('id'));
 
         $drafts = draft_repo::get_for_user(1, 0, [
             'sort' => 'id',
             'dir' => 'desc'
         ]);
-        $this->assertEquals(144006, $drafts->data[0]->get('id'));
+        $this->assertEquals($testdrafts[7]->id, $drafts->data[0]->get('id'));
 
         // Sort by course.
         $drafts = draft_repo::get_for_user(1, 0, [
@@ -228,7 +228,7 @@ class block_quickmail_draft_repo_testcase extends advanced_testcase {
     public function test_sorts_get_for_user_and_course() {
         $this->resetAfterTest(true);
 
-        $this->create_test_drafts();
+        $testdrafts = $this->create_test_drafts();
 
         // Get all drafts for user: 1, course: 1.
         $drafts = draft_repo::get_for_user(1, 1);
@@ -240,13 +240,13 @@ class block_quickmail_draft_repo_testcase extends advanced_testcase {
             'sort' => 'id',
             'dir' => 'asc'
         ]);
-        $this->assertEquals(144000, $drafts->data[0]->get('id'));
+        $this->assertEquals($testdrafts[1]->id, $drafts->data[0]->get('id'));
 
         $drafts = draft_repo::get_for_user(1, 1, [
             'sort' => 'id',
             'dir' => 'desc'
         ]);
-        $this->assertEquals(144006, $drafts->data[0]->get('id'));
+        $this->assertEquals($testdrafts[7]->id, $drafts->data[0]->get('id'));
 
         // Sort by course.
         $drafts = draft_repo::get_for_user(1, 1, [
@@ -355,7 +355,9 @@ class block_quickmail_draft_repo_testcase extends advanced_testcase {
     private function create_test_drafts() {
         global $DB;
 
-        // Id: 144000.
+        $testdrafts = [];
+
+        // Draft 1.
         $draft1 = $this->create_message(true);
         $draft1->set('course_id', 1);
         $draft1->set('subject', 'date');
@@ -364,8 +366,9 @@ class block_quickmail_draft_repo_testcase extends advanced_testcase {
         $draft->timecreated = 8888888888;
         $draft->timemodified = 3232323232;
         $DB->update_record('block_quickmail_messages', $draft);
+        $testdrafts[1] = $draft;
 
-        // Id: 144001.
+        // Draft 2.
         $draft2 = $this->create_message(true);
         $draft2->set('course_id', 5);
         $draft2->set('subject', 'elderberry');
@@ -374,8 +377,9 @@ class block_quickmail_draft_repo_testcase extends advanced_testcase {
         $draft->timecreated = 4444444444;
         $draft->timemodified = 5252525252;
         $DB->update_record('block_quickmail_messages', $draft);
+        $testdrafts[2] = $draft;
 
-        // Id: 144002.
+        // Draft 3.
         $draft3 = $this->create_message(true);
         $draft3->set('course_id', 3);
         $draft3->set('subject', 'coconut');
@@ -384,8 +388,9 @@ class block_quickmail_draft_repo_testcase extends advanced_testcase {
         $draft->timecreated = 7777777777;
         $draft->timemodified = 1919191919;
         $DB->update_record('block_quickmail_messages', $draft);
+        $testdrafts[3] = $draft;
 
-        // Id: 144003.
+        // Draft 4.
         $draft4 = $this->create_message(true);
         $draft4->set('course_id', 1);
         $draft4->set('subject', 'apple');
@@ -394,8 +399,9 @@ class block_quickmail_draft_repo_testcase extends advanced_testcase {
         $draft->timecreated = 1111111111;
         $draft->timemodified = 5454545454;
         $DB->update_record('block_quickmail_messages', $draft);
+        $testdrafts[4] = $draft;
 
-        // Id: 144004.
+        // Draft 5.
         $draft5 = $this->create_message(true);
         $draft5->set('course_id', 1);
         $draft5->set('subject', 'banana');
@@ -404,8 +410,9 @@ class block_quickmail_draft_repo_testcase extends advanced_testcase {
         $draft->timecreated = 2222222222;
         $draft->timemodified = 3333333333;
         $DB->update_record('block_quickmail_messages', $draft);
+        $testdrafts[5] = $draft;
 
-        // Id: 144005.
+        // Draft 6.
         $draft6 = $this->create_message(true);
         $draft6->set('course_id', 2);
         $draft6->set('subject', 'grape');
@@ -414,8 +421,9 @@ class block_quickmail_draft_repo_testcase extends advanced_testcase {
         $draft->timecreated = 1212121212;
         $draft->timemodified = 2525252525;
         $DB->update_record('block_quickmail_messages', $draft);
+        $testdrafts[6] = $draft;
 
-        // Id: 144006.
+        // Draft 7.
         $draft7 = $this->create_message(true);
         $draft7->set('course_id', 1);
         $draft7->set('subject', 'fig');
@@ -424,6 +432,9 @@ class block_quickmail_draft_repo_testcase extends advanced_testcase {
         $draft->timecreated = 3434343434;
         $draft->timemodified = 1010101010;
         $DB->update_record('block_quickmail_messages', $draft);
+        $testdrafts[7] = $draft;
+
+        return $testdrafts;
     }
 
 }

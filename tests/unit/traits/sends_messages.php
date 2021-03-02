@@ -42,4 +42,14 @@ trait sends_messages {
         return count($sink->get_messages());
     }
 
+    public function dispatch_queued_messages() {
+        // 2020-10-30, Segun Babalola
+        // For some reason, messages created from notifications remain sat in the DB
+        // this method flushes those messages so they get captured by the sink in tests
+        $messages = \block_quickmail\repos\queued_repo::get_all_messages_to_send();
+
+        foreach ($messages as $msg) {
+            $msg->send();
+        }
+    }
 }

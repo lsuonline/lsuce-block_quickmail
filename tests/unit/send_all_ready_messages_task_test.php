@@ -47,14 +47,30 @@ class block_quickmail_send_all_ready_messages_task_testcase extends advanced_tes
 
         $messages = $this->create_messages($course, $userteacher, $userstudents);
 
+        /*
+         *  Segun Babalola, 2020-10-31
+         *
+         *  The next assertion below (that checks no messages are sent when ad-hoc tasks are run seems inappropriate
+         *  because the very action of creating messages with a timetosend value of now will mean the messages are sent
+         *  immediately after creation. See call chain:
+         *
+         *  $this->create_messages() => messenger::compose() => self::send_message_to_recipients()
+         *
+         *  For this reason, I'm commenting out the assertion.
+         *
+         *  In addition, the use of a task to trigger message sending doesn't seem necessary (given the messages are
+         *  dispatched immediately after creation).
+         *  Also, the execute() method of task isn't defined with a parameter, so removing it.
+         */
+        /*
         \phpunit_util::run_all_adhoc_tasks();
 
         // Should be no tasks fire yet, so no emails.
         $this->assertEquals(0, $this->email_sink_email_count($sink));
-
+        */
         $task = new send_all_ready_messages_task();
 
-        $task->execute(time());
+        $task->execute();
 
         \phpunit_util::run_all_adhoc_tasks();
 
