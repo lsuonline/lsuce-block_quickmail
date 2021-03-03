@@ -40,9 +40,9 @@ class email_recipient_send_factory extends recipient_send_factory implements rec
 
     public function set_factory_computed_params() {
         $this->message_params->usetrueaddress = $this->should_use_true_address();
+        $this->alternate_email = alternate_email::find_or_null($this->message->get('alternate_email_id'));
         $this->message_params->replyto = $this->get_replyto_email();
         $this->message_params->replytoname = $this->get_replyto_name();
-        $this->alternate_email = alternate_email::find_or_null($this->message->get('alternate_email_id'));
     }
 
     /**
