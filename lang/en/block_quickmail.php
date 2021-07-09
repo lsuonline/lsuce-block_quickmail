@@ -568,3 +568,12 @@ $string['privacy:metadata:block_quickmail_schedules:usermodified'] = 'The user w
 $string['privacy:metadata:block_quickmail_schedules:timecreated'] = 'The timestamp at which the record was created';
 $string['privacy:metadata:block_quickmail_schedules:timemodified'] = 'The timestamp at which the record was modified';
 $string['privacy:metadata:block_quickmail_schedules:timedeleted'] = 'The timestamp at which the record was deleted';
+
+$string['privacy:metadata:block_quickmail_signatures'] = 'Stores signatures for users';
+$string['privacy:metadata:block_quickmail_signatures:user_id'] = 'The user id that created the signature';
+$string['privacy:metadata:block_quickmail_signatures:title'] = 'The title of the signature';
+$string['privacy:metadata:block_quickmail_signatures:signature'] = 'The contents of the signature';
+$string['privacy:metadata:block_quickmail_signatures:usermodified'] = 'The user who created/modified the signature';
+$string['privacy:metadata:block_quickmail_signatures:timecreated'] = 'The time when signature was created';
+$string['privacy:metadata:block_quickmail_signatures:timemodified'] = 'The time when signature was modified';
+$string['privacy:metadata:block_quickmail_signatures:timedeleted'] = 'The time when signature was deleted';
