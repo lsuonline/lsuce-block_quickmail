@@ -103,13 +103,13 @@ class create_alternate_controller extends base_controller {
 
         try {
             // Attempt to create the alternate and send a confirmation email.
-            alternate_manager::create_alternate_for_user($this->props->user, $this->props->course_id, [
+            alternate_manager::create_alternate_for_user($this->props->user, [
                 'availability' => $request->input->availability,
                 'firstname' => $request->input->firstname,
                 'lastname' => $request->input->lastname,
                 'email' => $request->input->email,
                 'allowed_role_ids' => $allowedroleids,
-            ]);
+            ], $this->props->course_id);
         } catch (\Exception $e) {
             $request->redirect_as_error($e->getMessage(), static::$baseuri, $this->get_form_url_params());
         }

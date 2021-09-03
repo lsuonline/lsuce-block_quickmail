@@ -50,7 +50,7 @@ class block_quickmail_alternate_manager_testcase extends advanced_testcase {
             'allowed_role_ids' => [],
         ];
 
-        $alternate = alternate_manager::create_alternate_for_user($userteacher, $course->id, $formdata);
+        $alternate = alternate_manager::create_alternate_for_user($userteacher, $formdata, $course->id);
     }
 
     public function test_creating_with_availability_only_requires_course() {
@@ -68,7 +68,7 @@ class block_quickmail_alternate_manager_testcase extends advanced_testcase {
             'allowed_role_ids' => [],
         ];
 
-        $alternate = alternate_manager::create_alternate_for_user($userteacher, 0, $formdata);
+        $alternate = alternate_manager::create_alternate_for_user($userteacher, $formdata, 0);
     }
 
     public function test_creating_with_availability_course_requires_course() {
@@ -86,7 +86,7 @@ class block_quickmail_alternate_manager_testcase extends advanced_testcase {
             'allowed_role_ids' => [],
         ];
 
-        $alternate = alternate_manager::create_alternate_for_user($userteacher, 0, $formdata);
+        $alternate = alternate_manager::create_alternate_for_user($userteacher, $formdata, 0);
     }
 
     public function test_creates_alternate_record_with_availability_only_successfully() {
@@ -102,7 +102,7 @@ class block_quickmail_alternate_manager_testcase extends advanced_testcase {
             'allowed_role_ids' => [],
         ];
 
-        $alternate = alternate_manager::create_alternate_for_user($userteacher, $course->id, $formdata);
+        $alternate = alternate_manager::create_alternate_for_user($userteacher, $formdata, $course->id);
 
         $this->assertInstanceOf(alternate_email::class, $alternate);
         $this->assertEquals('an@email.com', $alternate->get('email'));
@@ -128,7 +128,7 @@ class block_quickmail_alternate_manager_testcase extends advanced_testcase {
             'allowed_role_ids' => [],
         ];
 
-        $alternate = alternate_manager::create_alternate_for_user($userteacher, $course->id, $formdata);
+        $alternate = alternate_manager::create_alternate_for_user($userteacher, $formdata, $course->id);
 
         $this->assertInstanceOf(alternate_email::class, $alternate);
         $this->assertEquals('an@email.com', $alternate->get('email'));
@@ -154,7 +154,7 @@ class block_quickmail_alternate_manager_testcase extends advanced_testcase {
             'allowed_role_ids' => [],
         ];
 
-        $alternate = alternate_manager::create_alternate_for_user($userteacher, 0, $formdata);
+        $alternate = alternate_manager::create_alternate_for_user($userteacher, $formdata, 0);
 
         $this->assertInstanceOf(alternate_email::class, $alternate);
         $this->assertEquals('an@email.com', $alternate->get('email'));
@@ -182,7 +182,7 @@ class block_quickmail_alternate_manager_testcase extends advanced_testcase {
             'allowed_role_ids' => [],
         ];
 
-        $alternate = alternate_manager::create_alternate_for_user($userteacher, $course->id, $formdata);
+        $alternate = alternate_manager::create_alternate_for_user($userteacher, $formdata, $course->id);
 
         $this->assertEquals(1, $this->email_sink_email_count($sink));
         $this->assertEquals(\block_quickmail_string::get('alternate_subject'), $this->email_in_sink_attr($sink, 1, 'subject'));

@@ -101,8 +101,8 @@ class messenger implements messenger_interface {
         return self::send_message_to_recipients(
             $message,
             $formdata,
-            $recipientuserids,
             $transformeddata->additional_emails,
+            $recipientuserids,
             $sendastasks
         );
     }
@@ -154,8 +154,8 @@ class messenger implements messenger_interface {
         return self::send_message_to_recipients(
             $message,
             $formdata,
-            $recipientuserids,
             $transformeddata->additional_emails,
+            $recipientuserids,
             $sendastasks
         );
     }
@@ -167,8 +167,8 @@ class messenger implements messenger_interface {
      *
      * @param  message  $message              message object instance being sent
      * @param  array    $formdata            posted moodle form data (used for file attachment purposes)
-     * @param  array    $recipientuserids   moodle user ids to receive the message
      * @param  array    $additionalemails    array of additional email addresses to send to, optional, defaults to empty
+     * @param  array    $recipientuserids   moodle user ids to receive the message
      * @param  bool     $sendastasks        if false, the message will be sent immediately
      * @return message
      * @throws critical_exception
@@ -176,8 +176,8 @@ class messenger implements messenger_interface {
     private static function send_message_to_recipients(
         $message,
         $formdata,
-        $recipientuserids = [],
         $additionalemails,
+        $recipientuserids = [],
         $sendastasks = true) {
         // Handle saving and syncing of any uploaded file attachments.
         message_file_handler::handle_posted_attachments($message, $formdata, 'attachments');
