@@ -163,28 +163,28 @@ class block_quickmail_schedulable_testcase extends advanced_testcase {
 
         // Create a reminder notification to run soon.
         $remindernotification = reminder_notification::create_type('course-non-participation',
-                                    $course,
-                                    $course,
-                                    $userteacher,
-                                    $this->get_reminder_notification_params([], [
-                                        'schedule_unit' => 'week',
-                                        'schedule_amount' => 2,
-                                        'schedule_begin_at' => $this->get_soon_time()
-                                     ]));
+            $course,
+            $userteacher,
+            $this->get_reminder_notification_params([], [
+                'schedule_unit' => 'week',
+                'schedule_amount' => 2,
+                'schedule_begin_at' => $this->get_soon_time()
+            ]),
+            $course);
 
         // Next run time should be soon.
         $this->assertEquals($remindernotification->get_next_run_time(), $this->get_soon_time());
 
         // Create a reminder notification to run past.
         $remindernotification = reminder_notification::create_type('course-non-participation',
-                                    $course,
-                                    $course,
-                                    $userteacher,
-                                    $this->get_reminder_notification_params([], [
-                                        'schedule_unit' => 'week',
-                                        'schedule_amount' => 2,
-                                        'schedule_begin_at' => $this->get_past_time()
-                                    ]));
+            $course,
+            $userteacher,
+            $this->get_reminder_notification_params([], [
+                'schedule_unit' => 'week',
+                'schedule_amount' => 2,
+                'schedule_begin_at' => $this->get_past_time()
+            ]),
+            $course);
 
         // Next run time should be past.
         $this->assertEquals($remindernotification->get_next_run_time(), $this->get_past_time());

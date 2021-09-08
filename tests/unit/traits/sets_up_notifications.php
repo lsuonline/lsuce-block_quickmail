@@ -33,7 +33,7 @@ trait sets_up_notifications {
     public function create_reminder_notification_for_course_user($modelkey, $course, $user, $object = null, $overrides = []) {
         $params = $this->get_reminder_notification_params([], $overrides);
 
-        $notification = reminder_notification::create_type($modelkey, $object, $course, $user, $params);
+        $notification = reminder_notification::create_type($modelkey, $course, $user, $params, $object);
 
         return $notification;
     }

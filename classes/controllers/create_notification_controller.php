@@ -660,15 +660,15 @@ class create_notification_controller extends base_controller {
         return reminder_notification::create_type(
             str_replace('_', '-', $this->stored('notification_model')),
             $this->props->course, // Need to pull the object here!
-            $this->props->course,
             $this->props->user,
             array_merge($this->get_notification_params(), [
                 'schedule_unit' => $this->stored('schedule_time_unit'),
-                'schedule_amount' => (int) $this->stored('schedule_time_amount'),
-                'schedule_begin_at' => (int) $this->stored('schedule_begin_at'),
-                'schedule_end_at' => (int) $this->stored('schedule_end_at'),
-                'max_per_interval' => (int) $this->stored('schedule_max_per_interval'),
-            ])
+                'schedule_amount' => (int)$this->stored('schedule_time_amount'),
+                'schedule_begin_at' => (int)$this->stored('schedule_begin_at'),
+                'schedule_end_at' => (int)$this->stored('schedule_end_at'),
+                'max_per_interval' => (int)$this->stored('schedule_max_per_interval'),
+            ]),
+            $this->props->course
         );
     }
 
