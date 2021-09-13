@@ -228,7 +228,7 @@ class course_config_form extends controller_form {
     private function get_prepend_class_options() {
         return [
             0 => get_string('none'),
-            'idnumber' => get_string('idnumber'),
+            'idnumber' => get_string('idnumbercourse'),
             'shortname' => get_string('shortnamecourse'),
             'fullname' => get_string('fullname')
         ];
