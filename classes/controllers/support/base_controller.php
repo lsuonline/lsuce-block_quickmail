@@ -138,12 +138,17 @@ class base_controller {
         }
 
         global $OUTPUT;
+        $displayheaderfooter = self::display_header_footer($actionname, $request);
 
-        echo $OUTPUT->header();
+        if ($displayheaderfooter) {
+            echo $OUTPUT->header();
+        }
 
         call_user_func([$this, $actionname], $request);
 
-        echo $OUTPUT->footer();
+        if ($displayheaderfooter) {
+            echo $OUTPUT->footer();
+        }
     }
 
     /**
@@ -161,12 +166,42 @@ class base_controller {
         }
 
         global $OUTPUT;
+        $displayheaderfooter = self::display_header_footer('view', $request);
 
-        echo $OUTPUT->header();
+        if ($displayheaderfooter) {
+            echo $OUTPUT->header();
+        }
 
         call_user_func([$this, $viewname], $request);
 
-        echo $OUTPUT->footer();
+        if ($displayheaderfooter) {
+            echo $OUTPUT->footer();
+        }
+    }
+
+    /**
+     *  Returns true/false to display header and footer.
+     *
+     * @param  string              $actionorview
+     * @param  controller_request  $request
+     * @return boolean
+     */
+    private function display_header_footer($actionorview, controller_request $request) {
+        $result = true;
+        if ($actionorview === 'view') {
+            $hideviews = ['delete', 'update', 'save', 'cancelbutton'];
+            foreach ($hideviews as $view) {
+                if (isset($request->input->{$view})) {
+                    $result = false;
+                }
+            }
+        } else if (strpos($actionorview, "action_") === 0) {
+            $hideactions = ['action_delete', 'action_resend', 'action_duplicate'];
+            if (in_array($actionorview, $hideactions)) {
+                $result = false;
+            }
+        }
+        return $result;
     }
 
     /**
