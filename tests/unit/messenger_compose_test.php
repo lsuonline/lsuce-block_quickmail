@@ -227,7 +227,9 @@ class block_quickmail_messenger_compose_testcase extends advanced_testcase {
         $this->assertEquals('Hello world', $this->email_in_sink_attr($sink, 7, 'subject'));
         $this->assertTrue($this->email_in_sink_body_contains($sink, 7, 'This is one fine body.'));
         $this->assertEquals(get_config('moodle', 'noreplyaddress'), $this->email_in_sink_attr($sink, 7, 'from'));
-        $this->assertEquals('additional@three.com', $this->email_in_sink_attr($sink, 7, 'to'));
+        $this->assertContains('additional@one.com', $this->email_in_sink_attr_all($sink, 'to'));
+        $this->assertContains('additional@two.com', $this->email_in_sink_attr_all($sink, 'to'));
+        $this->assertContains('additional@three.com', $this->email_in_sink_attr_all($sink, 'to'));
 
         $this->close_email_sink($sink);
     }
