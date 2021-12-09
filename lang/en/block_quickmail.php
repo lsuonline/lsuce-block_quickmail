@@ -463,3 +463,117 @@ $string['ms_alternate'] = 'Alternate Emails';
 $string['ms_config'] = 'Configure';
 $string['ms_notifications'] = 'Notifications';
 $string['ms_create_notification'] = 'Create Notification';
+
+// Privacy metadata.
+$string['privacy:metadata:block_quickmail_alt_emails'] = 'Alternate email addresses that a user or course may send from if validated';
+$string['privacy:metadata:block_quickmail_alt_emails:setup_user_id'] = 'The user id who created this alternate email';
+$string['privacy:metadata:block_quickmail_alt_emails:course_id'] = 'The course id that may use this alternate email address to send from';
+$string['privacy:metadata:block_quickmail_alt_emails:user_id'] = 'The user id that may use this alternate email address to send from';
+$string['privacy:metadata:block_quickmail_alt_emails:setup_email'] = 'The alternate email address';
+$string['privacy:metadata:block_quickmail_alt_emails:firstname'] = 'The first name of the alternate email address sender';
+$string['privacy:metadata:block_quickmail_alt_emails:lastname'] = 'The last name of the alternate email address sender';
+$string['privacy:metadata:block_quickmail_alt_emails:allowed_role_ids'] = 'The role ids that may use this alternate email address to send from';
+$string['privacy:metadata:block_quickmail_alt_emails:is_validated'] = 'Whether or not this alternate email has been validated by the user who created it';
+$string['privacy:metadata:block_quickmail_alt_emails:usermodified'] = 'The user who created/modified the object';
+$string['privacy:metadata:block_quickmail_alt_emails:timecreated'] = 'The timestamp at which the record was created';
+$string['privacy:metadata:block_quickmail_alt_emails:timemodified'] = 'The timestamp at which the record was modified';
+$string['privacy:metadata:block_quickmail_alt_emails:timedeleted'] = 'The timestamp at which the record was deleted';
+
+$string['privacy:metadata:block_quickmail_draft_recips'] = 'The recipient entity keys of a specific message';
+$string['privacy:metadata:block_quickmail_draft_recips:message_id'] = 'The parent message id';
+$string['privacy:metadata:block_quickmail_draft_recips:recipient_type'] = 'The type of recipient entity. role, group, user, or filter.';
+$string['privacy:metadata:block_quickmail_draft_recips:recipient_id'] = 'The recipient entity id.';
+$string['privacy:metadata:block_quickmail_draft_recips:recipient_filter'] = 'The user_filtering serialized data for user selection.';
+$string['privacy:metadata:block_quickmail_draft_recips:timecreated'] = 'The timestamp at which the record was created. It is automatically set.';
+$string['privacy:metadata:block_quickmail_draft_recips:timemodified'] = 'The timestamp at which the record was modified. It is automatically set.';
+
+$string['privacy:metadata:block_quickmail_event_notifs'] = 'Event based notification type instances extending a parent notification record';
+$string['privacy:metadata:block_quickmail_event_notifs:notification_id'] = 'The parent notification id for this event notification';
+$string['privacy:metadata:block_quickmail_event_notifs:model'] = 'The key representing the event notification model';
+$string['privacy:metadata:block_quickmail_event_notifs:usermodified'] = 'The user who created/modified the object';
+$string['privacy:metadata:block_quickmail_event_notifs:timecreated'] = 'The timestamp at which the record was created';
+$string['privacy:metadata:block_quickmail_event_notifs:timemodified'] = 'The timestamp at which the record was modified';
+$string['privacy:metadata:block_quickmail_event_notifs:timedeleted'] = 'The timestamp at which the record was deleted';
+
+$string['privacy:metadata:block_quickmail_event_recips'] = 'The recipient users of a specific event notification';
+$string['privacy:metadata:block_quickmail_event_recips:user_id'] = 'The recipient user id';
+$string['privacy:metadata:block_quickmail_event_recips:event_notification_id'] = 'The event notification id';
+$string['privacy:metadata:block_quickmail_event_recips:notified_at'] = 'The timestamp at which the record was created';
+
+$string['privacy:metadata:block_quickmail_messages'] = 'All message batches including saved drafts and sent messages';
+$string['privacy:metadata:block_quickmail_messages:user_id'] = 'The user id that created the message';
+$string['privacy:metadata:block_quickmail_messages:notification_id'] = 'The notification id for the message';
+$string['privacy:metadata:block_quickmail_messages:alternate_email_id'] = 'The alternate email id for the mesasge';
+$string['privacy:metadata:block_quickmail_messages:signature_id'] = 'The signature id used in the message';
+$string['privacy:metadata:block_quickmail_messages:subject'] = 'The subject of the message';
+$string['privacy:metadata:block_quickmail_messages:body'] = 'The contents of the message';
+$string['privacy:metadata:block_quickmail_messages:sent_at'] = 'The date/time the message is sent at';
+$string['privacy:metadata:block_quickmail_messages:to_sent_at'] = 'The date/time the message is scheduled to be sent at';
+$string['privacy:metadata:block_quickmail_messages:usermodified'] = 'The user who created/modified the message';
+$string['privacy:metadata:block_quickmail_messages:timecreated'] = 'The time when message was created';
+$string['privacy:metadata:block_quickmail_messages:timemodified'] = 'The time when message was modified';
+$string['privacy:metadata:block_quickmail_messages:timedeleted'] = 'The time time when time was deleted';
+
+$string['privacy:metadata:block_quickmail_msg_ad_email'] = 'Additional emails that a specific message was sent to';
+$string['privacy:metadata:block_quickmail_msg_ad_email:message_id'] = 'The parent message id of this additional email';
+$string['privacy:metadata:block_quickmail_msg_ad_email:email'] = 'The additional email address to be sent to';
+$string['privacy:metadata:block_quickmail_msg_ad_email:sent_at'] = 'The timestamp at which the message was sent to the additional email';
+$string['privacy:metadata:block_quickmail_msg_ad_email:usermodified'] = 'The user who created/modified the object.';
+$string['privacy:metadata:block_quickmail_msg_ad_email:timecreated'] = 'The timestamp at which the record was created';
+$string['privacy:metadata:block_quickmail_msg_ad_email:timemodified'] = 'The timestamp at which the record was modified';
+
+$string['privacy:metadata:block_quickmail_msg_attach'] = 'The files that are attached to a parent message';
+$string['privacy:metadata:block_quickmail_msg_attach:message_id'] = 'The parent message id in which these files are attached to';
+$string['privacy:metadata:block_quickmail_msg_attach:path'] = 'The path of the attached file';
+$string['privacy:metadata:block_quickmail_msg_attach:filename'] = 'The name of the attached file';
+$string['privacy:metadata:block_quickmail_msg_attach:usermodified'] = 'The user who created/modified the object';
+$string['privacy:metadata:block_quickmail_msg_attach:timecreated'] = 'The timestamp at which the record was created';
+$string['privacy:metadata:block_quickmail_msg_attach:timemodified'] = 'The timestamp at which the record was modified';
+
+$string['privacy:metadata:block_quickmail_msg_recips'] = 'The recipient users of a specific message';
+$string['privacy:metadata:block_quickmail_msg_recips:user_id'] = 'The user id that is going to be receiving the message';
+$string['privacy:metadata:block_quickmail_msg_recips:sent_at'] = 'The time the message was sent at';
+$string['privacy:metadata:block_quickmail_msg_recips:moodle_message_id'] = 'The mdl_message id that was sent to this recipient user';
+$string['privacy:metadata:block_quickmail_msg_recips:usermodified'] = 'The user who created/modified the entry';
+$string['privacy:metadata:block_quickmail_msg_recips:timecreated'] = 'The time this entry was created';
+$string['privacy:metadata:block_quickmail_msg_recips:timemodified'] = 'The time this entry was modified';
+
+$string['privacy:metadata:block_quickmail_notifs'] = 'Parent notifications of sub class notification types';
+$string['privacy:metadata:block_quickmail_notifs:user_id'] = 'User defined name of this notification instance';
+$string['privacy:metadata:block_quickmail_notifs:alternate_email_id'] = 'The optional alternate email id that this notification message was sent from';
+$string['privacy:metadata:block_quickmail_notifs:subject'] = 'The notification message subject line';
+$string['privacy:metadata:block_quickmail_notifs:signature_id'] = 'The optional signature id that will be appended to this message';
+$string['privacy:metadata:block_quickmail_notifs:body'] = 'The body of the notification message';
+$string['privacy:metadata:block_quickmail_notifs:usermodified'] = 'The user who created/modified the object';
+$string['privacy:metadata:block_quickmail_notifs:timecreated'] = 'The timestamp at which the record was created';
+$string['privacy:metadata:block_quickmail_notifs:timemodified'] = 'The timestamp at which the record was modified';
+$string['privacy:metadata:block_quickmail_notifs:timedeleted'] = 'The timestamp at which the record was deleted';
+
+$string['privacy:metadata:block_quickmail_rem_notifs'] = 'Reminder based notification type instances extending a parent notification record';
+$string['privacy:metadata:block_quickmail_rem_notifs:notification_id'] = 'The parent notification id for this reminder notification';
+$string['privacy:metadata:block_quickmail_rem_notifs:model'] = 'The key representing the reminder notification model';
+$string['privacy:metadata:block_quickmail_rem_notifs:object_id'] = 'The id of the specific object that this reminder notification was created for';
+$string['privacy:metadata:block_quickmail_rem_notifs:schedule_id'] = 'The id of the schedule for this reminder notification';
+$string['privacy:metadata:block_quickmail_rem_notifs:usermodified'] = 'The user who created/modified the object';
+$string['privacy:metadata:block_quickmail_rem_notifs:timecreated'] = 'The timestamp at which the record was created';
+$string['privacy:metadata:block_quickmail_rem_notifs:timemodified'] = 'The timestamp at which the record was modified';
+$string['privacy:metadata:block_quickmail_rem_notifs:timedeleted'] = 'The timestamp at which the record was deleted';
+
+$string['privacy:metadata:block_quickmail_schedules'] = 'Schedule records for schedulable persistents';
+$string['privacy:metadata:block_quickmail_schedules:unit'] = 'The unit of time for which this scheduled is based';
+$string['privacy:metadata:block_quickmail_schedules:amount'] = 'The amount of time of the unit of time for which this schedule is based';
+$string['privacy:metadata:block_quickmail_schedules:begin_at'] = 'The timestamp for which this schedule will begin';
+$string['privacy:metadata:block_quickmail_schedules:end_at'] = 'The timestamp for which this schedule will end';
+$string['privacy:metadata:block_quickmail_schedules:usermodified'] = 'The user who created/modified the object';
+$string['privacy:metadata:block_quickmail_schedules:timecreated'] = 'The timestamp at which the record was created';
+$string['privacy:metadata:block_quickmail_schedules:timemodified'] = 'The timestamp at which the record was modified';
+$string['privacy:metadata:block_quickmail_schedules:timedeleted'] = 'The timestamp at which the record was deleted';
+
+$string['privacy:metadata:block_quickmail_signatures'] = 'Stores signatures for users';
+$string['privacy:metadata:block_quickmail_signatures:user_id'] = 'The user id that created the signature';
+$string['privacy:metadata:block_quickmail_signatures:title'] = 'The title of the signature';
+$string['privacy:metadata:block_quickmail_signatures:signature'] = 'The contents of the signature';
+$string['privacy:metadata:block_quickmail_signatures:usermodified'] = 'The user who created/modified the signature';
+$string['privacy:metadata:block_quickmail_signatures:timecreated'] = 'The time when signature was created';
+$string['privacy:metadata:block_quickmail_signatures:timemodified'] = 'The time when signature was modified';
+$string['privacy:metadata:block_quickmail_signatures:timedeleted'] = 'The time when signature was deleted';
