@@ -40,9 +40,9 @@ class email_recipient_send_factory extends recipient_send_factory implements rec
 
     public function set_factory_computed_params() {
         $this->message_params->usetrueaddress = $this->should_use_true_address();
+        $this->alternate_email = alternate_email::find_or_null($this->message->get('alternate_email_id'));
         $this->message_params->replyto = $this->get_replyto_email();
         $this->message_params->replytoname = $this->get_replyto_name();
-        $this->alternate_email = alternate_email::find_or_null($this->message->get('alternate_email_id'));
     }
 
     /**
@@ -80,7 +80,12 @@ class email_recipient_send_factory extends recipient_send_factory implements rec
 
         if(isset($this->alternate_email)) {
             $alt = $this->alternate_email->get('email');
+            $alt_firstname = $this->alternate_email->get('firstname');
+            $alt_lastname = $this->alternate_email->get('lastname');
+            
             $this->message_params->userfrom->email = $alt;
+            $this->message_params->userfrom->firstname = $alt_firstname;
+            $this->message_params->userfrom->lastname = $alt_lastname;
             $this->message_params->replyto = $alt;
             $this->message_params->usetrueaddress = true;
         }
