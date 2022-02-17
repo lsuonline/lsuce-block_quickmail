@@ -66,7 +66,7 @@ class block_quickmail_reminder_notification_course_grade_range_model_testcase ex
 
         // Test gets available condition keys.
         $keys = notification_model_helper::get_condition_keys_for_model('reminder', 'course_grade_range');
-        $this->assertInternalType('array', $keys);
+        $this->assertIsArray($keys);
         $this->assertCount(2, $keys);
 
         // Test gets required condition keys.

@@ -56,11 +56,11 @@ class block_quickmail_user_repo_testcase extends advanced_testcase {
 
         $firstuser = current($users);
 
-        $this->assertInternalType('array', $users);
+        $this->assertIsArray($users);
         $this->assertCount(44, $users);
         $this->assertArrayHasKey($editingteacher->id, $users);
         $this->assertArrayHasKey($student->id, $users);
-        $this->assertInternalType('object', $firstuser);
+        $this->assertIsObject($firstuser);
         $this->assertObjectHasAttribute('id', $firstuser);
         $this->assertObjectHasAttribute('firstname', $firstuser);
         $this->assertObjectHasAttribute('lastname', $firstuser);
@@ -68,7 +68,7 @@ class block_quickmail_user_repo_testcase extends advanced_testcase {
         // Should have limited access.
         $users = user_repo::get_course_user_selectable_users($course, $student, $coursecontext);
 
-        $this->assertInternalType('array', $users);
+        $this->assertIsArray($users);
         $this->assertCount(22, $users);
     }
 
