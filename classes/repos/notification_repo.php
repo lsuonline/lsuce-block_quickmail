@@ -69,7 +69,7 @@ class notification_repo extends repo implements notification_repo_interface {
         // If not paginating, return all sorted results.
         if (!$repo->paginate) {
             // Get SQL given params.
-            $sql = self::get_all_for_course_sql($courseid, $userid, $sortby, $sortdir, false);
+            $sql = self::get_all_for_course_sql($courseid, $sortby, $sortdir, $userid, false);
 
             // Pull data, iterate through recordset, instantiate persistents, add to array.
             $data = [];
@@ -80,7 +80,7 @@ class notification_repo extends repo implements notification_repo_interface {
             $recordset->close();
         } else {
             // Get (count) SQL given params.
-            $sql = self::get_all_for_course_sql($courseid, $userid, $sortby, $sortdir, true);
+            $sql = self::get_all_for_course_sql($courseid, $sortby, $sortdir, $userid, true);
 
             // Pull count.
             $count = $DB->count_records_sql($sql, $queryparams);
@@ -92,7 +92,7 @@ class notification_repo extends repo implements notification_repo_interface {
             $repo->set_result_pagination($paginated);
 
             // Get SQL given params.
-            $sql = self::get_all_for_course_sql($courseid, $userid, $sortby, $sortdir, false);
+            $sql = self::get_all_for_course_sql($courseid, $sortby, $sortdir, $userid, false);
 
             // Pull data, iterate through recordset, instantiate persistents, add to array.
             $data = [];
@@ -129,7 +129,7 @@ class notification_repo extends repo implements notification_repo_interface {
         return $notification;
     }
 
-    private static function get_all_for_course_sql($courseid, $userid = null, $sortby, $sortdir, $ascount = false) {
+    private static function get_all_for_course_sql($courseid, $sortby, $sortdir, $userid = null, $ascount = false) {
         $sql = $ascount
             ? 'SELECT COUNT(DISTINCT n.id) '
             : 'SELECT DISTINCT n.* ';

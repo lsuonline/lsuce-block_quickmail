@@ -41,11 +41,11 @@ class alternate_manager {
      * Creates an alternate email for the given user with the given data
      *
      * @param  object  $user  the creating user
-     * @param  int     $courseid  (optional) a course id to scope this alternate to if desired
      * @param  array  $params [availability,email,firstname,lastname,allowed_role_ids]
+     * @param  int     $courseid  (optional) a course id to scope this alternate to if desired
      * @return alternate_email
      */
-    public static function create_alternate_for_user($user, $courseid = 0, $params) {
+    public static function create_alternate_for_user($user, $params, $courseid = 0) {
         // Validate form data.
         $validator = new create_alternate_form_validator((object) $params);
         $validator->validate();

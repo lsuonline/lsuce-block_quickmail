@@ -33,11 +33,11 @@ trait sets_up_notification_models {
 
         // Create test reminder notification.
         $remindernotification = reminder_notification::create_type($modelkey,
-                                                                   $course,
-                                                                   $object,
-                                                                   $creatinguser,
-                                                                   $this->get_reminder_notification_params([],
-                                                                   $overrideparams));
+            $object,
+            $creatinguser,
+            $this->get_reminder_notification_params([],
+                $overrideparams),
+            $course);
 
         return $this->create_notification_model('reminder', $modelclassname, $remindernotification);
     }

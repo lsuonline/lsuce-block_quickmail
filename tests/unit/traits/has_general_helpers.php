@@ -44,7 +44,7 @@ trait has_general_helpers {
 
         return ! $asstring
             ? $userids
-            : implode($userids, ',');
+            : implode( ',', $userids);
     }
 
     public function get_course_config_params(array $overrideparams = []) {

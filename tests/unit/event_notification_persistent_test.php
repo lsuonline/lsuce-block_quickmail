@@ -48,10 +48,10 @@ class block_quickmail_event_notification_persistent_testcase extends advanced_te
 
         // Create.
         $eventnotification = event_notification::create_type('course-entered',
-                                 $course,
-                                 $course,
-                                 $userteacher,
-                                 $this->get_event_notification_params());
+            $course,
+            $userteacher,
+            $this->get_event_notification_params(),
+            $course);
 
         $this->assertInstanceOf(event_notification::class, $eventnotification);
         $this->assertEquals('course-entered', $eventnotification->get('model'));
@@ -108,13 +108,13 @@ class block_quickmail_event_notification_persistent_testcase extends advanced_te
 
         // Create.
         $eventnotification = event_notification::create_type('course-entered',
-                                 $course,
-                                 $course,
-                                 $userteacher,
-                                 $this->get_event_notification_params([], [
-                                     'time_delay_amount' => '',
-                                     'time_delay_unit' => '',
-                                 ]));
+            $course,
+            $userteacher,
+            $this->get_event_notification_params([], [
+                'time_delay_amount' => '',
+                'time_delay_unit' => '',
+            ]),
+            $course);
 
         $this->assertEquals(0, $eventnotification->get('time_delay_amount'));
         $this->assertEquals(null, $eventnotification->get('time_delay_unit'));
@@ -140,13 +140,13 @@ class block_quickmail_event_notification_persistent_testcase extends advanced_te
 
         // Create.
         $eventnotification = event_notification::create_type('course-entered',
-                                 $course,
-                                 $course,
-                                 $userteacher,
-                                 $this->get_event_notification_params([], [
-                                     'mute_time_amount' => '',
-                                     'mute_time_unit' => '',
-                                 ]));
+            $course,
+            $userteacher,
+            $this->get_event_notification_params([], [
+                'mute_time_amount' => '',
+                'mute_time_unit' => '',
+            ]),
+            $course);
 
         $this->assertEquals(5, $eventnotification->get('time_delay_amount'));
         $this->assertEquals('minute', $eventnotification->get('time_delay_unit'));
@@ -172,10 +172,10 @@ class block_quickmail_event_notification_persistent_testcase extends advanced_te
 
         // Create an event notification.
         $eventnotification = event_notification::create_type('course-entered',
-                                 $course,
-                                 $course,
-                                 $userteacher,
-                                 $this->get_event_notification_params());
+            $course,
+            $userteacher,
+            $this->get_event_notification_params(),
+            $course);
 
         $eventnotificationmodel = $eventnotification->get_notification_model();
 

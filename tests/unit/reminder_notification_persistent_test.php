@@ -50,10 +50,10 @@ class block_quickmail_reminder_notification_persistent_testcase extends advanced
 
         // Create.
         $remindernotification = reminder_notification::create_type('course-non-participation',
-                                                                   $course,
-                                                                   $course,
-                                                                   $userteacher,
-                                                                   $this->get_reminder_notification_params());
+            $course,
+            $userteacher,
+            $this->get_reminder_notification_params(),
+            $course);
 
         $this->assertInstanceOf(reminder_notification::class, $remindernotification);
         $this->assertEquals('course-non-participation', $remindernotification->get('model'));
@@ -111,14 +111,14 @@ class block_quickmail_reminder_notification_persistent_testcase extends advanced
 
         // Create a reminder notification to run soon.
         $remindernotification = reminder_notification::create_type('course-non-participation',
-                                $course,
-                                $course,
-                                $userteacher,
-                                $this->get_reminder_notification_params([], [
-                                    'schedule_unit' => 'week',
-                                    'schedule_amount' => 2,
-                                    'schedule_begin_at' => $this->get_soon_time()
-                                ]));
+            $course,
+            $userteacher,
+            $this->get_reminder_notification_params([], [
+                'schedule_unit' => 'week',
+                'schedule_amount' => 2,
+                'schedule_begin_at' => $this->get_soon_time()
+            ]),
+            $course);
 
         $remindernotificationmodel = $remindernotification->get_notification_model();
 
