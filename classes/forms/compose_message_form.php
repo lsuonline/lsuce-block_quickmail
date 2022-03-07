@@ -112,7 +112,7 @@ class compose_message_form extends \moodleform {
             'excluded_draft_recipients' => $excludeddraftrecipients,
             'allow_mentor_copy' => $allowmentorcopy,
             'use_multiselect_picker' => block_quickmail_plugin::user_prefers_multiselect_recips($user),
-        ], 'post', '', ['id' => 'mform-compose']);
+        ], 'post', '', ['id' => 'qm-mform-compose']);
     }
 
     /*
@@ -213,20 +213,34 @@ class compose_message_form extends \moodleform {
                 'ajax' => ''
             ];
 
-            $mform->addElement('autocomplete', 'included_entity_ids',
-                block_quickmail_string::get('included_ids_label'), $recipiententities, array_merge($options, [
-                    'noselectionstring' => block_quickmail_string::get('no_included_recipients'),
-                    'placeholder' => block_quickmail_string::get('included_recipients_desc'),
-                ]))->setValue($this->included_draft_recipients);
+            $mform->addElement(
+                'autocomplete',
+                'included_entity_ids',
+                block_quickmail_string::get('included_ids_label'),
+                $recipiententities,
+                array_merge(
+                    $options, [
+                        'noselectionstring' => block_quickmail_string::get('no_included_recipients'),
+                        'placeholder' => block_quickmail_string::get('included_recipients_desc'),
+                    ]
+                )
+            )->setValue($this->included_draft_recipients);
 
             // Remove "send to all" for exclude selection.
             array_shift($recipiententities);
 
-            $mform->addElement('autocomplete', 'excluded_entity_ids',
-                block_quickmail_string::get('excluded_ids_label'), $recipiententities, array_merge($options, [
-                    'noselectionstring' => block_quickmail_string::get('no_excluded_recipients'),
-                    'placeholder' => block_quickmail_string::get('excluded_recipients_desc'),
-                ]))->setValue($this->excluded_draft_recipients);
+            $mform->addElement(
+                'autocomplete',
+                'excluded_entity_ids',
+                block_quickmail_string::get('excluded_ids_label'),
+                $recipiententities,
+                array_merge(
+                    $options, [
+                        'noselectionstring' => block_quickmail_string::get('no_excluded_recipients'),
+                        'placeholder' => block_quickmail_string::get('excluded_recipients_desc'),
+                    ]
+                )
+            )->setValue($this->excluded_draft_recipients);
         }
 
         // Subject (text).
@@ -498,6 +512,9 @@ class compose_message_form extends \moodleform {
 
         // Additional_emails - make sure each is valid.
         $cleansedadditionalemails = preg_replace('/\s+/', '', $data['additional_emails']);
+        // some users prefer the semi-colon to separate addresses 
+        // so let's just change that back to a comma and carry on.
+        $cleansedadditionalemails = preg_replace('/;/', ',', $data['additional_emails']);
 
         if (!empty($cleansedadditionalemails) && count(array_filter(explode(',', $cleansedadditionalemails), function($email) {
             return !filter_var($email, FILTER_VALIDATE_EMAIL);
