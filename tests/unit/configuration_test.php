@@ -66,20 +66,20 @@ class block_quickmail_configuration_testcase extends advanced_testcase {
 
         $this->assertIsArray($setting);
         $this->assertCount(3, $setting);
-        $this->assertContains(3, $setting);
-        $this->assertContains(4, $setting);
-        $this->assertContains(5, $setting);
+        $this->assertContains('3', $setting);
+        $this->assertContains('4', $setting);
+        $this->assertContains('5', $setting);
 
         // Get default course setting - 3,4,5.
         $course = $this->getDataGenerator()->create_course();
 
         $setting = block_quickmail_config::get_role_selection_array($course);
 
-        $this->assertInternalType('array', $setting);
+        $this->assertIsArray($setting);
         $this->assertCount(3, $setting);
-        $this->assertContains(3, $setting);
-        $this->assertContains(4, $setting);
-        $this->assertContains(5, $setting);
+        $this->assertContains('3', $setting);
+        $this->assertContains('4', $setting);
+        $this->assertContains('5', $setting);
 
         // Update the course's settings.
         $newparams = [
@@ -101,10 +101,10 @@ class block_quickmail_configuration_testcase extends advanced_testcase {
 
         $setting = block_quickmail_config::get_role_selection_array($course);
 
-        $this->assertInternalType('array', $setting);
+        $this->assertIsArray($setting);
         $this->assertCount(2, $setting);
-        $this->assertContains(1, $setting);
-        $this->assertContains(2, $setting);
+        $this->assertContains('1', $setting);
+        $this->assertContains('2', $setting);
     }
 
     public function test_reports_course_ferpa_strictness() {
