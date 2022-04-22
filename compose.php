@@ -45,8 +45,8 @@ block_quickmail_plugin::require_user_can_send('compose', $USER, $coursecontext);
 $courseuserdata = block_quickmail_plugin::get_compose_message_recipients(
     $course,
     $USER,
-    block_quickmail_plugin::user_prefers_multiselect_recips($USER),
-    $coursecontext
+    $coursecontext,
+    block_quickmail_plugin::user_prefers_multiselect_recips($USER)
 );
 
 // Construct the page.

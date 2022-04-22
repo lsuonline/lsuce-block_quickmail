@@ -753,5 +753,327 @@ function xmldb_block_quickmail_upgrade($oldversion) {
         upgrade_block_savepoint(true, 2018092601, 'quickmail');
     }
 
+    if ($oldversion < 2021120300) {
+
+        // Update block_quickmail_signatures table.
+        // Define table block_quickmail_signatures.
+        $table = new xmldb_table('block_quickmail_signatures');
+
+        // Remove key so we can alter the fields.
+        $key = new xmldb_key('user_id', XMLDB_KEY_FOREIGN, ['user_id'], 'user', ['id']);
+        $dbman->drop_key($table, $key);
+
+        // Changing the default of field user_id on table block_quickmail_signatures to 0.
+        $field = new xmldb_field('user_id', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Re-add the key.
+        $dbman->add_key($table, $key);
+
+        // Changing the default of field usermodified on table block_quickmail_signatures to 0.
+        $field = new xmldb_field('usermodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timecreated on table block_quickmail_signatures to 0.
+        $field = new xmldb_field('timecreated', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timemodified on table block_quickmail_signatures to 0.
+        $field = new xmldb_field('timemodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field usermodified on table block_quickmail_signatures to 0.
+        $field = new xmldb_field('timedeleted', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, null, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Update block_quickmail_messages table.
+        // Define table block_quickmail_messages.
+        $table = new xmldb_table('block_quickmail_messages');
+
+        // Changing the default of field sent_at on table block_quickmail_messages to 0.
+        $field = new xmldb_field('sent_at', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field to_send_at on table block_quickmail_messages to 0.
+        $field = new xmldb_field('to_send_at', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field usermodified on table block_quickmail_messages to 0.
+        $field = new xmldb_field('usermodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timecreated on table block_quickmail_messages to 0.
+        $field = new xmldb_field('timecreated', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timemodified on table block_quickmail_messages to 0.
+        $field = new xmldb_field('timemodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timedeleted on table block_quickmail_messages to 0.
+        $field = new xmldb_field('timedeleted', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Define key notification_id (foreign) to be added to block_quickmail_messages.
+        $key = new xmldb_key('notification_id', XMLDB_KEY_FOREIGN, ['notification_id'], 'block_quickmail_notifs', ['id']);
+        $dbman->add_key($table, $key);
+
+        // Update block_quickmail_msg_recips table.
+        // Define table block_quickmail_msg_recips.
+        $table = new xmldb_table('block_quickmail_msg_recips');
+
+        // Define index msgrec (not unique) to be dropped from block_quickmail_msg_recips.
+        $index = new xmldb_index('msgrec', XMLDB_INDEX_NOTUNIQUE, ['sent_at']);
+        // Conditionally launch drop index msgrec.
+        if ($dbman->index_exists($table, $index)) {
+            $dbman->drop_index($table, $index);
+        }
+
+        // Changing the default of field sent_at on table block_quickmail_msg_recips to 0.
+        $field = new xmldb_field('sent_at', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Re-add the index.
+        $dbman->add_index($table, $index);
+
+        // Changing the default of field usermodified on table block_quickmail_msg_recips to 0.
+        $field = new xmldb_field('usermodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timecreated on table block_quickmail_msg_recips to 0.
+        $field = new xmldb_field('timecreated', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timemodified on table block_quickmail_msg_recips to 0.
+        $field = new xmldb_field('timemodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Update block_quickmail_draft_recips table.
+        // Define table block_quickmail_draft_recips.
+        $table = new xmldb_table('block_quickmail_draft_recips');
+
+        // Changing the default of field timecreated on table block_quickmail_draft_recips to 0.
+        $field = new xmldb_field('timecreated', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timemodified on table block_quickmail_draft_recips to 0.
+        $field = new xmldb_field('timemodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Update block_quickmail_msg_ad_email table.
+        // Define table block_quickmail_msg_ad_email.
+        $table = new xmldb_table('block_quickmail_msg_ad_email');
+
+        // Changing the default of field sent_at on table block_quickmail_msg_ad_email to 0.
+        $field = new xmldb_field('sent_at', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field usermodified on table block_quickmail_msg_ad_email to 0.
+        $field = new xmldb_field('usermodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timecreated on table block_quickmail_msg_ad_email to 0.
+        $field = new xmldb_field('timecreated', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timemodified on table block_quickmail_msg_ad_email to 0.
+        $field = new xmldb_field('timemodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Update block_quickmail_msg_attach table.
+        // Define table block_quickmail_msg_attach.
+        $table = new xmldb_table('block_quickmail_msg_attach');
+
+        // Changing the default of field usermodified on table block_quickmail_msg_attach to 0.
+        $field = new xmldb_field('usermodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timecreated on table block_quickmail_msg_attach to 0.
+        $field = new xmldb_field('timecreated', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timemodified on table block_quickmail_msg_attach to 0.
+        $field = new xmldb_field('timemodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Update block_quickmail_alt_emails table.
+        // Define table block_quickmail_alt_emails.
+        $table = new xmldb_table('block_quickmail_alt_emails');
+
+        // Changing precision of field firstname on table block_quickmail_alt_emails to (125).
+        $field = new xmldb_field('firstname', XMLDB_TYPE_CHAR, '125', null, XMLDB_NOTNULL, null, null);
+        $dbman->change_field_precision($table, $field);
+
+        // Changing precision of field lastname on table block_quickmail_alt_emails to (125).
+        $field = new xmldb_field('lastname', XMLDB_TYPE_CHAR, '125', null, XMLDB_NOTNULL, null, null);
+        $dbman->change_field_precision($table, $field);
+
+        // Changing the default of field usermodified on table block_quickmail_alt_emails to 0.
+        $field = new xmldb_field('usermodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timecreated on table block_quickmail_alt_emails to 0.
+        $field = new xmldb_field('timecreated', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timemodified on table block_quickmail_alt_emails to 0.
+        $field = new xmldb_field('timemodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timedeleted on table block_quickmail_alt_emails to 0.
+        $field = new xmldb_field('timedeleted', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Update block_quickmail_notifs table.
+        // Define table block_quickmail_notifs.
+        $table = new xmldb_table('block_quickmail_notifs');
+
+        // Changing nullability of field subject on table block_quickmail_notifs to null.
+        $field = new xmldb_field('subject', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $dbman->change_field_notnull($table, $field);
+
+        // Changing nullability of field body on table block_quickmail_notifs to null.
+        $field = new xmldb_field('body', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $dbman->change_field_notnull($table, $field);
+
+        // Changing the default of field usermodified on table block_quickmail_notifs to 0.
+        $field = new xmldb_field('usermodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timecreated on table block_quickmail_notifs to 0.
+        $field = new xmldb_field('timecreated', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timemodified on table block_quickmail_notifs to 0.
+        $field = new xmldb_field('timemodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        // Launch change of default for field timemodified.
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timedeleted on table block_quickmail_notifs to 0.
+        $field = new xmldb_field('timedeleted', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        // Launch change of default for field timedeleted.
+        $dbman->change_field_default($table, $field);
+
+        // Update block_quickmail_event_notifs table.
+        // Define table block_quickmail_event_notifs.
+        $table = new xmldb_table('block_quickmail_event_notifs');
+
+        // Remove key so we can alter the fields.
+        $key = new xmldb_key('usermodified', XMLDB_KEY_FOREIGN, ['usermodified'], 'user', ['id']);
+        $dbman->drop_key($table, $key);
+
+        // Changing the default of field usermodified on table block_quickmail_event_notifs to 0.
+        $field = new xmldb_field('usermodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Re-add the key.
+        $dbman->add_key($table, $key);
+
+        // Changing the default of field timecreated on table block_quickmail_event_notifs to 0.
+        $field = new xmldb_field('timecreated', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timemodified on table block_quickmail_event_notifs to 0.
+        $field = new xmldb_field('timemodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timedeleted on table block_quickmail_event_notifs to 0.
+        $field = new xmldb_field('timedeleted', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Define key notification_id (foreign) to be added to block_quickmail_event_notifs.
+        $key = new xmldb_key('notification_id', XMLDB_KEY_FOREIGN, ['notification_id'], 'block_quickmail_notifs', ['id']);
+        $dbman->add_key($table, $key);
+
+        // Update block_quickmail_schedules table.
+        // Define table block_quickmail_schedules.
+        $table = new xmldb_table('block_quickmail_schedules');
+
+        // Changing the default of field amount on table block_quickmail_schedules to 0.
+        $field = new xmldb_field('amount', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field usermodified on table block_quickmail_schedules to 0.
+        $field = new xmldb_field('usermodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timecreated on table block_quickmail_schedules to 0.
+        $field = new xmldb_field('timecreated', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timemodified on table block_quickmail_schedules to 0.
+        $field = new xmldb_field('timemodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timedeleted on table block_quickmail_schedules to 0.
+        $field = new xmldb_field('timedeleted', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Update block_quickmail_rem_notifs table.
+        // Define table block_quickmail_rem_notifs.
+        $table = new xmldb_table('block_quickmail_rem_notifs');
+
+        // Changing the default of field object_id on table block_quickmail_rem_notifs to 0.
+        $field = new xmldb_field('object_id', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Remove key so we can alter the fields.
+        $key = new xmldb_key('schedule_id', XMLDB_KEY_FOREIGN, ['schedule_id'], 'block_quickmail_schedules', ['id']);
+        $dbman->drop_key($table, $key);
+
+        // Changing the default of field schedule_id on table block_quickmail_rem_notifs to 0.
+        $field = new xmldb_field('schedule_id', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Re-add the key.
+        $dbman->add_key($table, $key);
+
+        // Remove key so we can alter the fields.
+        $key = new xmldb_key('usermodified', XMLDB_KEY_FOREIGN, ['usermodified'], 'user', ['id']);
+        $dbman->drop_key($table, $key);
+
+        // Changing the default of field usermodified on table block_quickmail_rem_notifs to 0.
+        $field = new xmldb_field('usermodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Re-add the key.
+        $dbman->add_key($table, $key);
+
+        // Changing the default of field timecreated on table block_quickmail_rem_notifs to 0.
+        $field = new xmldb_field('timecreated', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timemodified on table block_quickmail_rem_notifs to 0.
+        $field = new xmldb_field('timemodified', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Changing the default of field timedeleted on table block_quickmail_rem_notifs to 0.
+        $field = new xmldb_field('timedeleted', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, XMLDB_NOTNULL, null, '0');
+        $dbman->change_field_default($table, $field);
+
+        // Define key notification_id (foreign) to be added to block_quickmail_rem_notifs.
+        $key = new xmldb_key('notification_id', XMLDB_KEY_FOREIGN, ['notification_id'], 'block_quickmail_notifs', ['id']);
+        // Launch add key notification_id.
+        $dbman->add_key($table, $key);
+
+        // Update block_quickmail_event_recips table.
+        // Define table block_quickmail_event_recips.
+        $table = new xmldb_table('block_quickmail_event_recips');
+
+        // Define key event_notification_id (foreign) to be added to block_quickmail_event_recips.
+        $key = new xmldb_key('event_notification_id', XMLDB_KEY_FOREIGN, ['event_notification_id'],
+            'block_quickmail_notifs', ['id']);
+        $dbman->add_key($table, $key);
+
+        // Define key user_id (foreign) to be added to block_quickmail_event_recips.
+        $key = new xmldb_key('user_id', XMLDB_KEY_FOREIGN, ['user_id'], 'user', ['id']);
+        $dbman->add_key($table, $key);
+
+        block_quickmail\migrator\migrator::drop_old_tables();
+
+        // Quickmail savepoint reached.
+        upgrade_block_savepoint(true, 2021120300, 'quickmail');
+    }
+
     return $result;
 }

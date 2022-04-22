@@ -117,14 +117,14 @@ class reminder_notification extends \block_quickmail\persistents\persistent
      * Throws an exception if any missing param keys
      *
      * @param  string  $modelkey    a reminder_notification_model key
-     * @param  object  $object       the object that is to be evaluated by this reminder notification
      * @param  object  $course
      * @param  object  $user
      * @param  array   $params
+     * @param  object  $object       the object that is to be evaluated by this reminder notification
      * @return reminder_notification
      * @throws \Exception
      */
-    public static function create_type($modelkey, $object = null, $course, $user, $params) {
+    public static function create_type($modelkey, $course, $user, $params, $object = null) {
         // Add the model key to the params.
         $params = array_merge($params, ['model' => $modelkey]);
 
