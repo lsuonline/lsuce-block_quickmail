@@ -90,6 +90,18 @@ class messenger implements messenger_interface {
         // Get a message instance for this type, either from draft or freshly created.
         $message = self::get_message_instance('compose', $user, $course, $transformeddata, $draftmessage, false);
 
+        // TODO: Handle posted file attachments (moodle).
+        $coursecontext = \context_course::instance($course->id);
+        $transformeddata->message = file_save_draft_area_files($transformeddata->message_draftitem_id,
+                                                               $coursecontext->id,
+                                                               'block_quickmail',
+                                                               'message_editor',
+                                                               $message->get('id'),
+                                                               block_quickmail_config::get_filemanager_options(),
+                                                               $transformeddata->message);
+        $message->set('body', $transformeddata->message);
+        $message->update();
+
         // Get only the resolved recipient user ids.
         $recipientuserids = user_repo::get_unique_course_user_ids_from_selected_entities(
             $course,
@@ -234,6 +246,16 @@ class messenger implements messenger_interface {
         $message = self::get_message_instance('compose', $user, $course, $transformeddata, $draftmessage, true);
 
         // TODO: Handle posted file attachments (moodle).
+        $coursecontext = \context_course::instance($course->id);
+        $transformeddata->message = file_save_draft_area_files($transformeddata->message_draftitem_id,
+                                                               $coursecontext->id,
+                                                               'block_quickmail',
+                                                               'message_editor',
+                                                               $message->get('id'),
+                                                               block_quickmail_config::get_filemanager_options(),
+                                                               $transformeddata->message);
+        $message->set('body', $transformeddata->message);
+        $message->update();
 
         // Clear any existing draft recipients, and add those that have been recently submitted.
         $message->sync_compose_draft_recipients($transformeddata->included_entity_ids, $transformeddata->excluded_entity_ids);
@@ -337,6 +359,9 @@ class messenger implements messenger_interface {
             'no_reply' => $originaldraft->get('no_reply'),
             'usermodified' => $user->id
         ]);
+
+        // TODO: Duplicate files.
+
 
         // Duplicate the message recipients.
         foreach ($originaldraft->get_message_recipients() as $recipient) {
@@ -530,6 +555,18 @@ class messenger implements messenger_interface {
      * @return bool
      */
     public function send_to_recipient($recipient) {
+        $coursecontext = \context_course::instance($this->message->get("course_id"));
+        $body = file_rewrite_pluginfile_urls($this->message->get("body"),
+                                            'pluginfile.php',
+                                            $coursecontext->id,
+                                            'block_quickmail',
+                                            'message_editor',
+                                            $this->message->get('id'),
+                                            [
+                                                'includetoken' => true,
+                                            ]);
+        $this->message->set("body", $body);
+                             
         // Instantiate recipient_send_factory.
         $recipientsendfactory = recipient_send_factory::make(
             $this->message,

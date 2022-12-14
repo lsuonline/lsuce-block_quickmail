@@ -97,6 +97,20 @@ file_prepare_draft_area(
     block_quickmail_config::get_filemanager_options()
 );
 
+$messagedraftitemid = file_get_submitted_draft_itemid('message_editor');
+$messagebody = $draftmessage ? $draftmessage->get('body') : "";
+$messagebody = file_prepare_draft_area($messagedraftitemid,
+                                       $coursecontext->id,
+                                       'block_quickmail',
+                                       'message_editor',
+                                       $pageparams['draftid'] ?: null,
+                                       block_quickmail_config::get_filemanager_options(),
+                                       $messagebody);
+
+if ($draftmessage) {
+    $draftmessage->set('body', $messagebody);
+}
+
 // Instantiate the form.
 $composeform = \block_quickmail\forms\compose_message_form::make(
     $coursecontext,
