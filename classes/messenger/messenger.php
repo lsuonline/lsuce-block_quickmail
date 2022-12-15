@@ -92,6 +92,13 @@ class messenger implements messenger_interface {
 
         // TODO: Handle posted file attachments (moodle).
         $coursecontext = \context_course::instance($course->id);
+        file_save_draft_area_files($transformeddata->attachments_draftitem_id,
+                                   $coursecontext->id,
+                                   'block_quickmail',
+                                   'attachments',
+                                   $message->get('id'),
+                                   block_quickmail_config::get_filemanager_options());
+
         $transformeddata->message = file_save_draft_area_files($transformeddata->message_draftitem_id,
                                                                $coursecontext->id,
                                                                'block_quickmail',
@@ -247,6 +254,13 @@ class messenger implements messenger_interface {
 
         // TODO: Handle posted file attachments (moodle).
         $coursecontext = \context_course::instance($course->id);
+        file_save_draft_area_files($transformeddata->attachments_draftitem_id,
+                                   $coursecontext->id,
+                                   'block_quickmail',
+                                   'attachments',
+                                   $message->get('id'),
+                                   block_quickmail_config::get_filemanager_options());
+
         $transformeddata->message = file_save_draft_area_files($transformeddata->message_draftitem_id,
                                                                $coursecontext->id,
                                                                'block_quickmail',
@@ -302,7 +316,24 @@ class messenger implements messenger_interface {
         // Get a message instance for this type, either from draft or freshly created.
         $message = self::get_message_instance('broadcast', $user, $course, $transformeddata, $draftmessage, true);
 
-        // TODO: handle posted file attachments (moodle).
+        // TODO: Handle posted file attachments (moodle).
+        $coursecontext = \context_course::instance($course->id);
+        file_save_draft_area_files($transformeddata->attachments_draftitem_id,
+                                   $coursecontext->id,
+                                   'block_quickmail',
+                                   'attachments',
+                                   $message->get('id'),
+                                   block_quickmail_config::get_filemanager_options());
+
+        $transformeddata->message = file_save_draft_area_files($transformeddata->message_draftitem_id,
+                                                               $coursecontext->id,
+                                                               'block_quickmail',
+                                                               'message_editor',
+                                                               $message->get('id'),
+                                                               block_quickmail_config::get_filemanager_options(),
+                                                               $transformeddata->message);
+        $message->set('body', $transformeddata->message);
+        $message->update();
 
         // Clear any existing draft recipient filters, and add this recently submitted value.
         $message->sync_broadcast_draft_recipients($broadcastrecipientfilter->get_filter_value());
@@ -361,7 +392,8 @@ class messenger implements messenger_interface {
         ]);
 
         // TODO: Duplicate files.
-
+        message_file_handler::duplicate_files($originaldraft, $newdraft, 'attachments');
+        message_file_handler::duplicate_files($originaldraft, $newdraft, 'message_editor');
 
         // Duplicate the message recipients.
         foreach ($originaldraft->get_message_recipients() as $recipient) {
@@ -433,6 +465,10 @@ class messenger implements messenger_interface {
             'no_reply' => $originalmessage->get('no_reply'),
             'usermodified' => $user->id
         ]);
+
+        // TODO: Duplicate files.
+        message_file_handler::duplicate_files($originaldraft, $newdraft, 'attachments');
+        message_file_handler::duplicate_files($originaldraft, $newdraft, 'message_editor');
 
         // Duplicate the message additional emails.
         foreach ($originalmessage->get_additional_emails() as $additionalemail) {
