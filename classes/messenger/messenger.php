@@ -252,7 +252,7 @@ class messenger implements messenger_interface {
         // Get a message instance for this type, either from draft or freshly created.
         $message = self::get_message_instance('compose', $user, $course, $transformeddata, $draftmessage, true);
 
-        // TODO: Handle posted file attachments (moodle).
+        // Handle posted file attachments.
         $coursecontext = \context_course::instance($course->id);
         file_save_draft_area_files($transformeddata->attachments_draftitem_id,
                                    $coursecontext->id,
@@ -261,6 +261,7 @@ class messenger implements messenger_interface {
                                    $message->get('id'),
                                    block_quickmail_config::get_filemanager_options());
 
+        // Sync posted attachments to message record.
         $transformeddata->message = file_save_draft_area_files($transformeddata->message_draftitem_id,
                                                                $coursecontext->id,
                                                                'block_quickmail',
@@ -288,8 +289,6 @@ class messenger implements messenger_interface {
         // Clear any existing additional emails, and add those that have been recently submitted.
         $message->sync_additional_emails($transformeddata->additional_emails);
 
-        // TODO: Sync posted attachments to message record.
-
         return $message;
     }
 
@@ -316,7 +315,7 @@ class messenger implements messenger_interface {
         // Get a message instance for this type, either from draft or freshly created.
         $message = self::get_message_instance('broadcast', $user, $course, $transformeddata, $draftmessage, true);
 
-        // TODO: Handle posted file attachments (moodle).
+        // Handle posted file attachments (moodle).
         $coursecontext = \context_course::instance($course->id);
         file_save_draft_area_files($transformeddata->attachments_draftitem_id,
                                    $coursecontext->id,
@@ -325,6 +324,7 @@ class messenger implements messenger_interface {
                                    $message->get('id'),
                                    block_quickmail_config::get_filemanager_options());
 
+        // Sync posted attachments to message record.
         $transformeddata->message = file_save_draft_area_files($transformeddata->message_draftitem_id,
                                                                $coursecontext->id,
                                                                'block_quickmail',
@@ -346,8 +346,6 @@ class messenger implements messenger_interface {
 
         // Clear any existing additional emails, and add those that have been recently submitted.
         $message->sync_additional_emails($transformeddata->additional_emails);
-
-        // TODO: sync posted attachments to message record.
 
         return $message;
     }
@@ -466,7 +464,7 @@ class messenger implements messenger_interface {
             'usermodified' => $user->id
         ]);
 
-        // TODO: Duplicate files.
+        // Duplicate files.
         message_file_handler::duplicate_files($originaldraft, $newdraft, 'attachments');
         message_file_handler::duplicate_files($originaldraft, $newdraft, 'message_editor');
 

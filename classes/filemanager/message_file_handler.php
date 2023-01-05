@@ -188,7 +188,6 @@ class message_file_handler {
      * Replaces all existing message_attachment records for this message with the given uploaded file data
      *
      * @param  array  $uploadedfiles
-     * @param  string $filearea
      * @return void
      */
     private function sync_attachments($uploadedfiles = []) {

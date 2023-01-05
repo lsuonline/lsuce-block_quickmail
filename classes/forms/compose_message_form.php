@@ -63,6 +63,7 @@ class compose_message_form extends \moodleform {
      * @param  object    $course             moodle course
      * @param  array.    $courseuserdata   array including all role, group and user data for this course
      * @param  message   $draftmessage
+     * @param  string    $attachmentsdraftidemid    itemid for temporary file area
      * @return \block_quickmail\forms\compose_message_form
      */
     public static function make($context, $user, $course, $courseuserdata = [], $draftmessage = null, $attachmentsdraftitemid = "") {
