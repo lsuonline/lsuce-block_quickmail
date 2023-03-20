@@ -166,6 +166,8 @@ $string['edit_conditions'] = 'Edit Conditions';
 $string['edit_schedule'] = 'Edit Schedule';
 $string['edit_event_details'] = 'Edit Event Details';
 $string['edit_message'] = 'Edit Message';
+$string['edit_messages'] = 'Edit Messages';
+$string['edit'] = 'Edit';
 
 // Notification types.
 $string['notification_type'] = 'Notification Type';

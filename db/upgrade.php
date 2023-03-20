@@ -1075,5 +1075,24 @@ function xmldb_block_quickmail_upgrade($oldversion) {
         upgrade_block_savepoint(true, 2021120300, 'quickmail');
     }
 
+    if ($oldversion < 2021120301) {
+        
+        $table = new xmldb_table('block_quickmail_messages');
+
+        $deletedfield = new xmldb_field(
+            'deleted',
+            XMLDB_TYPE_INTEGER,
+            '10',
+            XMLDB_UNSIGNED,
+            XMLDB_NOTNULL,
+            null,
+            '0',
+            'timedeleted'
+        );
+        // Add deleted field if not already existing.
+        if (!$dbman->field_exists($table, $deletedfield)) {
+            $dbman->add_field($table, $deletedfield);
+        }
+    }
     return $result;
 }

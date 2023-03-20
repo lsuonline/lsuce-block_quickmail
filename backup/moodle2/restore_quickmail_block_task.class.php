@@ -56,7 +56,7 @@ class restore_quickmail_block_task extends restore_block_task {
         $isblocks = isset($rootsettings['blocks']) && $rootsettings['blocks'];
         $isusers = isset($rootsettings['users']) && $rootsettings['users'];
 
-        if ($isblocks and $isusers) {
+        if ($isblocks && $isusers) {
             $defaultvalue = true;
             $changeable = true;
         }
@@ -85,7 +85,7 @@ class restore_quickmail_block_task extends restore_block_task {
             array(1 => get_string('yes'), 0 => get_string('no'))
         ));
 
-        if ($this->get_target() != backup::TARGET_CURRENT_DELETING and $this->get_target() != backup::TARGET_EXISTING_DELETING) {
+        if ($this->get_target() != backup::TARGET_CURRENT_DELETING && $this->get_target() != backup::TARGET_EXISTING_DELETING) {
 
             $overwritehistory->set_value(false);
             $overwritehistory->set_status(backup_setting::LOCKED_BY_CONFIG);
@@ -111,12 +111,12 @@ class restore_quickmail_block_task extends restore_block_task {
         return array();
     }
 
-    static public function define_decode_contents() {
+    public static function define_decode_contents() {
         // TODO: Perhaps we'll need this when moving away from email zip attachments.
         return array();
     }
 
-    static public function define_decode_rules() {
+    public static function define_decode_rules() {
         return array();
     }
 }

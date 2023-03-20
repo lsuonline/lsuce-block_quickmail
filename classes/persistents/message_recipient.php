@@ -85,6 +85,28 @@ class message_recipient extends \block_quickmail\persistents\persistent {
         return (bool) $this->get('sent_at');
     }
 
+    // Getters.
+    /**
+     * Checks if the account still exists as some users may get
+     * "deleted" before a queue'd message is sent.
+     *
+     * @param  int        userid
+     * @return bool
+     */
+    public function account_exists($userid = 0) {
+        global $DB;
+        // First check the user exists.
+
+        $usertestrecord = array_values($DB->get_records_sql(
+            'SELECT deleted
+                FROM mdl_user
+                WHERE id = ?',
+            array($userid)
+        ));
+
+        return (bool) $usertestrecord[0]->deleted;
+    }
+
     // Setters.
     /**
      * Update the recipient as having been sent to right now
@@ -102,6 +124,19 @@ class message_recipient extends \block_quickmail\persistents\persistent {
         }
 
         $this->update();
+    }
+    // Maintenance.
+    /**
+     * Deletes a recipient for this message
+     *
+     * @param  int messageid
+     * @param  int userid
+     * @return void
+     */
+    public function remove_recipient_from_message($messageid = 0, $userid = 0) {
+        global $DB;
+        // Delete recipient belonging to this message.
+        $DB->delete_records('block_quickmail_msg_recips', ['message_id' => $messageid, 'user_id' => $userid]);
     }
 
     // Custom Static Methods.

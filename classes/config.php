@@ -58,20 +58,20 @@ class block_quickmail_config {
         $defaultmessagetype = get_config('moodle', 'block_quickmail_message_types_available');
 
         $blockconfigarray = [
-            'allowstudents'             => get_config('moodle', 'block_quickmail_allowstudents'),
-            'roleselection'             => get_config('moodle', 'block_quickmail_roleselection'),
-            'send_as_tasks'             => get_config('moodle', 'block_quickmail_send_as_tasks'),
-            'receipt'                   => get_config('moodle', 'block_quickmail_receipt'),
-            'allow_mentor_copy'         => get_config('moodle', 'block_quickmail_allow_mentor_copy'),
-            'email_profile_fields'      => get_config('moodle', 'block_quickmail_email_profile_fields'),
-            'prepend_class'             => get_config('moodle', 'block_quickmail_prepend_class'),
-            'ferpa'                     => get_config('moodle', 'block_quickmail_ferpa'),
-            'downloads'                 => get_config('moodle', 'block_quickmail_downloads'),
-            'additionalemail'           => get_config('moodle', 'block_quickmail_additionalemail'),
-            'notifications_enabled'     => get_config('moodle', 'block_quickmail_notifications_enabled'),
-            'send_now_threshold'        => get_config('moodle', 'block_quickmail_send_now_threshold'),
-            'message_types_available'   => $defaultmessagetype,
-            'default_message_type'      => $defaultmessagetype == 'all'
+            'allowstudents' => get_config('moodle', 'block_quickmail_allowstudents'),
+            'roleselection' => get_config('moodle', 'block_quickmail_roleselection'),
+            'send_as_tasks' => get_config('moodle', 'block_quickmail_send_as_tasks'),
+            'receipt' => get_config('moodle', 'block_quickmail_receipt'),
+            'allow_mentor_copy' => get_config('moodle', 'block_quickmail_allow_mentor_copy'),
+            'email_profile_fields' => get_config('moodle', 'block_quickmail_email_profile_fields'),
+            'prepend_class' => get_config('moodle', 'block_quickmail_prepend_class'),
+            'ferpa' => get_config('moodle', 'block_quickmail_ferpa'),
+            'downloads' => get_config('moodle', 'block_quickmail_downloads'),
+            'additionalemail' => get_config('moodle', 'block_quickmail_additionalemail'),
+            'notifications_enabled' => get_config('moodle', 'block_quickmail_notifications_enabled'),
+            'send_now_threshold' => get_config('moodle', 'block_quickmail_send_now_threshold'),
+            'message_types_available' => $defaultmessagetype,
+            'default_message_type' => $defaultmessagetype == 'all'
                 ? 'email'
                 : $defaultmessagetype,
         ];
@@ -122,26 +122,26 @@ class block_quickmail_config {
         }
 
         $courseconfigarray = [
-            'allowstudents'             => $courseallowstudents,
-            'roleselection'             => array_key_exists('roleselection', $courseconfig)
+            'allowstudents' => $courseallowstudents,
+            'roleselection' => array_key_exists('roleselection', $courseconfig)
                 ? $courseconfig['roleselection']
                 : $blockconfig['roleselection'],
-            'receipt'                   => array_key_exists('receipt', $courseconfig)
+            'receipt' => array_key_exists('receipt', $courseconfig)
                 ? $courseconfig['receipt']
                 : $blockconfig['receipt'],
-            'prepend_class'             => array_key_exists('prepend_class', $courseconfig)
+            'prepend_class' => array_key_exists('prepend_class', $courseconfig)
                 ? $courseconfig['prepend_class']
                 : $blockconfig['prepend_class'],
-            'ferpa'                     => $blockconfig['ferpa'],
-            'downloads'                 => $blockconfig['downloads'],
-            'send_as_tasks'             => $blockconfig['send_as_tasks'],
-            'allow_mentor_copy'         => $blockconfig['allow_mentor_copy'],
-            'email_profile_fields'      => $blockconfig['email_profile_fields'],
-            'additionalemail'           => $blockconfig['additionalemail'],
-            'message_types_available'   => $blockconfig['message_types_available'],
-            'default_message_type'      => $coursedefaultmessagetype,
-            'notifications_enabled'     => $blockconfig['notifications_enabled'],
-            'send_now_threshold'        => $blockconfig['send_now_threshold'],
+            'ferpa' => $blockconfig['ferpa'],
+            'downloads' => $blockconfig['downloads'],
+            'send_as_tasks' => $blockconfig['send_as_tasks'],
+            'allow_mentor_copy' => $blockconfig['allow_mentor_copy'],
+            'email_profile_fields' => $blockconfig['email_profile_fields'],
+            'additionalemail' => $blockconfig['additionalemail'],
+            'message_types_available' => $blockconfig['message_types_available'],
+            'default_message_type' => $coursedefaultmessagetype,
+            'notifications_enabled' => $blockconfig['notifications_enabled'],
+            'send_now_threshold' => $blockconfig['send_now_threshold'],
         ];
 
         if ($transformed) {
@@ -186,20 +186,20 @@ class block_quickmail_config {
      */
     public static function get_transformed($params, $key = '') {
         $transformed = [
-            'allowstudents'             => (int) $params['allowstudents'],
-            'roleselection'             => (string) $params['roleselection'],
-            'receipt'                   => (int) $params['receipt'],
-            'allow_mentor_copy'         => (int) $params['allow_mentor_copy'],
-            'email_profile_fields'      => explode(',', $params['email_profile_fields']),
-            'prepend_class'             => (string) $params['prepend_class'],
-            'ferpa'                     => (string) $params['ferpa'],
-            'downloads'                 => (int) $params['downloads'],
-            'send_as_tasks'             => (int) $params['send_as_tasks'],
-            'additionalemail'           => (int) $params['additionalemail'],
-            'message_types_available'   => (string) $params['message_types_available'],
-            'default_message_type'      => (string) $params['default_message_type'],
-            'notifications_enabled'     => (int) $params['notifications_enabled'],
-            'send_now_threshold'        => (int) $params['send_now_threshold'],
+            'allowstudents' => (int) $params['allowstudents'],
+            'roleselection' => (string) $params['roleselection'],
+            'receipt' => (int) $params['receipt'],
+            'allow_mentor_copy' => (int) $params['allow_mentor_copy'],
+            'email_profile_fields' => explode(',', $params['email_profile_fields']),
+            'prepend_class' => (string) $params['prepend_class'],
+            'ferpa' => (string) $params['ferpa'],
+            'downloads' => (int) $params['downloads'],
+            'send_as_tasks' => (int) $params['send_as_tasks'],
+            'additionalemail' => (int) $params['additionalemail'],
+            'message_types_available' => (string) $params['message_types_available'],
+            'default_message_type' => (string) $params['default_message_type'],
+            'notifications_enabled' => (int) $params['notifications_enabled'],
+            'send_now_threshold' => (int) $params['send_now_threshold'],
         ];
 
         return $key ? $transformed[$key] : $transformed;

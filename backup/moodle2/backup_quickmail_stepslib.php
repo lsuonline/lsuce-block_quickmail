@@ -60,14 +60,14 @@ class backup_quickmail_block_structure_step extends backup_block_structure_step 
 
         $backuplogsandsettings->set_source_array(array((object)$params));
 
-        if (!empty($quickmaillogs) and $includehistory) {
+        if (!empty($quickmaillogs) && $includehistory) {
             $log->set_source_sql(
                 'SELECT * FROM {block_quickmail_messages}
                 WHERE course_id = ?', array(array('sqlparam' => $this->get_courseid()))
             );
         }
 
-        if (!empty($quickmailblocklevelsettings) and $includeconfig) {
+        if (!empty($quickmailblocklevelsettings) && $includeconfig) {
             $quickmailsettings->set_source_sql(
                 'SELECT * FROM {block_quickmail_config}
                 WHERE coursesid = ?', array(array('sqlparam' => $this->get_courseid()))

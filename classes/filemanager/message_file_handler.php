@@ -107,7 +107,7 @@ class message_file_handler {
         // Iterate through each of the file records.
         foreach ($files as $file) {
             // If the record is a directory, skip.
-            if ($file->is_directory() and $file->get_filename() == '.') {
+            if ($file->is_directory() && $file->get_filename() == '.') {
                 continue;
             }
 

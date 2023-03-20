@@ -133,9 +133,9 @@ class block_quickmail_user_repo_testcase extends advanced_testcase {
 
         list($course, $coursecontext, $enrolledusers, $groups) = $this->create_course_with_users_and_groups();
 
-        // Editingteacher (id: 3).
-        // Teacher (id: 4).
-        // Student (id: 5).
+        // Editingteacher id: 3.
+        // Teacher id: 4.
+        // Student id: 5.
 
         // Get editingteacher users.
         $users = user_repo::get_course_role_users($coursecontext, 3);

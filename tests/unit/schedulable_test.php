@@ -118,10 +118,10 @@ class block_quickmail_schedulable_testcase extends advanced_testcase {
 
         $schedulable->set_next_run_time();
 
-		// Segun Babalola, 2020-10-30
+        // Segun Babalola, 2020-10-30.
         // Next run should be 1 week from last run time time.
-        $secondsInWeek = (7 * 24 * 60 * 60);
-        $nextrun = $lastrun + $secondsInWeek;
+        $secondsinweek = (7 * 24 * 60 * 60);
+        $nextrun = $lastrun + $secondsinweek;
 
         $this->assertEquals($nextrun, $schedulable->get_next_run_time());
     }

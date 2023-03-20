@@ -51,6 +51,9 @@ abstract class persistent {
 
     /** @var array The model data. */
     private $data = array();
+    
+    /** @var array The def data. */
+    private $def = null;
 
     /** @var array The list of validation errors. */
     private $errors = array();
@@ -169,7 +172,7 @@ abstract class persistent {
      * @return mixed
      */
     final protected function raw_get($property) {
-        if (!static::has_property($property)) {
+        if (!static::has_property($property, $this->def)) {
             throw new coding_exception('Unexpected property \'' . s($property) .'\' requested.');
         }
         if (!array_key_exists($property, $this->data) && !static::is_property_required($property)) {
@@ -194,7 +197,7 @@ abstract class persistent {
      * @return $this
      */
     final protected function raw_set($property, $value) {
-        if (!static::has_property($property)) {
+        if (!static::has_property($property, $this->def)) {
             throw new coding_exception('Unexpected property \'' . s($property) .'\' requested.');
         }
         if (!array_key_exists($property, $this->data) || $this->data[$property] != $value) {
@@ -250,10 +253,9 @@ abstract class persistent {
      *
      * @return array
      */
-    final public static function properties_definition() {
+    final public static function properties_definition($def = null) {
         global $CFG;
 
-        static $def = null;
         if ($def !== null) {
             return $def;
         }
@@ -371,8 +373,8 @@ abstract class persistent {
      * @param  string $property The property name.
      * @return boolean
      */
-    final public static function has_property($property) {
-        $properties = static::properties_definition();
+    final public static function has_property($property, $def = null) {
+        $properties = static::properties_definition($def);
         return isset($properties[$property]);
     }
 

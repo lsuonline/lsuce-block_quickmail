@@ -58,7 +58,8 @@ class block_quickmail_parses_compose_message_body_testcase extends advanced_test
         $messagebody = "Hey there {$firststudent->firstname}.\n";
         $messagebody .= "Don't I know you? Your last name is {$firststudent->lastname}, right?\n";
         $messagebody .= "In fact, I believe that your full name is {$fullname}.\n";
-        $messagebody .= "Your middle name must be {$firststudent->middlename}, but we will call you {$firststudent->alternatename}.\n";
+        $messagebody .= "Your middle name must be {$firststudent->middlename}, but we".
+            " will call you {$firststudent->alternatename}.\n";
         $messagebody .= "Is your email still {$firststudent->email}?";
         $this->assertEquals($messagebody, $body);
     }

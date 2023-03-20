@@ -48,7 +48,7 @@ class restore_quickmail_log_structure_step extends restore_structure_step {
             $DB->delete_records('block_quickmail_log', $params);
         }
 
-        if ($restore and isset($data->emaillogs['log'])) {
+        if ($restore && isset($data->emaillogs['log'])) {
             global $DB;
 
             $current = context_course::instance($this->get_courseid());

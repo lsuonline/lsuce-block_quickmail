@@ -233,8 +233,8 @@ class block_quickmail_messenger_compose_testcase extends advanced_testcase {
     }
 
     public function test_messenger_sends_a_receipt_if_asked() {
-		// Segun Babalola, 2020-10-30
-		// Various minor fixes to get tests passing.
+        // Segun Babalola, 2020-10-30.
+        // Various minor fixes to get tests passing.
 
         // Reset all changes automatically after this test.
         $this->resetAfterTest(true);
