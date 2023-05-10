@@ -119,9 +119,6 @@ class block_quickmail extends block_list {
         // Create a fresh content container.
         $this->content = $this->get_new_content_container();
 
-        $coursecontext = context_course::instance($this->course->id);
-        $systemcontext = context_system::instance();
-
         // Course-level Features (compose).
         if (!$this->is_site_course() && block_quickmail_plugin::user_can_send('compose', $this->user, $this->course_context)) {
             // COMPOSE (course-scoped message).
