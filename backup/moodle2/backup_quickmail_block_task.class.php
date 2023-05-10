@@ -54,7 +54,7 @@ class backup_quickmail_block_task extends backup_block_task {
         return array();
     }
 
-    static public function encode_content_links($content) {
+    public static function encode_content_links($content) {
         // TODO: Perhaps needing this when moving away from email zip attaches.
         return $content;
     }

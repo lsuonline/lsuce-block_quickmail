@@ -510,6 +510,13 @@ class messenger implements messenger_interface {
         foreach ($this->message->get_message_recipients() as $recipient) {
             // If any exceptions are thrown, gracefully move to the next recipient.
             if (!$recipient->has_been_sent_to()) {
+                // Verify the user still exists, edge cases have been found to have missing users.
+                $tempuserid = (int)$recipient->get('user_id');
+                $tempmsgid = (int)$recipient->get('message_id');
+                if ($recipient->account_exists($tempuserid)) {
+                    $recipient->remove_recipient_from_message($tempmsgid, $tempuserid);
+                    continue;
+                }
                 try {
                     // Send to recipient now.
                     $this->send_to_recipient($recipient);

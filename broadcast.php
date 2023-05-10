@@ -149,7 +149,7 @@ try {
 } catch (\block_quickmail\exceptions\validation_exception $e) {
     $broadcastform->set_error_exception($e);
 } catch (\block_quickmail\exceptions\critical_exception $e) {
-    print_error('critical_error', 'block_quickmail');
+    throw new moodle_exception('critical_error', 'block_quickmail');
 }
 
 // Render the page.

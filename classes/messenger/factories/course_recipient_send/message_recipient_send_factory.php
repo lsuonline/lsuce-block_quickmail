@@ -36,7 +36,7 @@ class message_recipient_send_factory extends recipient_send_factory implements r
     public function set_factory_params() {
         $this->message_params->component = 'moodle'; // Must exist in the table message_providers.
         $this->message_params->name = 'instantmessage'; // Type of message from that module (as module defines it).
-        $this->message_params->fullmessageformat = FORMAT_HTML;  // <------- check on this, should be hard-coded? FORMAT_PLAIN?
+        $this->message_params->fullmessageformat = FORMAT_HTML;  // ... <------- check on this, should be hard-coded? FORMAT_PLAIN?
         $this->message_params->notification = false; // Just in case.
     }
 

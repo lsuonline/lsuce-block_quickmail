@@ -30,6 +30,7 @@ $pageparams = [
     'dir' => optional_param('dir', 'desc', PARAM_TEXT), // Asc|desc.
     'page' => optional_param('page', 1, PARAM_INT),
     'per_page' => 10, // Adjust as necessary, maybe turn into real param?
+    'sent_edit' => optional_param('sentedit', 0, PARAM_INT),
 ];
 
 // Authentication.

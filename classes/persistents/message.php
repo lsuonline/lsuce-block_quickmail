@@ -125,6 +125,10 @@ class message extends \block_quickmail\persistents\persistent {
                 'type' => PARAM_INT,
                 'default' => 0,
             ],
+            'deleted' => [
+                'type' => PARAM_INT,
+                'default' => 0,
+            ],
         ];
     }
 
@@ -487,6 +491,16 @@ class message extends \block_quickmail\persistents\persistent {
         $this->update();
     }
 
+    /**
+     * Update this message as deleted
+     *
+     * @return void
+     */
+    public function mark_as_deleted() {
+        $this->set('deleted', 1);
+        $this->update();
+    }
+
     // Persistent Hooks.
     /**
      * After delete hook
@@ -672,7 +686,7 @@ class message extends \block_quickmail\persistents\persistent {
             }
         }
 
-        // Refresh record (necessary?)
+        // Refresh record (necessary?).
         $this->read();
     }
 

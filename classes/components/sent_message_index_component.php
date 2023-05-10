@@ -48,6 +48,7 @@ class sent_message_index_component extends component implements \renderable {
         $this->sort_by = $this->get_param('sort_by');
         $this->sort_dir = $this->get_param('sort_dir');
         $this->user_course_array = $this->get_param('user_course_array');
+        $this->sent_edit_mode = $this->get_param('sent_edit');
     }
 
     /**
@@ -65,7 +66,7 @@ class sent_message_index_component extends component implements \renderable {
         $data->courseIsSorted = $this->is_attr_sorted('course');
         $data->subjectIsSorted = $this->is_attr_sorted('subject');
         $data->sentAtIsSorted = $this->is_attr_sorted('sent');
-
+        $data->toggleSentEdit = $this->sent_edit_mode ? $this->sent_edit_mode : null;
         $data = $this->include_pagination($data, $this->pagination);
 
         $data->tableRows = [];

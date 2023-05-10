@@ -82,10 +82,11 @@ trait submits_compose_message_form {
                 foreach (['role', 'group', 'user'] as $recipienttype) {
                     if (array_key_exists($recipienttype, $recipients[$inclusiontype])) {
                         foreach ($recipients[$inclusiontype][$recipienttype] as $id) {
-							// Segun Babalola, 2020-10-30
-							// Not sure how this ever worked with undescores (reccipient IDs will neve have been captured).
+                            // Segun Babalola, 2020-10-30.
+                            // Not sure how this ever worked with undescores.
+                            // Recipient IDs will never have been captured.
                             $containername = $inclusiontype . 'entityids';
-                            $$containername[] = $recipienttype . '_' . $id;
+                            $containername[] = $recipienttype . '_' . $id;
                         }
                     }
                 }

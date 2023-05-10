@@ -33,9 +33,9 @@ trait sets_up_courses {
      */
     public function setup_course_with_teacher_and_students() {
 
-		// Segun Babalola, 2020-10-30
-		// Some tests are failing because the FERPA and notification settings are not
-		// in place. Adding them here (close to test data creation) to avoid those failures.
+        // Segun Babalola, 2020-10-30.
+        // Some tests are failing because the FERPA and notification settings are not in place.
+        // Adding them here (close to test data creation) to avoid those failures.
         $this->update_system_config_value('block_quickmail_notifications_enabled', true);
         $this->update_system_config_value('block_quickmail_ferpa', 'noferpa');
 

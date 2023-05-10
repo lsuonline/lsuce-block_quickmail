@@ -82,7 +82,7 @@ class sent_message_index_controller extends base_controller {
             'pagination' => $messages->pagination,
             'sort_by' => $this->props->page_params['sort'],
             'sort_dir' => $this->props->page_params['dir'],
+            'sent_edit' => $this->props->page_params['sent_edit']
         ]);
     }
-
 }

@@ -67,42 +67,56 @@ class view_message_component extends component implements \renderable {
         $scope = $this->message->get_message_scope();
 
         $data = (object) [
-            'messageId'              => $this->message->get('id'),
-            'status'                 => $status,
-            'scope'                  => $scope,
-            'fromEmail'              => $this->get_message_from_email(),
-            'courseName'             => $this->message->get_course_property('shortname', ''),
-            'messageType'            => block_quickmail_string::get('message_type_' . $this->message->get('message_type')),
-            'isQueued'               => $this->message->is_queued_message(),
-            'isSending'              => $this->message->is_being_sent(),
-            'wasSent'                => ! $this->message->is_being_sent() && ! $this->message->is_queued_message(),
-            'sendDate'               => $this->message->is_queued_message()
+            'messageId' => $this->message->get('id'),
+            'status' => $status,
+            'scope' => $scope,
+            'fromEmail' => $this->get_message_from_email(),
+            'courseName' => $this->message->get_course_property('shortname', ''),
+            'messageType' => block_quickmail_string::get('message_type_' .
+                $this->message->get('message_type')),
+            'isQueued' => $this->message->is_queued_message(),
+            'isSending' => $this->message->is_being_sent(),
+            'wasSent' => ! $this->message->is_being_sent() &&
+                !$this->message->is_queued_message(),
+            'sendDate' => $this->message->is_queued_message()
                 ? $this->message->get_readable_to_send_at()
                 : $this->message->get_readable_sent_at(),
-            'messageSubject'         => $this->message->get('subject'),
-            'messageBody'            => $this->get_message_body(),
+            'messageSubject' => $this->message->get('subject'),
+            'messageBody' => $this->get_message_body(),
             'receiptReportRequested' => (bool) $this->message->get('send_receipt'),
-            'mentorCopyRequested'    => (bool) $this->message->get('send_to_mentors'),
-            'attachmentCount'        => count($this->attachmentcounts),
-            'attachments'            => $this->attachments,
-            'sentRecipientCount'     => count($this->sent_recipient_users),
-            'sentRecipientUsers'     => $this->sent_recipient_users,
-            'unsentRecipientCount'   => count($this->unsent_recipient_users),
-            'unsentRecipientUsers'   => $this->unsent_recipient_users,
-            'additionalEmailCount'   => count($this->additional_emails),
-            'additionalEmails'       => $this->additional_emails,
-            'urlBack'                => $courseid > 1
+            'mentorCopyRequested' => (bool) $this->message->get('send_to_mentors'),
+            'attachmentCount' => count($this->attachmentcounts),
+            'attachments' => $this->attachments,
+            'sentRecipientCount' => count($this->sent_recipient_users),
+            'sentRecipientUsers' => $this->sent_recipient_users,
+            'unsentRecipientCount' => count($this->unsent_recipient_users),
+            'unsentRecipientUsers' => $this->unsent_recipient_users,
+            'additionalEmailCount' => count($this->additional_emails),
+            'additionalEmails' => $this->additional_emails,
+            'urlBack' => $courseid > 1
                 ? new moodle_url('/course/view.php', ['id' => $courseid])
                 : new moodle_url('/my'),
-            'urlBackLabel'           => $courseid > 1
+            'urlBackLabel' => $courseid > 1
                 ? block_quickmail_string::get('back_to_course')
                 : block_quickmail_string::get('back_to_mypage'),
-            'urlDuplicate'           => (new moodle_url('/blocks/quickmail/drafts.php',
-                                            ['action' => 'duplicate', 'id' => $this->message->get('id')]))->out(false),
-            'urlSendNow'             => (new moodle_url('/blocks/quickmail/queued.php',
-                                            ['action' => 'send', 'id' => $this->message->get('id')]))->out(false),
-            'urlUnqueue'             => (new moodle_url('/blocks/quickmail/queued.php',
-                                            ['action' => 'unqueue', 'id' => $this->message->get('id')]))->out(false),
+            'urlDuplicate' => (
+                new moodle_url(
+                    '/blocks/quickmail/drafts.php',
+                    ['action' => 'duplicate',
+                    'id' => $this->message->get('id')])
+                )->out(false),
+            'urlSendNow' => (
+                new moodle_url(
+                    '/blocks/quickmail/queued.php',
+                    ['action' => 'send',
+                    'id' => $this->message->get('id')])
+                )->out(false),
+            'urlUnqueue' => (
+                new moodle_url(
+                    '/blocks/quickmail/queued.php',
+                    ['action' => 'unqueue',
+                    'id' => $this->message->get('id')])
+                )->out(false),
         ];
 
         return $data;

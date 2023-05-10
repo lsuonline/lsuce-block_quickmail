@@ -145,9 +145,9 @@ class controller_request {
     public function redirect_as_type($type, $message, $url, $urlparams = [], $delay = 2) {
         $types = [
             'success' => \core\output\notification::NOTIFY_SUCCESS,
-            'info'    => \core\output\notification::NOTIFY_INFO,
+            'info' => \core\output\notification::NOTIFY_INFO,
             'warning' => \core\output\notification::NOTIFY_WARNING,
-            'error'   => \core\output\notification::NOTIFY_ERROR,
+            'error' => \core\output\notification::NOTIFY_ERROR,
         ];
 
         $moodleurl = new \moodle_url($url, $urlparams);

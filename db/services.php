@@ -15,35 +15,38 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * @package    block_quickmail
+ * ************************************************************************
+ *                            QuickMail
+ * ************************************************************************
+ * @package    block - Quickmail
  * @copyright  2008 onwards Louisiana State University
  * @copyright  2008 onwards Chad Mazilly, Robert Russo, Jason Peak, Dave Elliott, Adam Zapletal, Philip Cali
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Update by David Lowe
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
+// We defined the web service functions to install.
+$functions = array (
+    'block_quickmail_qm_ajax' => array (
+        'classname' => 'block_quickmail_external',
+        'methodname' => 'qm_ajax',
+        'classpath' => 'blocks/quickmail/externallib.php',
+        'description' => 'Simple PUT to update sent messages',
+        'type' => 'write',
+        'ajax' => true
+    ),
+);
 
-use block_quickmail\notifier\event_notification_handler;
-
-class block_quickmail_event_notification_handler_testcase extends advanced_testcase {
-
-    use has_general_helpers,
-        sets_up_courses,
-        sets_up_notifications;
-
-    public function test_handles_course_entered_events() {
-        // Reset all changes automatically after this test.
-        $this->resetAfterTest(true);
-
-        // Set up a course with a teacher and students.
-        list($course, $userteacher, $userstudents) = $this->setup_course_with_teacher_and_students();
-
-        $notif = $this->create_event_notification_for_course_user('course-entered', $course, $userstudents[0], null, [
-            'is_enabled' => 1
-        ]);
-
-        event_notification_handler::course_entered($userstudents[0]->id, $course->id);
-    }
-}
+// We define the services to install as pre-build services.
+// A pre-build service is not editable by administrator.
+$services = array (
+    'Quickmail Service' => array (
+        'functions' => array (
+            'block_quickmail_qm_ajax'
+        ),
+        'restrictedusers' => 0,
+        'enabled' => 1,
+    )
+);

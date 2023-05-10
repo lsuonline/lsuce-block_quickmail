@@ -275,8 +275,10 @@ class block_quickmail_sent_repo_testcase extends advanced_testcase {
     }
 
     // Helpers.
-    private function extract_ids(array $p_sents) {
-        return array_map( function($sent) { return $sent->get('id'); }, $p_sents);
+    private function extract_ids(array $psents) {
+        return array_map( function($sent) {
+            return $sent->get('id');
+        }, $psents);
     }
     private function create_message($issent = true) {
         return message::create_new([
