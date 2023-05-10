@@ -135,7 +135,7 @@ class block_quickmail_plugin {
 
         // Otherwise, we're composing.
         // Make sure we have the correct context (course).
-        if (get_class($context) !== 'context_course') {
+        if (get_class($context) !== 'core\context\course') {
             return false;
         }
 
