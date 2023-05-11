@@ -30,7 +30,7 @@ function block_quickmail_pluginfile($course, $cm, $context, $filearea, $args, $f
     }
 
     // Make sure the filearea is one of those used by the plugin.
-    if ($filearea !== 'attachments') {
+    if ($filearea !== 'attachments' && $filearea !== 'message_editor') {
         send_file_not_found();
     }
 
