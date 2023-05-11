@@ -36,7 +36,7 @@ class block_quickmail_notification_schedule_summary_testcase extends advanced_te
 
         $summary = notification_schedule_summary::get_from_params($params);
 
-        $this->assertInternalType('string', $summary);
+        $this->assertIsString($summary);
         $this->assertEquals('', $summary);
 
         $begin = $this->get_timestamp_for_date('jun 26 2018 08:30:00');
@@ -51,7 +51,7 @@ class block_quickmail_notification_schedule_summary_testcase extends advanced_te
 
         $summary = notification_schedule_summary::get_from_params($params);
 
-        $this->assertInternalType('string', $summary);
+        $this->assertIsString($summary);
         $this->assertEquals('Every 3 Days, Beginning Jun 26 2018, 12:30am, Ending Nov 30 2018, 12:30am', $summary);
 
         $begin = $this->get_timestamp_for_date('jun 26 2018 08:30:00');
@@ -64,7 +64,7 @@ class block_quickmail_notification_schedule_summary_testcase extends advanced_te
 
         $summary = notification_schedule_summary::get_from_params($params);
 
-        $this->assertInternalType('string', $summary);
+        $this->assertIsString($summary);
         $this->assertEquals('Once a Week, Beginning Jun 26 2018, 12:30am', $summary);
     }
 

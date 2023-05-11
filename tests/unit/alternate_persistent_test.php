@@ -102,14 +102,14 @@ class block_quickmail_alternate_persistent_testcase extends advanced_testcase {
 
         $allowedroles = $alternate->get_allowed_roles();
 
-        $this->assertInternalType('array', $allowedroles);
+        $this->assertIsArray($allowedroles);
         $this->assertCount(3, $allowedroles);
 
         $alternate = $this->create_alternate($userteacher, $course, 'course', 'email@example.com', true, '');
 
         $allowedroles = $alternate->get_allowed_roles();
 
-        $this->assertInternalType('array', $allowedroles);
+        $this->assertIsArray($allowedroles);
         $this->assertCount(0, $allowedroles);
     }
 
@@ -157,7 +157,7 @@ class block_quickmail_alternate_persistent_testcase extends advanced_testcase {
 
         $alternates = alternate_email::get_flat_array_for_course_user($course->id, $userteacher);
 
-        $this->assertInternalType('array', $alternates);
+        $this->assertIsArray($alternates);
         $this->assertCount(6, $alternates);
     }
 
@@ -216,7 +216,7 @@ class block_quickmail_alternate_persistent_testcase extends advanced_testcase {
         $alternates = alternate_email::get_flat_array_for_course_user($course->id, $teacher1, false);
 
         // Teacher 1 should have access to only 2.
-        $this->assertInternalType('array', $alternates);
+        $this->assertIsArray($alternates);
         $this->assertCount(2, $alternates);
     }
 
