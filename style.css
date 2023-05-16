@@ -205,10 +205,7 @@
 
 
 /* ================================================ */
-/* Drop down */
-#qm-mform-compose select.custom-select {
-    width: 50%;
-}
+
 /* Subject */
 #qm-mform-compose input.form-control {
     width: 50%;
