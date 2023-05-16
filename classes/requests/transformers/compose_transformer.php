@@ -42,6 +42,7 @@ class compose_transformer extends transformer {
         $this->transformed_data->alternate_email_id = $this->get_transformed_alternate_email_id();
         $this->transformed_data->to_send_at = $this->get_transformed_to_send_at();
         $this->transformed_data->attachments_draftitem_id = $this->get_transformed_attachments_draftitem_id();
+        $this->transformed_data->message_draftitem_id = $this->get_transformed_message_draftitem_id();
         $this->transformed_data->no_reply = $this->get_transformed_no_reply();
     }
 
@@ -153,6 +154,16 @@ class compose_transformer extends transformer {
      */
     public function get_transformed_attachments_draftitem_id() {
         return !$this->form_data->attachments ? 0 : (int) $this->form_data->attachments;
+    }
+
+    
+    /**
+     * Returns ...
+     *
+     * @return int
+     */
+    public function get_transformed_message_draftitem_id() {
+        return !$this->form_data->message_editor["itemid"] ? 0 : (int) $this->form_data->message_editor["itemid"];
     }
 
     /**

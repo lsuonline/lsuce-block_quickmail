@@ -68,6 +68,40 @@ class message_file_handler {
     }
 
     /**
+     * Duplicates files for a given message
+     *
+     * @param  message  $original
+     * @param  message  $new
+     * @param  string   $filearea    "attachments"
+     * @return void
+     */
+    public static function duplicate_files($original, $new, $filearea) {
+        $originalhandler = new self($original);
+        $course = $original->get_course();
+        $context = context_course::instance($course->id);
+
+        $files = $originalhandler->fetch_uploaded_file_data($filearea);
+
+        // Iterate through each uploaded file.
+        $fs = get_file_storage();
+        foreach ($files as $z) {
+            $file = $fs->get_file($z->contextid, $z->component, $z->filearea,
+                                  $z->itemid, $z->filepath, $z->filename);
+            if ($file) {
+                $file_record = array('contextid' => $context->id,
+                                     'component' => 'block_quickmail',
+                                     'filearea' => $filearea,
+                                     'itemid' => $new->get('id'),
+                                     'filepath'=> '/',
+                                     'filename'=> $z->filename,
+                                     'timecreated' => time(),
+                                     'timemodified' => time());
+                $fs->create_file_from_storedfile($file_record, $file->get_id());
+            }
+        }
+    }
+
+    /**
      * Zips all of the file attachments for the given message and makes available for the given user,
      * Returns the path in which the temp files are stored
      *
