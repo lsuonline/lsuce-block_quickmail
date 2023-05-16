@@ -88,14 +88,17 @@ class message_file_handler {
             $file = $fs->get_file($z->contextid, $z->component, $z->filearea,
                                   $z->itemid, $z->filepath, $z->filename);
             if ($file) {
-                $file_record = array('contextid' => $context->id,
-                                     'component' => 'block_quickmail',
-                                     'filearea' => $filearea,
-                                     'itemid' => $new->get('id'),
-                                     'filepath'=> '/',
-                                     'filename'=> $z->filename,
-                                     'timecreated' => time(),
-                                     'timemodified' => time());
+                $file_record = array(
+                    'contextid' => $context->id,
+                    'component' => 'block_quickmail',
+                    'filearea' => $filearea,
+                    'itemid' => $new->get('id'),
+                    'filepath'=> '/',
+                    'filename'=> $z->filename,
+                    'timecreated' => time(),
+                    'timemodified' => time()
+                );
+
                 $fs->create_file_from_storedfile($file_record, $file->get_id());
             }
         }

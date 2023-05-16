@@ -317,21 +317,25 @@ class messenger implements messenger_interface {
 
         // Handle posted file attachments (moodle).
         $coursecontext = \context_course::instance($course->id);
-        file_save_draft_area_files($transformeddata->attachments_draftitem_id,
-                                   $coursecontext->id,
-                                   'block_quickmail',
-                                   'attachments',
-                                   $message->get('id'),
-                                   block_quickmail_config::get_filemanager_options());
+        file_save_draft_area_files(
+            $transformeddata->attachments_draftitem_id,
+            $coursecontext->id,
+            'block_quickmail',
+            'attachments',
+            $message->get('id'),
+            block_quickmail_config::get_filemanager_options()
+        );
 
         // Sync posted attachments to message record.
-        $transformeddata->message = file_save_draft_area_files($transformeddata->message_draftitem_id,
-                                                               $coursecontext->id,
-                                                               'block_quickmail',
-                                                               'message_editor',
-                                                               $message->get('id'),
-                                                               block_quickmail_config::get_filemanager_options(),
-                                                               $transformeddata->message);
+        $transformeddata->message = file_save_draft_area_files(
+            $transformeddata->message_draftitem_id,
+            $coursecontext->id,
+            'block_quickmail',
+            'message_editor',
+            $message->get('id'),
+            block_quickmail_config::get_filemanager_options(),
+            $transformeddata->message
+        );
         $message->set('body', $transformeddata->message);
         $message->update();
 
@@ -597,15 +601,18 @@ class messenger implements messenger_interface {
      */
     public function send_to_recipient($recipient) {
         $coursecontext = \context_course::instance($this->message->get("course_id"));
-        $body = file_rewrite_pluginfile_urls($this->message->get("body"),
-                                            'pluginfile.php',
-                                            $coursecontext->id,
-                                            'block_quickmail',
-                                            'message_editor',
-                                            $this->message->get('id'),
-                                            [
-                                                'includetoken' => true,
-                                            ]);
+        $body = file_rewrite_pluginfile_urls(
+            $this->message->get("body"),
+            'pluginfile.php',
+            $coursecontext->id,
+            'block_quickmail',
+            'message_editor',
+            $this->message->get('id'),
+            [
+                'includetoken' => true,
+            ]
+        );
+
         $this->message->set("body", $body);
                              
         // Instantiate recipient_send_factory.
