@@ -30,7 +30,7 @@ use block_quickmail\persistents\message;
 use block_quickmail\persistents\message_recipient;
 use block_quickmail\repos\pagination\paginated;
 
-class block_quickmail_queued_repo_testcase extends advanced_testcase {
+class queued_repo_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses;

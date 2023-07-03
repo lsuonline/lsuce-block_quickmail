@@ -28,7 +28,7 @@ require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 use block_quickmail\repos\pagination\paginator;
 use block_quickmail\repos\pagination\paginated;
 
-class block_quickmail_paginator_testcase extends advanced_testcase {
+class paginator_test extends advanced_testcase {
 
     use has_general_helpers;
 

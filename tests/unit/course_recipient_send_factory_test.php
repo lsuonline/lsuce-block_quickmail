@@ -29,7 +29,7 @@ use block_quickmail\messenger\factories\course_recipient_send\recipient_send_fac
 use block_quickmail\messenger\factories\course_recipient_send\email_recipient_send_factory;
 use block_quickmail\messenger\factories\course_recipient_send\message_recipient_send_factory;
 
-class block_quickmail_course_recipient_send_factory_testcase extends advanced_testcase {
+class course_recipient_send_factory_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,
@@ -92,9 +92,9 @@ class block_quickmail_course_recipient_send_factory_testcase extends advanced_te
 
         $factory = recipient_send_factory::make($message, $recipient, null, null);
 
-        $this->assertInternalType('object', $factory->message_params->userto);
+        $this->assertIsObject($factory->message_params->userto);
         $this->assertEquals($firststudent->id, $factory->message_params->userto->id);
-        $this->assertInternalType('object', $factory->message_params->userfrom);
+        $this->assertIsObject($factory->message_params->userfrom);
         $this->assertEquals($userteacher->id, $factory->message_params->userfrom->id);
     }
 

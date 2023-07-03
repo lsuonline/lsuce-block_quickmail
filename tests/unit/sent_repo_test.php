@@ -29,7 +29,7 @@ use block_quickmail\repos\sent_repo;
 use block_quickmail\persistents\message;
 use block_quickmail\repos\pagination\paginated;
 
-class block_quickmail_sent_repo_testcase extends advanced_testcase {
+class sent_repo_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses;

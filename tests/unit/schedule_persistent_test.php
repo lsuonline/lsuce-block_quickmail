@@ -27,7 +27,7 @@ require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
 use block_quickmail\persistents\schedule;
 
-class block_quickmail_schedule_persistent_testcase extends advanced_testcase {
+class schedule_persistent_test extends advanced_testcase {
 
     use has_general_helpers;
 

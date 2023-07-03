@@ -30,7 +30,7 @@ use block_quickmail\persistents\message;
 use block_quickmail\persistents\signature;
 use block_quickmail\exceptions\validation_exception;
 
-class block_quickmail_messenger_compose_testcase extends advanced_testcase {
+class messenger_compose_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,

@@ -27,7 +27,7 @@ require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
 use block_quickmail\repos\user_repo;
 
-class block_quickmail_user_repo_testcase extends advanced_testcase {
+class user_repo_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,
@@ -56,11 +56,11 @@ class block_quickmail_user_repo_testcase extends advanced_testcase {
 
         $firstuser = current($users);
 
-        $this->assertInternalType('array', $users);
+        $this->assertIsArray($users);
         $this->assertCount(44, $users);
         $this->assertArrayHasKey($editingteacher->id, $users);
         $this->assertArrayHasKey($student->id, $users);
-        $this->assertInternalType('object', $firstuser);
+        $this->assertIsObject($firstuser);
         $this->assertObjectHasAttribute('id', $firstuser);
         $this->assertObjectHasAttribute('firstname', $firstuser);
         $this->assertObjectHasAttribute('lastname', $firstuser);
@@ -68,7 +68,7 @@ class block_quickmail_user_repo_testcase extends advanced_testcase {
         // Should have limited access.
         $users = user_repo::get_course_user_selectable_users($course, $student, $coursecontext);
 
-        $this->assertInternalType('array', $users);
+        $this->assertIsArray($users);
         $this->assertCount(22, $users);
     }
 

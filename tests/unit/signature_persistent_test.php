@@ -27,7 +27,7 @@ require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
 use block_quickmail\persistents\signature;
 
-class block_quickmail_signature_persistent_testcase extends advanced_testcase {
+class signature_persistent_test extends advanced_testcase {
 
     use has_general_helpers;
 
@@ -189,7 +189,7 @@ class block_quickmail_signature_persistent_testcase extends advanced_testcase {
 
         $signatures = signature::get_flat_array_for_user(1);
 
-        $this->assertInternalType('array', $signatures);
+        $this->assertIsArray($signatures);
         $this->assertCount(3, $signatures);
     }
 

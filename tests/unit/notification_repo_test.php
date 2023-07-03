@@ -29,7 +29,7 @@ use block_quickmail\repos\notification_repo;
 use block_quickmail\persistents\notification;
 use block_quickmail\repos\pagination\paginated;
 
-class block_quickmail_notification_repo_testcase extends advanced_testcase {
+class notification_repo_test extends advanced_testcase {
     use has_general_helpers,
         sets_up_courses,
         sets_up_notifications;

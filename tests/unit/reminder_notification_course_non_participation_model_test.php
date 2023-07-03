@@ -29,7 +29,7 @@ use block_quickmail\persistents\notification;
 use block_quickmail\notifier\models\notification_model_helper;
 use block_quickmail\notifier\models\reminder\course_non_participation_model;
 
-class block_quickmail_reminder_notification_course_non_participation_model_testcase extends advanced_testcase {
+class reminder_notification_course_non_participation_model_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,
@@ -63,7 +63,7 @@ class block_quickmail_reminder_notification_course_non_participation_model_testc
 
         // Test gets available condition keys.
         $keys = notification_model_helper::get_condition_keys_for_model('reminder', 'course_non_participation');
-        $this->assertInternalType('array', $keys);
+        $this->assertIsArray($keys);
         $this->assertCount(2, $keys);
 
         // Test gets required condition keys.

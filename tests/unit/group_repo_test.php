@@ -27,7 +27,7 @@ require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
 use block_quickmail\repos\group_repo;
 
-class block_quickmail_group_repo_testcase extends advanced_testcase {
+class group_repo_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses;
@@ -48,12 +48,12 @@ class block_quickmail_group_repo_testcase extends advanced_testcase {
 
         $firstgroup = current($groups);
 
-        $this->assertInternalType('array', $groups);
+        $this->assertIsArray($groups);
         $this->assertCount(3, $groups);
         $this->assertArrayHasKey($redgroup->id, $groups);
         $this->assertArrayHasKey($yellowgroup->id, $groups);
         $this->assertArrayHasKey($bluegroup->id, $groups);
-        $this->assertInternalType('object', $firstgroup);
+        $this->assertIsObject($firstgroup);
         $this->assertObjectHasAttribute('id', $firstgroup);
         $this->assertObjectHasAttribute('name', $firstgroup);
 
@@ -62,7 +62,7 @@ class block_quickmail_group_repo_testcase extends advanced_testcase {
         // Should have access to only two groups.
         $groups = group_repo::get_course_user_selectable_groups($course, $student);
 
-        $this->assertInternalType('array', $groups);
+        $this->assertIsArray($groups);
         $this->assertCount(2, $groups);
         $this->assertArrayHasKey($redgroup->id, $groups);
         $this->assertArrayHasKey($yellowgroup->id, $groups);
@@ -83,7 +83,7 @@ class block_quickmail_group_repo_testcase extends advanced_testcase {
 
         $groups = group_repo::get_course_user_groups($course, $editingteacher, $coursecontext);
 
-        $this->assertInternalType('array', $groups);
+        $this->assertIsArray($groups);
         $this->assertCount(0, $groups);
 
         $student = $enrolledusers['student'][0];
@@ -93,12 +93,12 @@ class block_quickmail_group_repo_testcase extends advanced_testcase {
 
         $firstgroup = current($groups);
 
-        $this->assertInternalType('array', $groups);
+        $this->assertIsArray($groups);
         $this->assertCount(2, $groups);
         $this->assertArrayHasKey($redgroup->id, $groups);
         $this->assertArrayHasKey($yellowgroup->id, $groups);
         $this->assertArrayNotHasKey($bluegroup->id, $groups);
-        $this->assertInternalType('object', $firstgroup);
+        $this->assertIsObject($firstgroup);
         $this->assertObjectHasAttribute('id', $firstgroup);
         $this->assertObjectHasAttribute('name', $firstgroup);
 
@@ -109,7 +109,7 @@ class block_quickmail_group_repo_testcase extends advanced_testcase {
 
         $firstgroup = current($groups);
 
-        $this->assertInternalType('array', $groups);
+        $this->assertIsArray($groups);
         $this->assertCount(0, $groups);
     }
 

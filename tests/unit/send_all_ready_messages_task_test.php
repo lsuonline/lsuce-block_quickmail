@@ -28,7 +28,7 @@ require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 use block_quickmail\messenger\messenger;
 use block_quickmail\tasks\send_all_ready_messages_task;
 
-class block_quickmail_send_all_ready_messages_task_testcase extends advanced_testcase {
+class send_all_ready_messages_task_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,

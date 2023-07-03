@@ -29,7 +29,7 @@ use block_quickmail\persistents\schedule;
 use block_quickmail\persistents\reminder_notification;
 use block_quickmail\persistents\interfaces\schedulable_interface;
 
-class block_quickmail_schedulable_testcase extends advanced_testcase {
+class schedulable_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,

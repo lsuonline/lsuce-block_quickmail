@@ -27,7 +27,7 @@ require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
 use block_quickmail\notifier\event_notification_handler;
 
-class block_quickmail_event_notification_handler_testcase extends advanced_testcase {
+class event_notification_handler_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,

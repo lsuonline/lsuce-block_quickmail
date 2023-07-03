@@ -31,7 +31,7 @@ use block_quickmail\persistents\schedule;
 use block_quickmail\persistents\interfaces\notification_type_interface;
 use block_quickmail\notifier\models\reminder_notification_model;
 
-class block_quickmail_reminder_notification_persistent_testcase extends advanced_testcase {
+class reminder_notification_persistent_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,

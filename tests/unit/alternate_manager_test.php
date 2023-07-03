@@ -29,7 +29,7 @@ use block_quickmail\services\alternate_manager;
 use block_quickmail\persistents\alternate_email;
 use block_quickmail\exceptions\validation_exception;
 
-class block_quickmail_alternate_manager_testcase extends advanced_testcase {
+class alternate_manager_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,

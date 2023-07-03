@@ -27,21 +27,21 @@ require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
 use block_quickmail\notifier\models\notification_model_helper;
 
-class block_quickmail_notification_model_helper_testcase extends advanced_testcase {
+class notification_model_helper_test extends advanced_testcase {
 
     use has_general_helpers;
 
     public function test_gets_available_reminder_model_keys_by_type() {
         $types = notification_model_helper::get_available_model_keys_by_type('reminder');
 
-        $this->assertInternalType('array', $types);
+        $this->assertIsArray($types);
         $this->assertCount(count(block_quickmail_plugin::get_model_notification_types('reminder')), $types);
     }
 
     public function test_gets_available_event_model_keys_by_type() {
         $types = notification_model_helper::get_available_model_keys_by_type('event');
 
-        $this->assertInternalType('array', $types);
+        $this->assertIsArray($types);
         $this->assertCount(count(block_quickmail_plugin::get_model_notification_types('event')), $types);
     }
 

@@ -28,7 +28,7 @@ require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 use block_quickmail\persistents\message;
 use block_quickmail\persistents\message_recipient;
 
-class block_quickmail_persistent_concerns_testcase extends advanced_testcase {
+class persistent_concerns_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses;
@@ -119,7 +119,7 @@ class block_quickmail_persistent_concerns_testcase extends advanced_testcase {
         $deletedmessage2 = $DB->get_record('block_quickmail_messages', ['id' => $message2id]);
 
         $this->assertFalse($deletedmessage1);
-        $this->assertInternalType('object', $deletedmessage2);
+        $this->assertIsObject($deletedmessage2);
         $this->assertGreaterThan(0, $message2->get('timedeleted'));
         $this->assertTrue($message2->is_soft_deleted());
     }
@@ -137,7 +137,7 @@ class block_quickmail_persistent_concerns_testcase extends advanced_testcase {
 
         $messagecourse = $message->get_course();
 
-        $this->assertInternalType('object', $messagecourse);
+        $this->assertIsObject($messagecourse);
         $this->assertEquals($course->id, $messagecourse->id);
         $this->assertTrue($message->is_owned_by_course($course));
         $this->assertTrue($message->is_owned_by_course($course->id));
@@ -204,7 +204,7 @@ class block_quickmail_persistent_concerns_testcase extends advanced_testcase {
 
         $messageuser = $message->get_user();
 
-        $this->assertInternalType('object', $messageuser);
+        $this->assertIsObject($messageuser);
         $this->assertEquals($user->id, $messageuser->id);
         $this->assertTrue($message->is_owned_by_user($user));
         $this->assertTrue($message->is_owned_by_user($user->id));
