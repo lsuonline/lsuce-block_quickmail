@@ -12,7 +12,7 @@ define([
          * int example 2     Only get events after this time
          *
          * @method fetchSWE
-         * @param {object} args The request arguments
+         * @param {object} data_chunk The request arguments
          * @return {promise} Resolved with an array of the calendar events
          */
         qmAjax: function(data_chunk) {

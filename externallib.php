@@ -59,6 +59,7 @@ class block_quickmail_external extends external_api {
         $function = isset($datachunk->call) ? $datachunk->call : null;
         $params = isset($datachunk->params) ? $datachunk->params : null;
         $path = isset($datachunk->path) ? $datachunk->path : null;
+        $qmajax = null;
 
         if (!isset($params)) {
             $params = array("empty" => "true");
@@ -66,15 +67,19 @@ class block_quickmail_external extends external_api {
 
         // It could be either GET or POST, let's check.
         if (isset($classobj)) {
-            $thisfile = $CFG->dirroot. '/blocks/quickmail/'. $path. $classobj. '.php';
-            include_once($thisfile);
+            $thisfile = $CFG->dirroot. '/blocks/quickmail/classes/external/'. $classobj. '.php';
+            require_once($thisfile);
             $qmajax = new $classobj();
+        } else {
+            error_log("\n ERROR: classobj not set ". $classobj. " \n");
         }
 
         // Now let's call the method.
         $retobjdata = null;
         if (method_exists($qmajax, $function)) {
             $retobjdata = call_user_func(array($qmajax, $function), $params);
+        } else {
+            error_log("\n ERROR: Did not find ". $function. " to call in: ". $qmajax. " \n");
         }
 
         $retjsondata = [
