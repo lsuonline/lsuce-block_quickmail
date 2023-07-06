@@ -81,7 +81,6 @@ class messenger implements messenger_interface {
      * @throws critical_exception
      */
     public static function compose($user, $course, $formdata, $draftmessage = null, $sendastasks = true) {
-//die("user = " . serialize($user));
         // Validate basic message form data.
         self::validate_message_form_data($formdata, 'compose');
 

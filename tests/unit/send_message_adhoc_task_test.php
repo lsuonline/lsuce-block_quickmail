@@ -70,6 +70,9 @@ class send_message_adhoc_task_test extends advanced_testcase {
         ]);
 
         // Schedule an email from the teacher to the students (as queued adhoc tasks).
+        // Set the teacher as global $USER as this will be used when sending emails.
+        global $USER;
+        $USER = $userteacher;
         $message = messenger::compose($userteacher, $course, $composeformdata, null, true);
 
         \phpunit_util::run_all_adhoc_tasks();

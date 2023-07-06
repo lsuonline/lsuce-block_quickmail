@@ -98,9 +98,9 @@ class message_recipient extends \block_quickmail\persistents\persistent {
         // First check the user exists.
 
         $usertestrecord = array_values($DB->get_records_sql(
-            'SELECT deleted
-                FROM mdl_user
-                WHERE id = ?',
+            "SELECT deleted
+                FROM {user}
+                WHERE id = ?",
             array($userid)
         ));
 
