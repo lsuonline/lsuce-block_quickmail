@@ -47,12 +47,11 @@ class signature_appender_test extends advanced_testcase {
 
         $body = 'This is the message I hope you like it.';
 
-        $formattedbody = signature_appender::append_user_signature_to_body(
+        $formattedbody = explode('<br><br>', signature_appender::append_user_signature_to_body(
             $body,
             $userteacher->id,
             $signature->get('id')
-        );
-
+        ));
         $this->assertContains('<p>This is my signature!</p>', $formattedbody);
     }
 
@@ -70,11 +69,11 @@ class signature_appender_test extends advanced_testcase {
 
         $body = 'This is the message I hope you like it.';
 
-        $formattedbody = signature_appender::append_user_signature_to_body(
+        $formattedbody = explode('<br><br>', signature_appender::append_user_signature_to_body(
             $body,
             $userteacher->id,
             $signature->get('id')
-        );
+        ));
 
         $this->assertNotContains('<p>This is my signature!</p>', $formattedbody);
     }
@@ -93,10 +92,10 @@ class signature_appender_test extends advanced_testcase {
 
         $body = 'This is the message I hope you like it.';
 
-        $formattedbody = signature_appender::append_user_signature_to_body(
+        $formattedbody = explode('<br><br>', signature_appender::append_user_signature_to_body(
             $body,
             $userteacher->id
-        );
+        ));
 
         $this->assertNotContains('<p>This is my signature!</p>', $formattedbody);
     }
