@@ -58,6 +58,9 @@ class messenger_drafting_test extends advanced_testcase {
         ]);
 
         // Save this email message as a draft.
+        // Set the teacher as global $USER as this will be used when saving drafts.
+        global $USER;
+        $USER = $userteacher;
         $message = messenger::save_compose_draft($userteacher, $course, $composeformdata);
 
         $messagerecipients = $message->get_message_recipients();
@@ -87,6 +90,9 @@ class messenger_drafting_test extends advanced_testcase {
         ]);
 
         // Save this email message as a draft.
+        // Set the teacher as global $USER as this will be used when saving drafts.
+        global $USER;
+        $USER = $userteacher;
         $draftmessage = messenger::save_compose_draft($userteacher, $course, $composeformdata);
 
         $this->expectException(validation_exception::class);
@@ -114,6 +120,9 @@ class messenger_drafting_test extends advanced_testcase {
         ]);
 
         // Save this email message as a draft.
+        // Set the teacher as global $USER as this will be used when saving drafts.
+        global $USER;
+        $USER = $userteacher;
         $draftmessage = messenger::save_compose_draft($userteacher, $course, $composeformdata);
 
         // Now attempt to duplicate this draft.
