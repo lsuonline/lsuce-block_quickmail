@@ -66,9 +66,9 @@ class configuration_test extends advanced_testcase {
 
         $this->assertIsArray($setting);
         $this->assertCount(3, $setting);
-        $this->assertContains(3, $setting);
-        $this->assertContains(4, $setting);
-        $this->assertContains(5, $setting);
+        $this->assertContains('3', $setting);
+        $this->assertContains('4', $setting);
+        $this->assertContains('5', $setting);
 
         // Get default course setting - 3,4,5.
         $course = $this->getDataGenerator()->create_course();
@@ -77,9 +77,9 @@ class configuration_test extends advanced_testcase {
 
         $this->assertIsArray($setting);
         $this->assertCount(3, $setting);
-        $this->assertContains(3, $setting);
-        $this->assertContains(4, $setting);
-        $this->assertContains(5, $setting);
+        $this->assertContains('3', $setting);
+        $this->assertContains('4', $setting);
+        $this->assertContains('5', $setting);
 
         // Update the course's settings.
         $newparams = [
@@ -103,8 +103,8 @@ class configuration_test extends advanced_testcase {
 
         $this->assertIsArray($setting);
         $this->assertCount(2, $setting);
-        $this->assertContains(1, $setting);
-        $this->assertContains(2, $setting);
+        $this->assertContains('1', $setting);
+        $this->assertContains('2', $setting);
     }
 
     public function test_reports_course_ferpa_strictness() {
