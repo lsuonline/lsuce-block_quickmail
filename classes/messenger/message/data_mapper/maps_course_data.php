@@ -79,12 +79,12 @@ trait maps_course_data {
         global $DB;
 
         $sql = "SELECT ue.timestart
-                FROM mdl_course AS c
-                JOIN mdl_enrol AS en ON en.courseid = c.id
-                JOIN mdl_user_enrolments AS ue ON ue.enrolid = en.id
-                JOIN mdl_user AS u ON ue.userid = u.id
-                JOIN mdl_context AS ct ON c.id = ct.instanceid
-                JOIN mdl_role_assignments AS ra ON ra.contextid = ct.id
+                FROM {course} AS c
+                JOIN {enrol} AS en ON en.courseid = c.id
+                JOIN {user_enrolments} AS ue ON ue.enrolid = en.id
+                JOIN {user} AS u ON ue.userid = u.id
+                JOIN {context} AS ct ON c.id = ct.instanceid
+                JOIN {role_assignments} AS ra ON ra.contextid = ct.id
                 WHERE u.id = ?
                 AND c.id = ?
                 AND ra.roleid = 5
@@ -107,12 +107,12 @@ trait maps_course_data {
         global $DB;
 
         $sql = "SELECT ue.timeend
-                FROM mdl_course AS c
-                JOIN mdl_enrol AS en ON en.courseid = c.id
-                JOIN mdl_user_enrolments AS ue ON ue.enrolid = en.id
-                JOIN mdl_user AS u ON ue.userid = u.id
-                JOIN mdl_context AS ct ON c.id = ct.instanceid
-                JOIN mdl_role_assignments AS ra ON ra.contextid = ct.id
+                FROM {course} AS c
+                JOIN {enrol} AS en ON en.courseid = c.id
+                JOIN {user_enrolments} AS ue ON ue.enrolid = en.id
+                JOIN {user} AS u ON ue.userid = u.id
+                JOIN {context} AS ct ON c.id = ct.instanceid
+                JOIN {role_assignments} AS ra ON ra.contextid = ct.id
                 WHERE u.id = ?
                 AND c.id = ?
                 AND ra.roleid = 5
