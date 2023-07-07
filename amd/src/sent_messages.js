@@ -11,7 +11,7 @@ define([
             'params': {
                 'ids': data
             },
-            'path': 'classes/external/',
+            // 'path': 'classes/external/',
             'class': 'sent_messages_ctrl'
         // eslint-disable-next-line promise/always-return
         })).then(function (response) {

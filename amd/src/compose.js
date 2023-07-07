@@ -13,7 +13,7 @@ define(['jquery'], function($) {
         });
 
         $('[name="included_entity_ids"]').val(entities);
-    }
+    };
 
     return {
         init: function() {
