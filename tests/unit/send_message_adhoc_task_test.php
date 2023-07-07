@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -21,7 +20,9 @@
  * @copyright  2008 onwards Chad Mazilly, Robert Russo, Jason Peak, Dave Elliott, Adam Zapletal, Philip Cali
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
- 
+
+defined('MOODLE_INTERNAL') || die();
+
 require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
 use block_quickmail\messenger\messenger;
@@ -29,39 +30,51 @@ use block_quickmail\tasks\send_message_adhoc_task;
 use core\task\manager as task_manager;
 
 class block_quickmail_send_message_adhoc_task_testcase extends advanced_testcase {
-    
-    use has_general_helpers, 
-        sets_up_courses, 
-        submits_compose_message_form, 
-        sends_emails, 
+
+    use has_general_helpers,
+        sets_up_courses,
+        submits_compose_message_form,
+        sends_emails,
         sends_messages;
-    
-    public function test_send_message_adhoc_task_sends()
-    {
-        // reset all changes automatically after this test
+
+    public function test_send_message_adhoc_task_sends() {
+        // Reset all changes automatically after this test.
         $this->resetAfterTest(true);
-        
+
         $sink = $this->open_email_sink();
- 
-        // set up a course with a teacher and students
-        list($course, $user_teacher, $user_students) = $this->setup_course_with_teacher_and_students();
 
-        // specify recipients
-        $recipients['included']['user'] = $this->get_user_ids_from_user_array($user_students);
+        // Set up a course with a teacher and students.
+        list($course, $userteacher, $userstudents) = $this->setup_course_with_teacher_and_students();
 
-        $now = time();
+        // Specify recipients.
+        $recipients['included']['user'] = $this->get_user_ids_from_user_array($userstudents);
 
-        // get a compose form submission, sending message now
-        $compose_form_data = $this->get_compose_message_form_submission($recipients, 'email', [
-            'to_send_at' => $now
+        $sendtime = time() + 10000;
+
+        /*
+         *  Segun Babalola, 2020-10-31
+         *
+         *  Since the very action of creating messages with a "to_send_at" value of "now" will
+         *  mean the messages are sent immediately after creation (see call chain
+         *  $this->create_messages() => messenger::compose() => self::send_message_to_recipients()),
+         *  some of the assertions below is failing.
+         *
+         *  I'm modifying this test to create the message for a future send time so that the
+         *  test is more appropriate.
+         *
+         */
+
+        // Get a compose form submission, sending message now.
+        $composeformdata = $this->get_compose_message_form_submission($recipients, 'email', [
+            'to_send_at' => $sendtime
         ]);
 
-        // schedule an email from the teacher to the students (as queued adhoc tasks)
-        $message = messenger::compose($user_teacher, $course, $compose_form_data, null, true);
+        // Schedule an email from the teacher to the students (as queued adhoc tasks).
+        $message = messenger::compose($userteacher, $course, $composeformdata, null, true);
 
         \phpunit_util::run_all_adhoc_tasks();
 
-        // should be no tasks fire yet, so no emails
+        // Should be no tasks fire yet, so no emails.
         $this->assertEquals(0, $this->email_sink_email_count($sink));
 
         $task = new send_message_adhoc_task();
@@ -70,12 +83,12 @@ class block_quickmail_send_message_adhoc_task_testcase extends advanced_testcase
             'message_id' => $message->get('id')
         ]);
 
-        // queue job
+        // Queue job.
         task_manager::queue_adhoc_task($task);
 
         \phpunit_util::run_all_adhoc_tasks();
 
-        // should have executed the taks, so 4 emails
+        // Should have executed the taks, so 4 emails.
         $this->assertEquals(4, $this->email_sink_email_count($sink));
 
         $this->close_email_sink($sink);

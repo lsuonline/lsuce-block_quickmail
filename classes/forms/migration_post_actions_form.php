@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -24,16 +23,15 @@
 
 namespace block_quickmail\forms;
 
-require_once $CFG->libdir . '/formslib.php';
+defined('MOODLE_INTERNAL') || die();
 
-// use block_quickmail_string;
+require_once($CFG->libdir . '/formslib.php');
 
 class migration_post_actions_form extends \moodleform {
-    
-    public function definition()
-    {
+
+    public function definition() {
         $mform = $this->_form;
- 
+
         $this->add_action_buttons(false, 'Delete Old Quickmail Tables');
     }
 }

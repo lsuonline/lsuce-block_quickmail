@@ -30,7 +30,7 @@
         {{/ userCourseArray }}
     </select>
 
-    <table class="table table-hover">
+    <table class="table table-hover qm_sent_msgs">
         <thead>
             <tr>
                 {{#courseIsSorted}}
@@ -77,7 +77,17 @@
                     <th><a href="?courseid={{ courseId }}&sort=sent&dir=asc">{{# str }} sent_at, block_quickmail {{/ str }}</a></th>
                 {{/sentAtIsSorted}}
 
-                <th></th>
+                {{#toggleSentEdit}}
+                    <th class="qm_tb_col_spcr">
+                        <a href="?courseid={{ courseId }}&sentedit=0">View/Edit</a>
+                        <br>
+                        <input type="checkbox" class="qm_sm_spacer" id="qm_sm_select_all" name="selectAll"/><label for="qm_sm_select_all">Select All</label>
+                    </th>
+                {{/toggleSentEdit}}
+                {{^toggleSentEdit}}
+                    <th><a href="?courseid={{ courseId }}&sentedit=1">View/Edit</a>
+                    </th>
+                {{/toggleSentEdit}}
             </tr>
         </thead>
         <tbody>
@@ -90,9 +100,15 @@
                     <td>{{ recipientTotal }}</td>
                     <td>{{ additionalEmailTotal }}</td>
                     <td>{{ sentAt }}</td>
-                    <td>
-                        <a href="{{ openUrl }}" class="btn btn-primary btn-sm">{{# str }} view {{/ str }}</a>
-                    </td>
+                    {{#toggleSentEdit}}
+                        <td>
+                            <input type="checkbox" class="qm_sm_cb" data-msgid="{{ id }}" name="sent_msg_{{id}}" value="">
+                            <a href="#" class="qm_sm_trash btn btn-danger btn-sm" data-msgid="{{ id }}"><i class="fa fa-trash"></i></a>
+                        </td>
+                    {{/toggleSentEdit}}
+                    {{^toggleSentEdit}}
+                        <td><a href="{{ openUrl }}" class="btn btn-primary btn-sm">{{# str }} view {{/ str }}</a></td>
+                    {{/toggleSentEdit}}
                 </tr>
             {{/ tableRows }}
 
@@ -101,6 +117,16 @@
                     <td colspan="5" align="center">{{# str }} no_sents, block_quickmail {{/ str }}</td>
                 </tr>
             {{/ tableRows }}
+
+            {{#toggleSentEdit}}
+                <tr>
+                    <td colspan=6></td>
+                    <td colspan=2 class='alnright'><button type="button" id="qm_sm_selected_remove" style="display:none" class="btn btn-danger">Remove Selected</button></td>
+                </tr>
+            {{/toggleSentEdit}}
+            {{^toggleSentEdit}}
+                {{! Nothing....... }}
+            {{/toggleSentEdit}}
         </tbody>
     </table>
 
@@ -109,3 +135,9 @@
     
     <a href="{{ urlBack }}" class="btn btn-secondary">{{ urlBackLabel }}</a>
 </div>
+
+{{#js}}
+require(['jquery', 'block_quickmail/sent_messages'], function($, SM) {
+    SM.init();
+});
+{{/js}}

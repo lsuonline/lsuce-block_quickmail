@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -24,18 +23,15 @@
 
 namespace block_quickmail\components;
 
+defined('MOODLE_INTERNAL') || die();
+
 use block_quickmail\components\component;
 
 class broadcast_message_component extends component implements \renderable {
-
-    public $broadcast_form;
-    
+    public $broadcastform;
     public function __construct($params = []) {
         parent::__construct($params);
-
         $this->broadcast_form = $this->get_param('broadcast_form');
-
         $this->heading = '';
     }
-
 }

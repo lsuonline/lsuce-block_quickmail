@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,31 +21,35 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-////////////////////////////////////////////////////
-///
-///  MESSAGE HELPERS
-/// 
-////////////////////////////////////////////////////
+defined('MOODLE_INTERNAL') || die();
 
+// Message helpers.
 trait sends_messages {
 
-    public function open_message_sink()
-    {
+    public function open_message_sink() {
         $this->preventResetByRollback();
-        
+
         $sink = $this->redirectMessages();
 
         return $sink;
     }
 
-    public function close_message_sink($sink)
-    {
+    public function close_message_sink($sink) {
         $sink->close();
     }
 
-    public function message_sink_message_count($sink)
-    {
+    public function message_sink_message_count($sink) {
         return count($sink->get_messages());
     }
 
+    public function dispatch_queued_messages() {
+        // 2020-10-30, Segun Babalola
+        // For some reason, messages created from notifications remain sat in the DB
+        // this method flushes those messages so they get captured by the sink in tests
+        $messages = \block_quickmail\repos\queued_repo::get_all_messages_to_send();
+
+        foreach ($messages as $msg) {
+            $msg->send();
+        }
+    }
 }

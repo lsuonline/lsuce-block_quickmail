@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -24,16 +23,18 @@
 
 namespace block_quickmail\components;
 
+defined('MOODLE_INTERNAL') || die();
+
 use block_quickmail\components\component;
 use block_quickmail_string;
 
 class broadcast_recipient_filter_results_component extends component implements \renderable {
 
-    public $broadcast_recipient_filter;
-    public $display_users;
-    public $sort_by;
-    public $sort_dir;
-    
+    public $broadcastrecipientfilter;
+    public $displayusers;
+    public $sortby;
+    public $sortdir;
+
     public function __construct($params = []) {
         parent::__construct($params);
 
@@ -65,7 +66,7 @@ class broadcast_recipient_filter_results_component extends component implements 
         $data->lastaccessIsSorted = $this->is_attr_sorted('lastaccess');
 
         $data->tableRows = [];
-        
+
         foreach ($this->display_users as $user) {
             $data->tableRows[] = [
                 'firstname' => $user->firstname,
@@ -79,11 +80,7 @@ class broadcast_recipient_filter_results_component extends component implements 
         return $data;
     }
 
-    private function format_last_access($lastaccess)
-    {
-        return isset($lastaccess)
-            ? format_time(time() - $lastaccess) 
-            : get_string('never');
+    private function format_last_access($lastaccess) {
+        return isset($lastaccess) ? format_time(time() - $lastaccess) : get_string('never');
     }
-
 }

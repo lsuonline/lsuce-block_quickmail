@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -24,6 +23,8 @@
 
 namespace block_quickmail\components;
 
+defined('MOODLE_INTERNAL') || die();
+
 use block_quickmail\components\component;
 use block_quickmail_string;
 use moodle_url;
@@ -33,10 +34,10 @@ class sent_message_index_component extends component implements \renderable {
     public $messages;
     public $pagination;
     public $user;
-    public $course_id;
-    public $sort_by;
-    public $sort_dir;
-    public $user_course_array;
+    public $courseid;
+    public $sortby;
+    public $sortdir;
+    public $usercoursearray;
 
     public function __construct($params = []) {
         parent::__construct($params);
@@ -47,6 +48,7 @@ class sent_message_index_component extends component implements \renderable {
         $this->sort_by = $this->get_param('sort_by');
         $this->sort_dir = $this->get_param('sort_dir');
         $this->user_course_array = $this->get_param('user_course_array');
+        $this->sent_edit_mode = $this->get_param('sent_edit');
     }
 
     /**
@@ -64,11 +66,11 @@ class sent_message_index_component extends component implements \renderable {
         $data->courseIsSorted = $this->is_attr_sorted('course');
         $data->subjectIsSorted = $this->is_attr_sorted('subject');
         $data->sentAtIsSorted = $this->is_attr_sorted('sent');
-
+        $data->toggleSentEdit = $this->sent_edit_mode ? $this->sent_edit_mode : null;
         $data = $this->include_pagination($data, $this->pagination);
-        
+
         $data->tableRows = [];
-        
+
         foreach ($this->messages as $message) {
             $data->tableRows[] = [
                 'id' => $message->get('id'),
@@ -85,11 +87,11 @@ class sent_message_index_component extends component implements \renderable {
             ];
         }
 
-        $data->urlBack = $this->course_id 
+        $data->urlBack = $this->course_id
             ? new moodle_url('/course/view.php', ['id' => $this->course_id])
             : new moodle_url('/my');
 
-        $data->urlBackLabel = $this->course_id 
+        $data->urlBackLabel = $this->course_id
             ? block_quickmail_string::get('back_to_course')
             : block_quickmail_string::get('back_to_mypage');
 

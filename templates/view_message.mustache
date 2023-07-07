@@ -71,8 +71,8 @@
 
     <!-- if message is not queued then it must be sent or sending, show both sent and unsent recipients individually -->
     {{^isQueued}}
-        <h6 class="success">{{# str }} recipients, block_quickmail {{/ str }} <span class="badge badge-primary">{{ sentRecipientCount }}</span></h6>
-        <small class="success">{{# str }} success_recipients_promise, block_quickmail {{/ str }}</small>
+        <h6>{{# str }} recipients, block_quickmail {{/ str }} <span class="badge badge-primary">{{ sentRecipientCount }}</span></h6>
+        <small>{{# str }} success_recipients_promise, block_quickmail {{/ str }}</small>
         <div style="margin-bottom: 30px;">
             {{#sentRecipientUsers}}
                 <span class="label recipients">{{{ . }}}</span>
@@ -80,13 +80,13 @@
         </div>
 
         {{#wasSent}}
-            <h6 class="failed">{{# str }} failed_recipients, block_quickmail {{/ str }} <span class="badge badge-primary">{{ unsentRecipientCount }}</span></h6>
-            <small class="failed">{{# str }} failed_recipients_promise, block_quickmail {{/ str }}</small>
+            <h6>{{# str }} failed_recipients, block_quickmail {{/ str }} <span class="badge badge-primary">{{ unsentRecipientCount }}</span></h6>
+            <small>{{# str }} failed_recipients_promise, block_quickmail {{/ str }}</small>
         {{/wasSent}}
 
         {{#isSending}}
-            <h6 class="pending">{{# str }} pending_recipients, block_quickmail {{/ str }} <span class="badge badge-primary">{{ unsentRecipientCount }}</span></h6>
-            <small class="pending">{{# str }} pending_recipients_promise, block_quickmail {{/ str }}</small>
+            <h6>{{# str }} pending_recipients, block_quickmail {{/ str }} <span class="badge badge-primary">{{ unsentRecipientCount }}</span></h6>
+            <small>{{# str }} pending_recipients_promise, block_quickmail {{/ str }}</small>
         {{/isSending}}
         <div style="margin-bottom: 30px;">
             {{#unsentRecipientUsers}}
@@ -95,7 +95,7 @@
         </div>
     {{/isQueued}}
 
-    <h6 class="additional">{{# str }} additional_emails, block_quickmail {{/ str }} <span class="badge badge-primary">{{ additionalEmailCount }}</span></h6>
+    <h6>{{# str }} additional_emails, block_quickmail {{/ str }} <span class="badge badge-primary">{{ additionalEmailCount }}</span></h6>
     <div style="margin-bottom: 30px;">
         {{#additionalEmails}}
             <span class="label recipients">{{{ . }}}</span>
