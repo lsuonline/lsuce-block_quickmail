@@ -189,7 +189,7 @@ class block_quickmail_signature_persistent_testcase extends advanced_testcase {
 
         $signatures = signature::get_flat_array_for_user(1);
 
-        $this->assertInternalType('array', $signatures);
+        $this->assertIsArray($signatures);
         $this->assertCount(3, $signatures);
     }
 

@@ -45,9 +45,9 @@ class block_quickmail_role_repo_testcase extends advanced_testcase {
         $roles = role_repo::get_course_selectable_roles($course);
 
         $this->assertCount(3, $roles);
-        $this->assertInternalType('array', $roles);
+        $this->assertIsArray($roles);
         $this->assertArrayHasKey(3, $roles);
-        $this->assertInternalType('object', $roles[3]);
+        $this->assertIsObject($roles[3]);
         $this->assertObjectHasAttribute('id', $roles[3]);
         $this->assertObjectHasAttribute('name', $roles[3]);
         $this->assertObjectHasAttribute('shortname', $roles[3]);
@@ -71,9 +71,9 @@ class block_quickmail_role_repo_testcase extends advanced_testcase {
         $roles = role_repo::get_course_selectable_roles($course);
 
         $this->assertCount(2, $roles);
-        $this->assertInternalType('array', $roles);
+        $this->assertIsArray($roles);
         $this->assertArrayHasKey(4, $roles);
-        $this->assertInternalType('object', $roles[4]);
+        $this->assertIsObject($roles[4]);
         $this->assertObjectHasAttribute('id', $roles[4]);
         $this->assertObjectHasAttribute('name', $roles[4]);
         $this->assertObjectHasAttribute('shortname', $roles[4]);
@@ -85,9 +85,9 @@ class block_quickmail_role_repo_testcase extends advanced_testcase {
         $roleselectionarray = role_repo::get_alternate_email_role_selection_array();
 
         $this->assertCount(3, $roleselectionarray);
-        $this->assertInternalType('array', $roleselectionarray);
+        $this->assertIsArray($roleselectionarray);
         $this->assertArrayHasKey(3, $roleselectionarray);
-        $this->assertInternalType('string', $roleselectionarray[3]);
+        $this->assertIsString($roleselectionarray[3]);
 
         // Create course with enrolled users.
         list($course, $coursecontext, $users) = $this->setup_course_with_users([
@@ -126,7 +126,7 @@ class block_quickmail_role_repo_testcase extends advanced_testcase {
         // Editingteacher.
         $roleids = role_repo::get_user_roles_in_course($editingteacher->id, $course->id);
 
-        $this->assertInternalType('array', $roleids);
+        $this->assertIsArray($roleids);
         $this->assertCount(1, $roleids);
         $this->assertContains(3, $roleids);
 
