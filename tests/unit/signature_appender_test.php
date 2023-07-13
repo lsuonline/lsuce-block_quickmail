@@ -52,7 +52,8 @@ class signature_appender_test extends advanced_testcase {
             $userteacher->id,
             $signature->get('id')
         ));
-        $this->assertContains('<p>This is my signature!</p>', $formattedbody);
+
+        $this->assertStringContainsString('<p>This is my signature!</p>', $formattedbody);
     }
 
     public function test_does_not_append_signature_if_requested_signature_does_not_belong_to_sending_user() {
@@ -75,7 +76,7 @@ class signature_appender_test extends advanced_testcase {
             $signature->get('id')
         ));
 
-        $this->assertNotContains('<p>This is my signature!</p>', $formattedbody);
+        $this->assertStringNotContainsString('<p>This is my signature!</p>', $formattedbody);
     }
 
     public function test_does_not_append_signature_if_no_signature_id_is_given() {
@@ -97,7 +98,7 @@ class signature_appender_test extends advanced_testcase {
             $userteacher->id
         ));
 
-        $this->assertNotContains('<p>This is my signature!</p>', $formattedbody);
+        $this->assertStringNotContainsString('<p>This is my signature!</p>', $formattedbody);
     }
 
 }
