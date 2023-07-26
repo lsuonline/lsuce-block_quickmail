@@ -614,7 +614,7 @@ class messenger implements messenger_interface {
         );
 
         $this->message->set("body", $body);
-                             
+
         // Instantiate recipient_send_factory.
         $recipientsendfactory = recipient_send_factory::make(
             $this->message,
