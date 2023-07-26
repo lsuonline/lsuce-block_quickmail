@@ -36,7 +36,7 @@ class block_quickmail_body_substitution_code_parser_testcase extends advanced_te
 
         $codes = body_substitution_code_parser::get_codes($message);
 
-        $this->assertInternalType('array', $codes);
+        $this->assertIsArray($codes);
         $this->assertCount(0, $codes);
     }
 
@@ -46,7 +46,7 @@ class block_quickmail_body_substitution_code_parser_testcase extends advanced_te
 
         $codes = body_substitution_code_parser::get_codes($message);
 
-        $this->assertInternalType('array', $codes);
+        $this->assertIsArray($codes);
         $this->assertCount(6, $codes);
         $this->assertContains('hey', $codes);
         $this->assertContains('some', $codes);

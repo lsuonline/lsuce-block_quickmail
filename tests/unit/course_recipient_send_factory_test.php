@@ -92,9 +92,9 @@ class block_quickmail_course_recipient_send_factory_testcase extends advanced_te
 
         $factory = recipient_send_factory::make($message, $recipient, null, null);
 
-        $this->assertInternalType('object', $factory->message_params->userto);
+        $this->assertIsObject($factory->message_params->userto);
         $this->assertEquals($firststudent->id, $factory->message_params->userto->id);
-        $this->assertInternalType('object', $factory->message_params->userfrom);
+        $this->assertIsObject($factory->message_params->userfrom);
         $this->assertEquals($userteacher->id, $factory->message_params->userfrom->id);
     }
 
