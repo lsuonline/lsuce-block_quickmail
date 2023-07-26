@@ -156,7 +156,6 @@ class compose_transformer extends transformer {
         return !$this->form_data->attachments ? 0 : (int) $this->form_data->attachments;
     }
 
-    
     /**
      * Returns ...
      *
@@ -176,5 +175,4 @@ class compose_transformer extends transformer {
             ? true
             : false;
     }
-
 }

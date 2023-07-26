@@ -1076,7 +1076,7 @@ function xmldb_block_quickmail_upgrade($oldversion) {
     }
 
     if ($oldversion < 2021120301) {
-        
+
         $table = new xmldb_table('block_quickmail_messages');
 
         $deletedfield = new xmldb_field(

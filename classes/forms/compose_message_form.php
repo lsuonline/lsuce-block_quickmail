@@ -66,7 +66,14 @@ class compose_message_form extends \moodleform {
      * @param  string    $attachmentsdraftidemid    itemid for temporary file area
      * @return \block_quickmail\forms\compose_message_form
      */
-    public static function make($context, $user, $course, $courseuserdata = [], $draftmessage = null, $attachmentsdraftitemid = "") {
+    public static function make(
+        $context,
+        $user,
+        $course,
+        $courseuserdata = [],
+        $draftmessage = null,
+        $attachmentsdraftitemid = ""
+    ) {
         $targeturl = self::generate_target_url([
             'courseid' => $course->id,
             'draftid' => !empty($draftmessage) ? $draftmessage->get('id') : 0,

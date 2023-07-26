@@ -71,7 +71,7 @@ class block_quickmail_external extends external_api {
             require_once($thisfile);
             $qmajax = new $classobj();
         } else {
-            error_log("\n ERROR: classobj not set ". $classobj. " \n");
+            debugging("\n ERROR: classobj not set ". $classobj. " \n");
         }
 
         // Now let's call the method.
@@ -79,7 +79,7 @@ class block_quickmail_external extends external_api {
         if (method_exists($qmajax, $function)) {
             $retobjdata = call_user_func(array($qmajax, $function), $params);
         } else {
-            error_log("\n ERROR: Did not find ". $function. " to call in: ". $qmajax. " \n");
+            debugging("\n ERROR: Did not find ". $function. " to call in: ". $qmajax. " \n");
         }
 
         $retjsondata = [

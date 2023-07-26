@@ -53,8 +53,7 @@ class block_quickmail_signature_appender_testcase extends advanced_testcase {
             $signature->get('id')
         );
 
-	#$this->assertContains('<p>This is my signature!</p>', $formattedbody);
-	$this->assertStringContainsString('<p>This is my signature!</p>', $formattedbody);
+        $this->assertStringContainsString('<p>This is my signature!</p>', $formattedbody);
     }
 
     public function test_does_not_append_signature_if_requested_signature_does_not_belong_to_sending_user() {
