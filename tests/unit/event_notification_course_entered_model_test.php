@@ -63,7 +63,7 @@ class block_quickmail_event_notification_course_entered_model_testcase extends a
 
         // Test gets available condition keys.
         $keys = notification_model_helper::get_condition_keys_for_model('event', 'course_entered');
-        $this->assertInternalType('array', $keys);
+        $this->assertIsArray($keys);
         $this->assertCount(0, $keys);
 
         // Test gets required condition keys.

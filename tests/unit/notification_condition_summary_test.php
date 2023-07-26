@@ -34,7 +34,7 @@ class block_quickmail_notification_condition_summary_testcase extends advanced_t
         ];
 
         $summary = notification_condition_summary::get_model_condition_summary('reminder', 'course_non_participation', $params);
-        $this->assertInternalType('string', $summary);
+        $this->assertIsString($summary);
         $this->assertEquals('All who have not accessed the course in 3 days', $summary);
 
         $params = [
@@ -43,7 +43,7 @@ class block_quickmail_notification_condition_summary_testcase extends advanced_t
         ];
 
         $summary = notification_condition_summary::get_model_condition_summary('reminder', 'course_non_participation', $params);
-        $this->assertInternalType('string', $summary);
+        $this->assertIsString($summary);
         $this->assertEquals('All who have not accessed the course in 1 week', $summary);
     }
 

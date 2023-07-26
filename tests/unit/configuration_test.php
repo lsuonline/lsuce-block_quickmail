@@ -35,7 +35,7 @@ class block_quickmail_configuration_testcase extends advanced_testcase {
 
         $config = block_quickmail_config::block();
 
-        $this->assertInternalType('array', $config);
+        $this->assertIsArray($config);
     }
 
     public function test_fetches_course_config_as_array() {
@@ -45,7 +45,7 @@ class block_quickmail_configuration_testcase extends advanced_testcase {
 
         $config = block_quickmail_config::course($course);
 
-        $this->assertInternalType('array', $config);
+        $this->assertIsArray($config);
     }
 
     public function test_fetches_course_id_config_as_array() {
@@ -55,7 +55,7 @@ class block_quickmail_configuration_testcase extends advanced_testcase {
 
         $config = block_quickmail_config::course($course->id);
 
-        $this->assertInternalType('array', $config);
+        $this->assertIsArray($config);
     }
 
     public function test_fetches_role_selection_setting_as_array() {
@@ -64,22 +64,22 @@ class block_quickmail_configuration_testcase extends advanced_testcase {
         // Get default block setting - 3,4,5.
         $setting = block_quickmail_config::get_role_selection_array();
 
-        $this->assertInternalType('array', $setting);
+        $this->assertIsArray($setting);
         $this->assertCount(3, $setting);
-        $this->assertContains(3, $setting);
-        $this->assertContains(4, $setting);
-        $this->assertContains(5, $setting);
+        $this->assertContains('3', $setting);
+        $this->assertContains('4', $setting);
+        $this->assertContains('5', $setting);
 
         // Get default course setting - 3,4,5.
         $course = $this->getDataGenerator()->create_course();
 
         $setting = block_quickmail_config::get_role_selection_array($course);
 
-        $this->assertInternalType('array', $setting);
+        $this->assertIsArray($setting);
         $this->assertCount(3, $setting);
-        $this->assertContains(3, $setting);
-        $this->assertContains(4, $setting);
-        $this->assertContains(5, $setting);
+        $this->assertContains('3', $setting);
+        $this->assertContains('4', $setting);
+        $this->assertContains('5', $setting);
 
         // Update the course's settings.
         $newparams = [
@@ -101,10 +101,10 @@ class block_quickmail_configuration_testcase extends advanced_testcase {
 
         $setting = block_quickmail_config::get_role_selection_array($course);
 
-        $this->assertInternalType('array', $setting);
+        $this->assertIsArray($setting);
         $this->assertCount(2, $setting);
-        $this->assertContains(1, $setting);
-        $this->assertContains(2, $setting);
+        $this->assertContains('1', $setting);
+        $this->assertContains('2', $setting);
     }
 
     public function test_reports_course_ferpa_strictness() {

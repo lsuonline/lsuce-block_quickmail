@@ -51,7 +51,7 @@ abstract class persistent {
 
     /** @var array The model data. */
     private $data = array();
-    
+
     /** @var array The def data. */
     private $def = null;
 
