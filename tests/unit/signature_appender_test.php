@@ -28,7 +28,7 @@ require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 use block_quickmail\messenger\message\signature_appender;
 use block_quickmail\persistents\signature;
 
-class block_quickmail_signature_appender_testcase extends advanced_testcase {
+class signature_appender_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses;
@@ -47,14 +47,13 @@ class block_quickmail_signature_appender_testcase extends advanced_testcase {
 
         $body = 'This is the message I hope you like it.';
 
-        $formattedbody = signature_appender::append_user_signature_to_body(
+        $formattedbody = explode('<br><br>', signature_appender::append_user_signature_to_body(
             $body,
             $userteacher->id,
             $signature->get('id')
-        );
+        ));
 
-	#$this->assertContains('<p>This is my signature!</p>', $formattedbody);
-	$this->assertStringContainsString('<p>This is my signature!</p>', $formattedbody);
+        $this->assertStringContainsString('<p>This is my signature!</p>', $formattedbody);
     }
 
     public function test_does_not_append_signature_if_requested_signature_does_not_belong_to_sending_user() {
@@ -71,11 +70,11 @@ class block_quickmail_signature_appender_testcase extends advanced_testcase {
 
         $body = 'This is the message I hope you like it.';
 
-        $formattedbody = signature_appender::append_user_signature_to_body(
+        $formattedbody = explode('<br><br>', signature_appender::append_user_signature_to_body(
             $body,
             $userteacher->id,
             $signature->get('id')
-        );
+        ));
 
         $this->assertStringNotContainsString('<p>This is my signature!</p>', $formattedbody);
     }
@@ -94,10 +93,10 @@ class block_quickmail_signature_appender_testcase extends advanced_testcase {
 
         $body = 'This is the message I hope you like it.';
 
-        $formattedbody = signature_appender::append_user_signature_to_body(
+        $formattedbody = explode('<br><br>', signature_appender::append_user_signature_to_body(
             $body,
             $userteacher->id
-        );
+        ));
 
         $this->assertStringNotContainsString('<p>This is my signature!</p>', $formattedbody);
     }

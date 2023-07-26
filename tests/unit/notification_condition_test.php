@@ -25,7 +25,7 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 use block_quickmail\notifier\notification_condition;
-class block_quickmail_notification_condition_testcase extends advanced_testcase {
+class notification_condition_test extends advanced_testcase {
     use has_general_helpers;
 
     public function test_formats_condition_for_storage() {

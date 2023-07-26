@@ -29,7 +29,7 @@ use block_quickmail\messenger\factories\course_recipient_send\recipient_send_fac
 use block_quickmail\messenger\factories\course_recipient_send\email_recipient_send_factory;
 use block_quickmail\messenger\factories\course_recipient_send\message_recipient_send_factory;
 
-class block_quickmail_course_recipient_send_factory_testcase extends advanced_testcase {
+class course_recipient_send_factory_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,

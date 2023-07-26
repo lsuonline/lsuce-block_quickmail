@@ -27,7 +27,7 @@ require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
 use block_quickmail\messenger\message\subject_prepender;
 
-class block_quickmail_subject_prepender_testcase extends advanced_testcase {
+class subject_prepender_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses;

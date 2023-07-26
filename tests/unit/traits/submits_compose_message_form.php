@@ -32,7 +32,6 @@ trait submits_compose_message_form {
         $params = $this->get_compose_message_form_submission_params($overrideparams);
 
         list($includedentityids, $excludedentityids) = $this->get_recipients_array($recipients);
-
         $formdata = (object)[];
         // Default - '0' (user email), '-1' (system no reply), else alt id.
         $formdata->from_email_id = $params['from_email_id'];
@@ -85,8 +84,14 @@ trait submits_compose_message_form {
                             // Segun Babalola, 2020-10-30.
                             // Not sure how this ever worked with undescores.
                             // Recipient IDs will never have been captured.
-                            $containername = $inclusiontype . 'entityids';
-                            $containername[] = $recipienttype . '_' . $id;
+                            switch ($inclusiontype) {
+                                case "included" :
+                                    $includedentityids[]  = $recipienttype . '_' . $id;
+                                    break;
+                                case "excluded" :
+                                    $excludedentityids[]  = $recipienttype . '_' . $id;
+                                    break;
+                            }
                         }
                     }
                 }

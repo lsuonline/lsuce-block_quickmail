@@ -29,7 +29,7 @@ use block_quickmail\persistents\notification;
 use block_quickmail\notifier\models\notification_model_helper;
 use block_quickmail\notifier\models\event\course_entered_model;
 
-class block_quickmail_event_notification_course_entered_model_testcase extends advanced_testcase {
+class event_notification_course_entered_model_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,

@@ -27,7 +27,7 @@ require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
 use block_quickmail\messenger\message\body_substitution_code_parser;
 
-class block_quickmail_body_substitution_code_parser_testcase extends advanced_testcase {
+class body_substitution_code_parser_test extends advanced_testcase {
 
     use has_general_helpers;
 

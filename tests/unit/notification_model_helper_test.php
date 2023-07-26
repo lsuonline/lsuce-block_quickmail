@@ -27,7 +27,7 @@ require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
 use block_quickmail\notifier\models\notification_model_helper;
 
-class block_quickmail_notification_model_helper_testcase extends advanced_testcase {
+class notification_model_helper_test extends advanced_testcase {
 
     use has_general_helpers;
 

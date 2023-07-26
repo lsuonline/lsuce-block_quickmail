@@ -27,7 +27,7 @@ require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
 use block_quickmail\messenger\message\message_body_constructor;
 
-class block_quickmail_parses_compose_message_body_testcase extends advanced_testcase {
+class formats_message_recipient_compose_message_body_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,

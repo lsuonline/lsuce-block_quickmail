@@ -25,7 +25,7 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 use block_quickmail\notifier\notification_condition_summary;
-class block_quickmail_notification_condition_summary_testcase extends advanced_testcase {
+class notification_condition_summary_test extends advanced_testcase {
     use has_general_helpers;
     public function test_gets_summary_for_reminder_course_non_participation_notification() {
         $params = [

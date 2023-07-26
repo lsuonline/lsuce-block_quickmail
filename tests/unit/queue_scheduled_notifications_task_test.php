@@ -28,7 +28,7 @@ require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 use block_quickmail\messenger\messenger;
 use block_quickmail\tasks\queue_scheduled_notifications_task;
 
-class block_quickmail_queue_scheduled_notifications_task_testcase extends advanced_testcase {
+class queue_scheduled_notifications_task_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,

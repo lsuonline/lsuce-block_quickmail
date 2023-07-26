@@ -30,7 +30,7 @@ use block_quickmail\persistents\message;
 use block_quickmail\persistents\signature;
 use block_quickmail\exceptions\validation_exception;
 
-class block_quickmail_messenger_drafting_testcase extends advanced_testcase {
+class messenger_drafting_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,
@@ -58,6 +58,9 @@ class block_quickmail_messenger_drafting_testcase extends advanced_testcase {
         ]);
 
         // Save this email message as a draft.
+        // Set the teacher as global $USER as this will be used when saving drafts.
+        global $USER;
+        $USER = $userteacher;
         $message = messenger::save_compose_draft($userteacher, $course, $composeformdata);
 
         $messagerecipients = $message->get_message_recipients();
@@ -87,6 +90,9 @@ class block_quickmail_messenger_drafting_testcase extends advanced_testcase {
         ]);
 
         // Save this email message as a draft.
+        // Set the teacher as global $USER as this will be used when saving drafts.
+        global $USER;
+        $USER = $userteacher;
         $draftmessage = messenger::save_compose_draft($userteacher, $course, $composeformdata);
 
         $this->expectException(validation_exception::class);
@@ -114,6 +120,9 @@ class block_quickmail_messenger_drafting_testcase extends advanced_testcase {
         ]);
 
         // Save this email message as a draft.
+        // Set the teacher as global $USER as this will be used when saving drafts.
+        global $USER;
+        $USER = $userteacher;
         $draftmessage = messenger::save_compose_draft($userteacher, $course, $composeformdata);
 
         // Now attempt to duplicate this draft.

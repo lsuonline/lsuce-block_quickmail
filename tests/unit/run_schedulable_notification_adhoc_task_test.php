@@ -30,7 +30,7 @@ use block_quickmail\persistents\reminder_notification;
 use block_quickmail\tasks\run_schedulable_notification_adhoc_task;
 use core\task\manager as task_manager;
 
-class block_quickmail_run_schedulable_notification_adhoc_task_testcase extends advanced_testcase {
+class run_schedulable_notification_adhoc_task_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,

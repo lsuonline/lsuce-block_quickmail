@@ -27,7 +27,7 @@ require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
 use block_quickmail\persistents\alternate_email;
 
-class block_quickmail_alternate_persistent_testcase extends advanced_testcase {
+class alternate_persistent_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses;

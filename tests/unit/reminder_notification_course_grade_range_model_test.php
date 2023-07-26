@@ -32,7 +32,7 @@ use block_quickmail\notifier\models\reminder\course_grade_range_model;
 global $CFG;
 require_once($CFG->libdir . '/gradelib.php');
 
-class block_quickmail_reminder_notification_course_grade_range_model_testcase extends advanced_testcase {
+class reminder_notification_course_grade_range_model_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,

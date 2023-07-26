@@ -25,7 +25,7 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
-class block_quickmail_reminder_notification_model_testcase extends advanced_testcase {
+class reminder_notification_model_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,

@@ -27,7 +27,7 @@ require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
 use block_quickmail\repos\user_repo;
 
-class block_quickmail_user_repo_testcase extends advanced_testcase {
+class user_repo_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,
