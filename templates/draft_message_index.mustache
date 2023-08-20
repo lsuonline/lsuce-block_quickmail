@@ -23,7 +23,7 @@
 -->
 
 <div class="block_quickmail_draft_message_index">
-    <select id="select_course_filter">
+    <select id="select_course_filter" class="form-control custom-select">
         <option value="0">{{# str }} fulllistofcourses {{/ str }}</option>
         {{# userCourseArray }}
             <option value="{{ userCourseId }}" {{ selectedAttr }}>{{ userCourseName }}</option>
