@@ -600,6 +600,8 @@ class messenger implements messenger_interface {
      * @return bool
      */
     public function send_to_recipient($recipient) {
+        global $CFG;
+        require_once($CFG->libdir . '/filelib.php');
         $coursecontext = \context_course::instance($this->message->get("course_id"));
         $body = file_rewrite_pluginfile_urls(
             $this->message->get("body"),
