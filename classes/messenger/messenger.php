@@ -469,8 +469,8 @@ class messenger implements messenger_interface {
         ]);
 
         // Duplicate files.
-        message_file_handler::duplicate_files($originaldraft, $newdraft, 'attachments');
-        message_file_handler::duplicate_files($originaldraft, $newdraft, 'message_editor');
+        message_file_handler::duplicate_files($originalmessage, $newdraft, 'attachments');
+        message_file_handler::duplicate_files($originalmessage, $newdraft, 'message_editor');
 
         // Duplicate the message additional emails.
         foreach ($originalmessage->get_additional_emails() as $additionalemail) {
