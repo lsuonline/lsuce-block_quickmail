@@ -76,8 +76,8 @@ class message_file_handler {
      * @return void
      */
     public static function duplicate_files($original, $new, $filearea) {
-        $originalhandler = new self($original);
-        $course = $original->get_course();
+        $originalhandler = new self($new);
+        $course = $new->get_course();
         $context = context_course::instance($course->id);
 
         $files = $originalhandler->fetch_uploaded_file_data($filearea);
