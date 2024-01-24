@@ -86,7 +86,7 @@ trait submits_compose_message_form {
                             // Not sure how this ever worked with undescores.
                             // Recipient IDs will never have been captured.
                             $containername = $inclusiontype . 'entityids';
-                            $containername[] = $recipienttype . '_' . $id;
+                            $$containername[] = $recipienttype . '_' . $id;
                         }
                     }
                 }
