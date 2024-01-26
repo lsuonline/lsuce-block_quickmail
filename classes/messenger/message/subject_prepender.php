@@ -85,7 +85,7 @@ class subject_prepender {
                 break;
 
             case 'fullname':
-                return $this->get_prepended_with($course->fullname);
+                return $this->get_prepended_with(format_string($course->fullname));
                 break;
 
             default:
