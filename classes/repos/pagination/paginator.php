@@ -29,11 +29,11 @@ use block_quickmail\repos\pagination\paginated;
 
 class paginator {
 
-    public $totalcount;
+    public $total_count;
     public $page;
-    public $perpage;
-    public $pageuri;
-    public $totalpages;
+    public $per_page;
+    public $page_uri;
+    public $total_pages;
     public $offset;
 
     public function __construct($totalcount, $page = 1, $perpage = 10, $pageuri = '') {

@@ -47,19 +47,23 @@ class course_non_participation_model extends reminder_notification_model impleme
         // Where users are in a specific course.
         // And where have not accessed the course since a conditionally set increment of time before now.
 
-        global $DB;
+        global $DB, $CFG;
 
-        $results = $DB->get_records_sql('SELECT u.id
-            FROM {user} u
+        $gradebookroles = explode(',', $CFG->gradebookroles);
+        list($insql, $params) = $DB->get_in_or_equal($gradebookroles);
+        $params[] = $this->condition->get_offset_timestamp_from_now('before');
+        $params[] = $this->get_course_id();
+        $results = $DB->get_records_sql("SELECT u.id
+                  FROM {user} u
             INNER JOIN {user_enrolments} ue ON ue.userid = u.id
             INNER JOIN {enrol} e ON e.id = ue.enrolid
             INNER JOIN {course} c ON c.id = e.courseid
             INNER JOIN {role_assignments} ra ON ra.userid = u.id
             INNER JOIN {context} ctx ON ctx.id = ra.contextid AND ctx.instanceid = c.id
-            WHERE u.id NOT IN (SELECT la.userid FROM {user_lastaccess} la WHERE la.courseid = c.id AND la.timeaccess > ?)
-            AND ra.roleid IN (SELECT value FROM {config} WHERE name = "gradebookroles")
-            AND c.id = ?
-            GROUP BY u.id', [$this->condition->get_offset_timestamp_from_now('before'), $this->get_course_id()]);
+                 WHERE ra.roleid " . $insql . "
+                   AND u.id NOT IN (SELECT la.userid FROM {user_lastaccess} la WHERE la.courseid = c.id AND la.timeaccess > ?)
+                   AND c.id = ?
+              GROUP BY u.id", $params);
 
         return array_keys($results);
     }

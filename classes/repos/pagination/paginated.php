@@ -36,19 +36,19 @@ use block_quickmail\repos\pagination\paginator;
 class paginated {
 
     public $paginator;
-    public $pagecount;
+    public $page_count;
     public $offset;
-    public $perpage;
-    public $currentpage;
-    public $nextpage;
-    public $previouspage;
-    public $totalcount;
-    public $emptyuri;
-    public $uriforpage;
-    public $firstpageuri;
-    public $lastpageuri;
-    public $nextpageuri;
-    public $previouspageuri;
+    public $per_page;
+    public $current_page;
+    public $next_page;
+    public $previous_page;
+    public $total_count;
+    public $empty_uri;
+    public $uri_for_page;
+    public $first_page_uri;
+    public $last_page_uri;
+    public $next_page_uri;
+    public $previous_page_uri;
 
     public function __construct(paginator $paginator) {
         $this->paginator = $paginator;

@@ -34,7 +34,7 @@ abstract class notification_model implements notification_model_interface {
 
     public static $objecttype = '';
     public static $conditionkeys = [];
-    public $notificationtypeinterface;
+    public $notification_type_interface;
     public $notification;
     public $condition;
 
