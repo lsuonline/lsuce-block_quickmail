@@ -57,6 +57,7 @@ class block_quickmail_messenger_drafting_testcase extends advanced_testcase {
             'body' => 'This is one fine body.',
         ]);
 
+        $this->setUser($userteacher);
         // Save this email message as a draft.
         $message = messenger::save_compose_draft($userteacher, $course, $composeformdata);
 
@@ -86,6 +87,7 @@ class block_quickmail_messenger_drafting_testcase extends advanced_testcase {
             'body' => 'This is one fine body.',
         ]);
 
+        $this->setUser($userteacher);
         // Save this email message as a draft.
         $draftmessage = messenger::save_compose_draft($userteacher, $course, $composeformdata);
 
@@ -113,6 +115,7 @@ class block_quickmail_messenger_drafting_testcase extends advanced_testcase {
             'body' => 'This is one fine body.',
         ]);
 
+        $this->setUser($userteacher);
         // Save this email message as a draft.
         $draftmessage = messenger::save_compose_draft($userteacher, $course, $composeformdata);
 

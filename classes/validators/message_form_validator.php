@@ -34,7 +34,7 @@ use block_quickmail\exceptions\body_parser_exception;
 
 class message_form_validator extends validator {
 
-    public $transformeddata;
+    public $transformed_data;
 
     /**
      * Defines this specific validator's validation rules

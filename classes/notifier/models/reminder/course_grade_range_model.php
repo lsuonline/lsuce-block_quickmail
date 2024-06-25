@@ -44,6 +44,8 @@ class course_grade_range_model extends reminder_notification_model implements re
      * @return array
      */
     public function get_user_ids_to_notify() {
+        global $CFG;
+
         // Make sure a grade_greater_than boundary is set.
         if (!$greaterthan = $this->condition->get_value('grade_greater_than')) {
             $greaterthan = 0;
@@ -58,16 +60,19 @@ class course_grade_range_model extends reminder_notification_model implements re
         // Where users are in a specific course.
         global $DB;
 
-        $queryresults = $DB->get_records_sql('SELECT u.id
+        $gradebookroles = explode(',', $CFG->gradebookroles);
+        list($insql, $params) = $DB->get_in_or_equal($gradebookroles);
+        $params[] = $this->get_course_id();
+        $queryresults = $DB->get_records_sql("SELECT u.id
             FROM {user} u
             INNER JOIN {user_enrolments} ue ON ue.userid = u.id
             INNER JOIN {enrol} e ON e.id = ue.enrolid
             INNER JOIN {course} c ON c.id = e.courseid
             INNER JOIN {role_assignments} ra ON ra.userid = u.id
             INNER JOIN {context} ctx ON ctx.id = ra.contextid AND ctx.instanceid = c.id
-            WHERE ra.roleid IN (SELECT value FROM {config} WHERE name = "gradebookroles")
+            WHERE ra.roleid " . $insql . "
             AND c.id = ?
-            GROUP BY u.id', [$this->get_course_id()]);
+            GROUP BY u.id", $params);
 
         $courseuserids = array_keys($queryresults);
 

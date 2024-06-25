@@ -35,7 +35,7 @@ class message_body_constructor {
     public $message;
     public $user;
     public $course;
-    public $allowedsubstitutioncodeclasses;
+    public $allowed_substitution_code_classes;
 
     public function __construct(message $message, $user, $course = null) {
         $this->message = $message;

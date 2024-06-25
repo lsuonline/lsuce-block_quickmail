@@ -34,7 +34,7 @@ abstract class repo {
     public $dir;
     public $paginate;
     public $page;
-    public $perpage;
+    public $per_page;
     public $uri;
     public $result;
 

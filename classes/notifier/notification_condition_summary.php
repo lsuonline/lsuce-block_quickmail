@@ -30,7 +30,7 @@ use block_quickmail_string;
 
 class notification_condition_summary {
 
-    public $langstringkey;
+    public $lang_string_key;
     public $params;
 
     public function __construct($langstringkey, $params = []) {

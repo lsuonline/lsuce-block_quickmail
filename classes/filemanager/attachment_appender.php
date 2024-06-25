@@ -38,8 +38,8 @@ class attachment_appender {
 
     public $message;
     public $body;
-    public $coursecontext;
-    public $messageattachments;
+    public $course_context;
+    public $message_attachments;
 
     public function __construct(message $message, $body) {
         $this->message = $message;

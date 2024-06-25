@@ -84,19 +84,9 @@ trait has_general_helpers {
         return $params;
     }
 
-    public function update_system_config_value($configname, $newvalue) {
-        global $DB;
-
-        if ($record = $DB->get_record('config', ['name' => $configname])) {
-            $record->value = $newvalue;
-
-            $DB->update_record('config', $record);
-        } else {
-            $DB->insert_record('config', (object)[
-                'name' => $configname,
-                'value' => $newvalue,
-            ]);
-        }
+    public function update_system_config_value($configname, $newvalue): void
+    {
+        set_config($configname, $newvalue);
     }
 
     public function override_params($values, $overrides) {

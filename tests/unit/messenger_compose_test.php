@@ -56,6 +56,7 @@ class block_quickmail_messenger_compose_testcase extends advanced_testcase {
             'body' => 'This is one fine body.',
         ]);
 
+        $this->setUser($userteacher);
         // Send an email from the teacher to the students now (not as queued adhoc tasks).
         messenger::compose($userteacher, $course, $composeformdata, null, false);
 
@@ -88,6 +89,7 @@ class block_quickmail_messenger_compose_testcase extends advanced_testcase {
             'mentor_copy' => 1,
         ]);
 
+        $this->setUser($userteacher);
         // Send an email from the teacher to the students now (not as queued adhoc tasks).
         messenger::compose($userteacher, $course, $composeformdata, null, false);
 
@@ -139,6 +141,7 @@ class block_quickmail_messenger_compose_testcase extends advanced_testcase {
         // Get a compose form submission.
         $composeformdata = $this->get_compose_message_form_submission($recipients, 'message', []);
 
+        $this->setUser($userteacher);
         // Send a moodle message from the teacher to the students now (not as queued adhoc tasks).
         messenger::compose($userteacher, $course, $composeformdata, null, false);
 
@@ -164,6 +167,7 @@ class block_quickmail_messenger_compose_testcase extends advanced_testcase {
             'body' => 'This is one fine body.',
         ]);
 
+        $this->setUser($userteacher);
         // Send an email from the teacher to the students as queued adhoc tasks).
         messenger::compose($userteacher, $course, $composeformdata, null, false);
 
@@ -192,6 +196,7 @@ class block_quickmail_messenger_compose_testcase extends advanced_testcase {
             'to_send_at' => $nextweek
         ]);
 
+        $this->setUser($userteacher);
         // Schedule an email from the teacher to the students (as queued adhoc tasks).
         messenger::compose($userteacher, $course, $composeformdata);
 
@@ -220,6 +225,7 @@ class block_quickmail_messenger_compose_testcase extends advanced_testcase {
             'additional_emails' => 'additional@one.com,additional@two.com,additional@three.com'
         ]);
 
+        $this->setUser($userteacher);
         // Send an email from the teacher to the students now (not as queued adhoc tasks).
         messenger::compose($userteacher, $course, $composeformdata, null, false);
 
@@ -254,6 +260,7 @@ class block_quickmail_messenger_compose_testcase extends advanced_testcase {
             'receipt' => '1'
         ]);
 
+        $this->setUser($userteacher);
         // Send an email from the teacher to the students now (not as queued adhoc tasks).
         messenger::compose($userteacher, $course, $composeformdata, null, false);
 
@@ -294,6 +301,7 @@ class block_quickmail_messenger_compose_testcase extends advanced_testcase {
             'signature_id' => $signature->get('id')
         ]);
 
+        $this->setUser($userteacher);
         // Send an email from the teacher to the students now (not as queued adhoc tasks).
         messenger::compose($userteacher, $course, $composeformdata, null, false);
 

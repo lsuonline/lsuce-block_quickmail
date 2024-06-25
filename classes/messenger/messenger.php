@@ -52,8 +52,8 @@ use html_writer;
 class messenger implements messenger_interface {
 
     public $message;
-    public $allprofilefields;
-    public $selectedprofilefields;
+    public $all_profile_fields;
+    public $selected_profile_fields;
 
     public function __construct(message $message) {
         $this->message = $message;
