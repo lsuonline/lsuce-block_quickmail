@@ -66,6 +66,26 @@
         <KEY NAME="signature_id" TYPE="foreign" FIELDS="signature_id" REFTABLE="block_quickmail_signatures" REFFIELDS="id"/>
       </KEYS>
     </TABLE>
+    <TABLE NAME="block_quickmail_msg_course" COMMENT="The course to send a message to all users">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="message_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="The parent message id"/>
+        <FIELD NAME="course_id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="The recipient user id"/>
+        <FIELD NAME="sent_at" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The timestamp at which this message was sent to the recipient user"/>
+        <FIELD NAME="moodle_message_id" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The mdl_message id that was sent to this recipient user"/>
+        <FIELD NAME="usermodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The user who created/modified the object. It is automatically set."/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The timestamp at which the record was modified. It is automatically set."/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The timestamp at which the record was modified. It is automatically set, and defaults to 0."/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+        <KEY NAME="message_id" TYPE="foreign" FIELDS="message_id" REFTABLE="block_quickmail_messages" REFFIELDS="id"/>
+        <KEY NAME="course_id" TYPE="foreign" FIELDS="course_id" REFTABLE="course" REFFIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="msgrec" UNIQUE="false" FIELDS="sent_at"/>
+      </INDEXES>
+    </TABLE>
     <TABLE NAME="block_quickmail_msg_recips" COMMENT="The recipient users of a specific message">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>

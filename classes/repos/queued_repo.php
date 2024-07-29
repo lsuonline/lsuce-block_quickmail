@@ -202,12 +202,50 @@ class queued_repo extends repo implements queued_repo_interface {
     }
 
     /**
+     * Call this to inject into msg recipients table for courses that have messages as ALL from the mdl_block_quickmail_msg_course table.
+     *
+     * @return array
+     */
+    public static function sync_course_recip_msgs() {
+        global $DB;
+        $params = array(
+            "sent_at" => 0
+        );
+        $syncthese = $DB->get_records('block_quickmail_msg_course', $params);
+
+        $now = time();
+        
+        foreach ($syncthese as $cmsg) {
+            
+            $zeemsg = new message($cmsg->message_id);
+            error_log("\n\nLooking at msg: ". $zeemsg->get('id'). "\n");
+            if ($zeemsg->get('to_send_at') <= $now) {
+
+                error_log("\n\npopulating msg: ". $zeemsg->get('id'). "\n");
+                $zeemsg->populate_recip_course_msg();
+                error_log("\n\nMsg ". $zeemsg->get('id'). " marked as sent in msg_course table.\n");
+                $DB->update_record(
+                    'block_quickmail_msg_course',
+                    array('id' => $cmsg->id, 'sent_at' => $now)
+                );
+            }
+        }
+        // syncing complete.
+    }
+
+    /**
      * Returns an array of all messages that should be sent by the system right now
      *
      * @return array
      */
     public static function get_all_messages_to_send() {
         global $DB;
+
+        try {
+            self::sync_course_recip_msgs();
+        } catch (\Exception $e) {
+            error_log("\n\nThere was an error trying to sync course msgs\n");
+        }
 
         $now = time();
 
@@ -219,11 +257,23 @@ class queued_repo extends repo implements queued_repo_interface {
                 AND m.timedeleted = 0
                 AND m.to_send_at <= :now
                 AND mr.sent_at = 0
+                GROUP BY m.id
+                
+                UNION
+                
+                SELECT m.*
+                FROM {block_quickmail_messages} m
+                INNER JOIN {block_quickmail_msg_course} mc ON m.id = mc.message_id
+                WHERE m.is_draft = 0
+                AND m.is_sending = 0
+                AND m.timedeleted = 0
+                AND m.to_send_at <= :now2
+                AND mc.sent_at = 0
                 GROUP BY m.id';
 
         // Pull data, iterate through recordset, instantiate persistents, add to array.
         $data = [];
-        $recordset = $DB->get_recordset_sql($sql, ['now' => $now]);
+        $recordset = $DB->get_recordset_sql($sql, ['now' => $now, 'now2' => $now]);
         foreach ($recordset as $record) {
             $data[] = new message(0, $record);
         }

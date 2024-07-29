@@ -190,6 +190,20 @@ class block_quickmail_plugin {
         if (is_siteadmin($user)) {
             return true;
         }
+        
+        // Check whether context locking is enabled.
+        if (!empty($CFG->contextlocking)) {
+            // Ugggh
+            $roles = get_user_roles($context, $user->id);
+            
+            foreach ($roles as $role) {
+                // Do we want this to be a setting? don't like hard coding roles but.....
+                if ($role->name == "Primary Instructor") {
+                    return true;
+                }
+            }
+                
+        }
 
         return has_capability('block/quickmail:' . $capability, $context, $user);
     }

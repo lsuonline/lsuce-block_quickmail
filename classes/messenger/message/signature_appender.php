@@ -30,8 +30,8 @@ use block_quickmail\persistents\signature;
 class signature_appender {
 
     public $body;
-    public $userid;
-    public $signatureid;
+    public $user_id;
+    public $signature_id;
 
     /**
      * Construct the message signature appender

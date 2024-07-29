@@ -39,6 +39,8 @@ use block_quickmail\persistents\message_attachment;
 use block_quickmail\persistents\notification;
 use block_quickmail\messenger\messenger;
 use block_quickmail\messenger\message\substitution_code;
+use block_quickmail\repos\user_repo;
+
 
 class message extends \block_quickmail\persistents\persistent {
 
@@ -159,6 +161,48 @@ class message extends \block_quickmail\persistents\persistent {
     }
 
     /**
+     * Returns a check to see if the message is sent to ALL of the class.
+     *
+     * @return bool
+     */
+    public function check_course_msg()
+    {
+        global $DB;
+        $params = array("message_id" => $this->get('id'), "course_id" => $this->get('course_id'));
+        $foundall = $DB->record_exists('block_quickmail_msg_course', $params);
+        return $foundall;
+    }
+
+    /**
+     * Returns a check to see if the message is sent to ALL of the class.
+     *
+     * @return bool
+     */
+    public function populate_recip_course_msg()
+    {
+        global $DB;
+
+        $messageid = $this->get('id');
+        $cuser = $this->get('user_id');
+        $course = $DB->get_record('course', ['id' => $this->get('course_id')]);
+        $coursemsg = new message($messageid);
+
+        $recipientuserids = user_repo::get_unique_course_user_ids_from_selected_entities(
+            $course,
+            $cuser,
+            array("all")
+        );
+
+        // Now get that msg recipient into the table so it can be processed.
+        foreach ($recipientuserids as $recipient) {
+            message_recipient::create_new([
+                'message_id' => $messageid,
+                'user_id' => (int)$recipient,
+            ]);
+        }
+    }
+
+    /**
      * Returns the message recipients of a given status that are associated with this message
      *
      * Optionally, returns as an array of user ids
@@ -169,6 +213,13 @@ class message extends \block_quickmail\persistents\persistent {
      */
     public function get_message_recipients($status = 'all', $asuseridarray = false) {
         $messageid = $this->get('id');
+
+        // Do a quick check and see if this particular message is meant for ALL.
+        if ($this->check_course_msg()) {
+            // There is a record for ALL people. Let's NOW create all the
+            // recipients (most up to date with add/drops) and then send.
+            $this->populate_recip_course_msg();
+        }
 
         // Be sure we have a valid status.
         if (!in_array($status, ['all', 'sent', 'unsent'])) {
@@ -648,6 +699,38 @@ class message extends \block_quickmail\persistents\persistent {
 
         // Refresh record - necessary?
         $this->read();
+    }
+
+    /**
+     * Replaces all recipients for this message with the given array of user ids
+     *
+     * @param  array  $recipientuserids
+     * @return void
+     */
+    public function sync_course_msg($course = 0) {
+        // Clear all current recipients.
+        message_course::clear_all_for_message($this);
+
+        message_course::create_for_message($this, ['course_id' => $course]);
+
+        // Add all new recipients.
+        // foreach ($recipientuserids as $userid) {
+        //     // If any exceptions, proceed gracefully to the next.
+        //     try {
+        //         message_recipient::create_for_message($this, ['user_id' => $userid]);
+        //         $count++;
+        //     } catch (\Exception $e) {
+        //         // Most likely invalid user, exception thrown due to validation error
+        //         // Log this?
+        //         continue;
+        //     }
+        // }
+
+        // // Cache the count for external use.
+        // block_quickmail_cache::store('qm_msg_recip_count')->put($this->get('id'), $count);
+
+        // // Refresh record - necessary?
+        // $this->read();
     }
 
     /**

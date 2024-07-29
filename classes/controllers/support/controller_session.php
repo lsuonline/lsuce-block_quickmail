@@ -29,7 +29,7 @@ use block_quickmail_cache;
 
 class controller_session {
 
-    public $controllerkey;
+    public $controller_key;
     public $store;
 
     public static $cachestore = 'qm_controller_store';

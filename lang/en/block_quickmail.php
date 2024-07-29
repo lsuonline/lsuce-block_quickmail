@@ -79,6 +79,7 @@ $string['all_in_course'] = 'All In Course';
 $string['compose'] = 'Compose Course Message';
 $string['broadcast'] = 'Compose Admin Message';
 $string['subject'] = 'Subject';
+$string['from'] = 'From';
 $string['message_preview'] = 'Message Preview';
 $string['message_details'] = 'Message Details';
 $string['preview_no_subject'] = '(No subject)';

@@ -40,7 +40,7 @@ class base_controller {
     public $context;
     public $props;
     public $session;
-    public $formerrors;
+    public $form_errors;
 
     public function __construct(&$page, $data = []) {
         $this->set_props($data);
