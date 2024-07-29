@@ -215,11 +215,11 @@ class message extends \block_quickmail\persistents\persistent {
         $messageid = $this->get('id');
 
         // Do a quick check and see if this particular message is meant for ALL.
-        if ($this->check_course_msg()) {
+        // if ($this->check_course_msg()) {
             // There is a record for ALL people. Let's NOW create all the
             // recipients (most up to date with add/drops) and then send.
-            $this->populate_recip_course_msg();
-        }
+            // $this->populate_recip_course_msg();
+        // }
 
         // Be sure we have a valid status.
         if (!in_array($status, ['all', 'sent', 'unsent'])) {

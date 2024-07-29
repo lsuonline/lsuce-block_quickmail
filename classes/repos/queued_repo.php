@@ -215,15 +215,11 @@ class queued_repo extends repo implements queued_repo_interface {
 
         $now = time();
         
-        foreach ($syncthese as $cmsg) {
-            
+        foreach ($syncthese as $cmsg) {            
             $zeemsg = new message($cmsg->message_id);
-            error_log("\n\nLooking at msg: ". $zeemsg->get('id'). "\n");
             if ($zeemsg->get('to_send_at') <= $now) {
 
-                error_log("\n\npopulating msg: ". $zeemsg->get('id'). "\n");
                 $zeemsg->populate_recip_course_msg();
-                error_log("\n\nMsg ". $zeemsg->get('id'). " marked as sent in msg_course table.\n");
                 $DB->update_record(
                     'block_quickmail_msg_course',
                     array('id' => $cmsg->id, 'sent_at' => $now)
@@ -244,7 +240,7 @@ class queued_repo extends repo implements queued_repo_interface {
         try {
             self::sync_course_recip_msgs();
         } catch (\Exception $e) {
-            error_log("\n\nThere was an error trying to sync course msgs\n");
+            error_log("\n\nThere was an error trying to sync course msgs.\n");
         }
 
         $now = time();
