@@ -85,9 +85,20 @@ class block_quickmail_broadcast_recipient_filter {
      * @param mixed  $draftmessage  optional draft message, defaults to null
      */
     public function __construct($filterparams, $extraparams, $draftmessage = null) {
+        global $SESSION;
+
         $this->filter_params = $filterparams;
         $this->extra_params = $extraparams;
         $this->draft_message = $draftmessage;
+
+        // In user/filters/lib.php  this variable $SESSION->user_filtering
+        // sometimes is set to '' which causes an error. Instead of changing core from
+        // if (!isset($SESSION->user_filtering) to the what's below I'll do that 
+        // check here right before the call. 
+        if (!isset($SESSION->user_filtering) || $SESSION->user_filtering == '') {
+            $SESSION->user_filtering = array();
+        }
+
         $this->ufilter = new user_filtering($this->supportedfields, null, $this->extra_params);
 
         // If there is a valid draft message passed, attempt to set the pre-set the filter but only if none already exist.
