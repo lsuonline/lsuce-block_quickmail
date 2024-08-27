@@ -27,6 +27,7 @@ class block_quickmail_request {
 
     public $form;
     public $data;
+
     public function __construct() {
         $this->form = null;
         $this->data = (object)[];

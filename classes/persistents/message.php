@@ -202,6 +202,11 @@ class message extends \block_quickmail\persistents\persistent {
         }
     }
 
+    public function quick_enrol_check($user_id, $course_id) {
+        $context = \context_course::instance($course_id);
+        $enrolled = is_enrolled($context, $user_id, '', true);
+        return $enrolled;
+    }
     /**
      * Returns the message recipients of a given status that are associated with this message
      *
@@ -253,13 +258,19 @@ class message extends \block_quickmail\persistents\persistent {
             }
             $recordset->close();
         }
-
-        if (!$asuseridarray) {
-            return $recipients;
+        $checkedrecipients = [];
+        foreach ($recipients as $recip) {
+            if ($this->quick_enrol_check($recip->get('user_id'), $this->get('course_id'))) {
+                $checkedrecipients[] = $recip;
+            }
         }
 
-        $recipientids = array_reduce($recipients, function ($carry, $recipient) {
-            $carry[] = $recipient->get('user_id');
+        if (!$asuseridarray) {
+            return $checkedrecipients;
+        }
+
+        $recipientids = array_reduce($checkedrecipients, function ($carry, $recipient) {
+            $carry[] = $checkedrecipients->get('user_id');
 
             return $carry;
         }, []);
