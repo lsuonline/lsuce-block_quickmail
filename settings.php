@@ -257,4 +257,29 @@ if ($ADMIN->fulltree) {
         )
     );
 
+    // Frozen Context Settings.
+    $settings->add(
+        new admin_setting_heading(
+            'block_quickmail_context_freezing_readonly_access',
+            block_quickmail_string::get('block_quickmail_context_freezing_readonly_access_title'),
+            ''
+        )
+    );
+    $settings->add(
+        new admin_setting_configmultiselect(
+            'block_quickmail_frozen_readonly',
+            block_quickmail_string::get('selectable_roles'),
+            block_quickmail_string::get('selectable_roles_readonly'),
+            $defaultroleskeys, // Default.
+            $blockquickmailroleselectionoptions
+        )
+    );
+    $settings->add(
+        new admin_setting_configtext(
+            'block_quickmail_frozen_readonly_pages',
+            block_quickmail_string::get('frozen_readonly_pages'),
+            block_quickmail_string::get('frozen_readonly_pages_desc'),
+            'qm,sent,notifcations,signatures'
+        )
+    );
 }

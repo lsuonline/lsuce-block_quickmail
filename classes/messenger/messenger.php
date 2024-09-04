@@ -627,6 +627,7 @@ class messenger implements messenger_interface {
                 // Verify the user still exists, edge cases have been found to have missing users.
                 $tempuserid = (int)$recipient->get('user_id');
                 $tempmsgid = (int)$recipient->get('message_id');
+
                 if ($recipient->account_exists($tempuserid)) {
                     $recipient->remove_recipient_from_message($tempmsgid, $tempuserid);
                     continue;

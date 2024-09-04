@@ -329,7 +329,6 @@ $string['allowstudents'] = 'Allow students to use Quickmail';
 $string['allowstudents_desc'] = 'Allow students to use Quickmail. If you choose "Never", the block cannot be configured to allow students access at the course level.';
 $string['altsendfrom'] = 'Allow alt from emails';
 $string['altsendfrom_desc'] = 'Allow alternate from emails (needs a core change for this).';
-$string['selectable_roles'] = 'Selectable roles';
 $string['selectable_roles_desc'] = 'These roles will be available for selection when composing a message. This setting is overridable by course configuration.';
 $string['selectable_roles_configuration'] = 'These roles will be available for selection when composing a message.';
 $string['selectable_roles_configuration_help'] = 'These roles will be available for selection when composing a message.';
@@ -466,3 +465,10 @@ $string['ms_alternate'] = 'Alternate Emails';
 $string['ms_config'] = 'Configure';
 $string['ms_notifications'] = 'Notifications';
 $string['ms_create_notification'] = 'Create Notification';
+
+// Context Freezing Options.
+$string['block_quickmail_context_freezing_readonly_access_title'] = 'Context Freezing Options';
+$string['selectable_roles'] = 'Read Only Roles for Context Freezing';
+$string['selectable_roles_readonly'] = 'Which roles can still view sent emails after the course has been frozen.';
+$string['frozen_readonly_pages'] = 'Page Access for Roles';
+$string['frozen_readonly_pages_desc'] = 'When the context is frozen these pages will have read only access from the above roles';

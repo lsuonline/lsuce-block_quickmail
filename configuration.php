@@ -37,7 +37,7 @@ $PAGE->set_context($coursecontext);
 $PAGE->set_url(new moodle_url('/blocks/quickmail/configuration.php', $pageparams));
 
 // Throw an exception if user does not have capability to configure a course.
-block_quickmail_plugin::require_user_capability('canconfig', $USER, $coursecontext);
+block_quickmail_plugin::require_user_capability('canconfig', $USER, $coursecontext, 'configuration');
 
 // Construct the page.
 $PAGE->set_pagetype('block-quickmail');

@@ -54,7 +54,6 @@ class email_recipient_send_factory extends recipient_send_factory implements rec
      */
     public function send() {
         $success = $this->send_email_to_user();
-
         // If the message was sent successfully, handle post send tasks.
         if ($success) {
             $this->handle_recipient_post_send();
@@ -89,7 +88,6 @@ class email_recipient_send_factory extends recipient_send_factory implements rec
             $this->message_params->replyto = $alt;
             $this->message_params->usetrueaddress = true;
         }
-
         $success = email_to_user(
             $user,
             $this->message_params->userfrom,
@@ -103,6 +101,7 @@ class email_recipient_send_factory extends recipient_send_factory implements rec
             $this->message_params->replytoname,
             $this->message_params->wordwrapwidth
         );
+
 
         return $success;
     }

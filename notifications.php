@@ -43,7 +43,7 @@ $PAGE->set_context($coursecontext);
 $PAGE->set_url(new moodle_url('/blocks/quickmail/notifications.php', $pageparams));
 
 // Throw an exception if user does not have capability to create notifications.
-block_quickmail_plugin::require_user_can_create_notifications($USER, $coursecontext);
+block_quickmail_plugin::require_user_can_create_notifications($USER, $coursecontext, 'notifications');
 
 // Construct the page.
 $PAGE->set_pagetype('block-quickmail');

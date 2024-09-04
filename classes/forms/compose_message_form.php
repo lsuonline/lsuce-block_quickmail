@@ -120,7 +120,7 @@ class compose_message_form extends \moodleform {
         $excludeddraftrecipients = !empty($draftmessage) ? $draftmessage->get_message_draft_recipients('exclude', true) : [];
 
         // Only allow users with hard set capabilities (not students) to copy mentors.
-        $allowmentorcopy = block_quickmail_plugin::user_can_send('compose', $user, $context, false);
+        $allowmentorcopy = block_quickmail_plugin::user_can_send('compose', $user, $context, '', false);
 
         return new self($targeturl, [
             'context' => $context,

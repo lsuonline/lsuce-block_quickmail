@@ -41,8 +41,8 @@ class block_quickmail_plugin {
      * @return void
      * @throws required_capability_exception
      */
-    public static function require_user_can_send($sendtype, $user, $context) {
-        if (!self::user_can_send($sendtype, $user, $context)) {
+    public static function require_user_can_send($sendtype, $user, $context, $page) {
+        if (!self::user_can_send($sendtype, $user, $context, $page, false)) {
             $capability = $sendtype == 'broadcast' ? 'myaddinstance' : 'cansend';
 
             throw new required_capability_exception($context, 'block/quickmail:' . $capability, 'nopermissions', '');
@@ -60,7 +60,7 @@ class block_quickmail_plugin {
      * @return void
      * @throws required_capability_exception
      */
-    public static function require_user_can_create_notifications($user, $context) {
+    public static function require_user_can_create_notifications($user, $context, $page = '') {
         if (!block_quickmail_config::block('notifications_enabled')) {
             $moodleurl = new \moodle_url('/course/view.php', ['id' => $context->instanceid]);
 
@@ -70,7 +70,7 @@ class block_quickmail_plugin {
                 \core\output\notification::NOTIFY_INFO);
         }
 
-        self::require_user_capability('createnotifications', $user, $context);
+        self::require_user_capability('createnotifications', $user, $context, $page);
     }
 
     /**
@@ -82,7 +82,7 @@ class block_quickmail_plugin {
      * @return void
      * @throws required_capability_exception
      */
-    public static function require_user_capability($capability, $user, $context) {
+    public static function require_user_capability($capability, $user, $context, $page = '') {
         if (!self::user_has_capability($capability, $user, $context)) {
             throw new required_capability_exception($context, 'block/quickmail:' . $capability, 'nopermissions', '');
         }
@@ -96,7 +96,7 @@ class block_quickmail_plugin {
      * @return void
      * @throws required_capability_exception
      */
-    public static function require_user_has_course_message_access($user, $courseid) {
+    public static function require_user_has_course_message_access($user, $courseid, $page) {
         $sendtype = $courseid == SITEID
             ? 'broadcast'
             : 'compose';
@@ -105,7 +105,7 @@ class block_quickmail_plugin {
             ? context_system::instance()
             : context_course::instance($courseid);
 
-        self::require_user_can_send($sendtype, $user, $context);
+        self::require_user_can_send($sendtype, $user, $context, $page);
     }
 
     /**
@@ -117,7 +117,7 @@ class block_quickmail_plugin {
      * @param  bool    $includestudentaccess   if true (default), will check a course's "allowstudents" config for access
      * @return bool
      */
-    public static function user_can_send($sendtype, $user, $context, $includestudentaccess = true) {
+    public static function user_can_send($sendtype, $user, $context, $page = '', $includestudentaccess = true) {
         // Must be a valid send_type.
         if (!in_array($sendtype, ['broadcast', 'compose'])) {
             return false;
@@ -137,6 +137,10 @@ class block_quickmail_plugin {
         // Make sure we have the correct context (course).
         if (get_class($context) !== 'core\context\course' && get_class($context) !== 'context_course') {
             return false;
+        }
+
+        if (self::check_frozen_context($user, $context, $page)) {
+            return true;
         }
 
         if (self::user_has_capability('cansend', $user, $context)) {
@@ -179,6 +183,42 @@ class block_quickmail_plugin {
     /**
      * Reports whether or not the authenticated user has the given capability within the given context
      *
+     * @param  object $user
+     * @param  object $context
+     * @param  object $page
+     * @return bool
+     */
+    public static function check_frozen_context($user, $context, $page) {
+        // Always allow site admins.
+        global $CFG;
+        if (is_siteadmin($user)) {
+            return true;
+        }
+
+        // Check whether context locking is enabled.
+        error_log("What is context locking: ". $CFG->contextlocking);
+        $pageaccess = explode(",", get_config('moodle', 'block_quickmail_frozen_readonly_pages'));
+
+        if (in_array($page, $pageaccess)) {
+            // Proceed if context locking is enabled.
+            if (!empty($CFG->contextlocking)) {
+                $roles = get_user_roles($context, $user->id);
+                // Check roles against hand picked readonly roles in qm settings.
+                $roleoverride = explode(",", get_config('moodle', 'block_quickmail_frozen_readonly'));
+                foreach ($roleoverride as $thisrid) {
+
+                    $key = array_search($thisrid, array_column($roles, 'roleid'));
+                    if ($key !== FALSE) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Reports whether or not the authenticated user has the given capability within the given context
+     *
      * @param  string $capability
      * @param  object $user
      * @param  object $context
@@ -191,20 +231,6 @@ class block_quickmail_plugin {
             return true;
         }
         
-        // Check whether context locking is enabled.
-        if (!empty($CFG->contextlocking)) {
-            // Ugggh
-            $roles = get_user_roles($context, $user->id);
-            
-            foreach ($roles as $role) {
-                // Do we want this to be a setting? don't like hard coding roles but.....
-                if ($role->name == "Primary Instructor") {
-                    return true;
-                }
-            }
-                
-        }
-
         return has_capability('block/quickmail:' . $capability, $context, $user);
     }
 
