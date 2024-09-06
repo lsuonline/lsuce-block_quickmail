@@ -27,8 +27,8 @@ defined('MOODLE_INTERNAL') || die();
 
 class controller_request {
 
-    public $viewname;
-    public $viewformname;
+    public $view_name;
+    public $view_form_name;
     public $post;
     public $input;
 

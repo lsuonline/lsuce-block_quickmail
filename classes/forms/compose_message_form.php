@@ -39,21 +39,38 @@ class compose_message_form extends \moodleform {
 
     use is_quickmail_form;
 
+    // public $errors;
+    // public $context;
+    // public $user;
+    // public $course;
+    // public $courseuserdata;
+    // public $usercanselectalternate;
+    // public $useralternateemailarray;
+    // public $usersignaturearray;
+    // public $userdefaultsignatureid;
+    // public $courseconfigarray;
+    // public $draftmessage;
+    // public $includeddraftrecipients;
+    // public $excludeddraftrecipients;
+    // public $allowmentorcopy;
+    // public $usemultiselectpicker;
+
     public $errors;
     public $context;
     public $user;
     public $course;
-    public $courseuserdata;
-    public $usercanselectalternate;
-    public $useralternateemailarray;
-    public $usersignaturearray;
-    public $userdefaultsignatureid;
-    public $courseconfigarray;
-    public $draftmessage;
-    public $includeddraftrecipients;
-    public $excludeddraftrecipients;
-    public $allowmentorcopy;
-    public $usemultiselectpicker;
+    public $user_can_select_alternate;
+    public $course_user_data;
+    public $user_alternate_email_array;
+    public $user_signature_array;
+    public $user_default_signature_id;
+    public $course_config_array;
+    public $draft_message;
+    public $included_draft_recipients;
+    public $attachment_draft_id;
+    public $excluded_draft_recipients;
+    public $allow_mentor_copy;
+    public $use_multiselect_picker;
 
     /**
      * Instantiates and returns a compose message form
@@ -103,7 +120,7 @@ class compose_message_form extends \moodleform {
         $excludeddraftrecipients = !empty($draftmessage) ? $draftmessage->get_message_draft_recipients('exclude', true) : [];
 
         // Only allow users with hard set capabilities (not students) to copy mentors.
-        $allowmentorcopy = block_quickmail_plugin::user_can_send('compose', $user, $context, false);
+        $allowmentorcopy = block_quickmail_plugin::user_can_send('compose', $user, $context, '', false);
 
         return new self($targeturl, [
             'context' => $context,
@@ -152,7 +169,8 @@ class compose_message_form extends \moodleform {
             $mform->addElement(
                 'select',
                 'from_email_id',
-                get_string('from'),
+                // get_string('from'),
+                block_quickmail_string::get('from'),
                 $this->get_from_email_values()
             );
             $mform->addHelpButton(

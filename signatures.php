@@ -35,7 +35,7 @@ require_login();
 // If we're scoping to a specific course.
 if ($pageparams['courseid']) {
     // Check that the user can message in this course.
-    block_quickmail_plugin::require_user_has_course_message_access($USER, $pageparams['courseid']);
+    block_quickmail_plugin::require_user_has_course_message_access($USER, $pageparams['courseid'], 'signatures');
 }
 
 $systemcontext = context_system::instance();

@@ -61,7 +61,7 @@ class block_quickmail extends block_list {
      * @return context
      */
     private function set_system_context() {
-        $this->system_context = context_system::instance();
+        $this->systemcontext = context_system::instance();
     }
 
     /**
@@ -70,7 +70,7 @@ class block_quickmail extends block_list {
      * @return context
      */
     private function set_course_context() {
-        $this->course_context = context_course::instance($this->course->id);
+        $this->coursecontext = context_course::instance($this->course->id);
     }
 
     /**
@@ -84,7 +84,7 @@ class block_quickmail extends block_list {
             'mod-scorm-view' => true
         ];
 
-        if (block_quickmail_plugin::user_can_send('broadcast', $this->user, $this->system_context)) {
+        if (block_quickmail_plugin::user_can_send('broadcast', $this->user, $this->systemcontext)) {
             return array_merge($formats, [
                 'site' => true,
                 'my' => true,
@@ -123,7 +123,7 @@ class block_quickmail extends block_list {
         $systemcontext = context_system::instance();
 
         // Course-level Features (compose).
-        if (!$this->is_site_course() && block_quickmail_plugin::user_can_send('compose', $this->user, $this->course_context)) {
+        if (!$this->is_site_course() && block_quickmail_plugin::user_can_send('compose', $this->user, $this->coursecontext)) {
             // COMPOSE (course-scoped message).
             $this->add_item_to_content([
                 'lang_key' => block_quickmail_string::get('compose'),
@@ -165,7 +165,7 @@ class block_quickmail extends block_list {
             ]);
 
             // ALTERNATES (manage your alternate send-from emails).
-            if (block_quickmail_plugin::user_has_capability('allowalternate', $this->user, $this->course_context)) {
+            if (block_quickmail_plugin::user_has_capability('allowalternate', $this->user, $this->coursecontext)) {
                 $this->add_item_to_content([
                     'lang_key' => block_quickmail_string::get('manage_alternates'),
                     'icon_key' => 't/add',
@@ -175,7 +175,7 @@ class block_quickmail extends block_list {
             }
 
             // CONFIGURATION (settings for course-level messaging preferences).
-            if (block_quickmail_plugin::user_has_capability('canconfig', $this->user, $this->course_context)) {
+            if (block_quickmail_plugin::user_has_capability('canconfig', $this->user, $this->coursecontext)) {
                 $this->add_item_to_content([
                     'lang_key' => get_string('configuration'),
                     'icon_key' => 'i/settings',
@@ -185,7 +185,7 @@ class block_quickmail extends block_list {
             }
 
             // NOTIFICATIONS.
-            if (block_quickmail_plugin::user_can_create_notifications($this->user, $this->course_context)) {
+            if (block_quickmail_plugin::user_can_create_notifications($this->user, $this->coursecontext)) {
                 $this->add_item_to_content([
                     'lang_key' => block_quickmail_string::get('notifications'),
                     'icon_key' => 'e/insert_time',
@@ -205,7 +205,7 @@ class block_quickmail extends block_list {
         } else if ($this->is_site_course() && block_quickmail_plugin::user_can_send(
                       'broadcast',
                       $this->user,
-                      $this->system_context)) {
+                      $this->systemcontext)) {
             // BROADCAST (site-scoped admin message).
             $this->add_item_to_content([
                 'lang_key' => block_quickmail_string::get('open_broadcast'),

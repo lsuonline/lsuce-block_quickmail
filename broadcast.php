@@ -40,7 +40,7 @@ $PAGE->set_context($systemcontext);
 $PAGE->set_url(new moodle_url('/blocks/quickmail/broadcast.php', $pageparams));
 
 // Throw an exception if user does not have capability to broadcast messages.
-block_quickmail_plugin::require_user_can_send('broadcast', $USER, $systemcontext);
+block_quickmail_plugin::require_user_can_send('broadcast', $USER, $systemcontext, 'broadcast');
 
 // Get (site) course.
 $course = get_course($pageparams['courseid']);

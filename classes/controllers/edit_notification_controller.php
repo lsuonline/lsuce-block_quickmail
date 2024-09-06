@@ -90,7 +90,7 @@ class edit_notification_controller extends base_controller {
                 $notification->get('type'), str_replace('-', '_', $notificationtypeinterface->get('model'))),
             'assigned_conditions' => notification_condition::decode_condition_string($notification->get('conditions')),
             'editor_options' => block_quickmail_config::get_editor_options($this->context),
-            'allow_mentor_copy' => block_quickmail_plugin::user_can_send('compose', $this->props->user, $this->context, false),
+            'allow_mentor_copy' => block_quickmail_plugin::user_can_send('compose', $this->props->user, $this->context, '', false),
             'course_config_array' => block_quickmail_config::get('', $this->props->course),
         ]);
 

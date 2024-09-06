@@ -27,8 +27,8 @@ defined('MOODLE_INTERNAL') || die();
 
 class transformer {
 
-    public $formdata;
-    public $transformeddata;
+    public $form_data;
+    public $transformed_data;
 
     /**
      * Construct the transformer

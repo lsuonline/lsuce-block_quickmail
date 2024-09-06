@@ -36,9 +36,10 @@ class view_message_component extends component implements \renderable {
 
     public $message;
     public $user;
-    public $sentrecipientusers;
-    public $unsentrecipientusers;
-    public $additionalemails;
+    public $sent_recipient_users;
+    public $unsent_recipient_users;
+    public $additional_emails;
+    public $attachmentcounts;
     public $attachments;
 
     public function __construct($params = []) {

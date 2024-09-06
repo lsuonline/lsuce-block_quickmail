@@ -44,10 +44,10 @@ abstract class recipient_send_factory {
     public $message;
     public $recipient;
     public $course;
-    public $messageparams;
-    public $alternateemail;
-    public $allprofilefields;
-    public $selectedprofilefields;
+    public $all_profile_fields;
+    public $selected_profile_fields;
+    public $message_params;
+    public $alternate_email;
 
     public function __construct($message, $recipient, $allprofilefields, $selectedprofilefields) {
         $this->message = $message;

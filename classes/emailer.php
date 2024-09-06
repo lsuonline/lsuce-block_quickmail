@@ -30,13 +30,13 @@ defined('MOODLE_INTERNAL') || die();
  */
 class block_quickmail_emailer {
 
-    public $fromuser;
+    public $from_user;
     public $subject;
     public $body;
-    public $toemail;
-    public $touser;
-    public $replytoemail;
-    public $replytoname;
+    public $to_email;
+    public $to_user;
+    public $reply_to_email;
+    public $reply_to_name;
     public $wordwrapwidth;
 
     /**

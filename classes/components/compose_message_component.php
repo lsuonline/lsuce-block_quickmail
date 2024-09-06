@@ -30,6 +30,8 @@ use block_quickmail\components\component;
 class compose_message_component extends component implements \renderable {
 
     public $composeform;
+    public $compose_form;
+    public $heading;
 
     public function __construct($params = []) {
         parent::__construct($params);

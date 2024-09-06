@@ -29,8 +29,8 @@ use block_quickmail_config;
 
 abstract class validator {
 
-    public $formdata;
-    public $extraparams;
+    public $form_data;
+    public $extra_params;
     public $errors;
     public $course;
 

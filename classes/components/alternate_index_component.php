@@ -32,7 +32,7 @@ use moodle_url;
 class alternate_index_component extends component implements \renderable {
 
     public $alternates;
-    public $courseid;
+    public $course_id;
 
     public function __construct($params = []) {
         parent::__construct($params);
@@ -65,6 +65,7 @@ class alternate_index_component extends component implements \renderable {
                 'id' => $alternate->get('id'),
                 'email' => $alternate->get('email'),
                 'fullname' => $alternate->get_fullname(),
+                'courseid' => $this->course_id,
                 'status' => $alternate->get_status(),
                 'scope' => $alternate->get_scope(),
                 'isValidated' => $alternate->get('is_validated'),

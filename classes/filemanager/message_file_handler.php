@@ -38,8 +38,8 @@ class message_file_handler {
     public $message;
     public $course;
     public $context;
-    public $filestorage;
-    public $uploadedfiles;
+    public $file_storage;
+    public $uploaded_files;
 
     public function __construct(message $message) {
         $this->message = $message;

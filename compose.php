@@ -39,7 +39,7 @@ $PAGE->set_url(new moodle_url('/blocks/quickmail/compose.php', $pageparams));
 $PAGE->requires->js_call_amd('block_quickmail/compose', 'init');
 
 // Throw an exception if user does not have capability to compose messages.
-block_quickmail_plugin::require_user_can_send('compose', $USER, $coursecontext);
+block_quickmail_plugin::require_user_can_send('compose', $USER, $coursecontext, 'compose');
 
 // Get course user/role/group data for selection.
 $courseuserdata = block_quickmail_plugin::get_compose_message_recipients(

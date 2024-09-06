@@ -39,7 +39,7 @@ $PAGE->set_context($coursecontext);
 $PAGE->set_url(new moodle_url('/blocks/quickmail/compose.php', $pageparams));
 
 // Throw an exception if user does not have capability to compose messages.
-block_quickmail_plugin::require_user_can_send('compose', $USER, $coursecontext);
+block_quickmail_plugin::require_user_can_send('compose', $USER, $coursecontext, 'qm');
 
 // Construct the page.
 $PAGE->set_pagetype('block-quickmail');

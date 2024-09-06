@@ -52,8 +52,8 @@ use html_writer;
 class messenger implements messenger_interface {
 
     public $message;
-    public $allprofilefields;
-    public $selectedprofilefields;
+    public $all_profile_fields;
+    public $selected_profile_fields;
 
     public function __construct(message $message) {
         $this->message = $message;
@@ -108,6 +108,23 @@ class messenger implements messenger_interface {
                                                                $transformeddata->message);
         $message->set('body', $transformeddata->message);
         $message->update();
+
+        
+        // Make sure there are no duplicates in the incoming arrays.
+        $includedentityids = array_unique($transformeddata->included_entity_ids);
+        
+        // Determine whether or not we're sending to all.
+        $sendingtoall = in_array('all', $includedentityids);
+        if ($sendingtoall) {
+
+            return self::save_course_message(
+                $message,
+                $formdata,
+                $transformeddata->additional_emails,
+                $user,
+                $course
+            );
+        }
 
         // Get only the resolved recipient user ids.
         $recipientuserids = user_repo::get_unique_course_user_ids_from_selected_entities(
@@ -179,6 +196,39 @@ class messenger implements messenger_interface {
         );
     }
 
+    private static function save_course_message($message, $formdata, $additionalemails, $user, $course) {
+
+        // Handle saving and syncing of any uploaded file attachments.
+        message_file_handler::handle_posted_attachments($message, $formdata, 'attachments');
+
+        // Clear any draft recipients for this message, unnecessary at this point.
+        message_draft_recipient::clear_all_for_message($message);
+
+        // Clear any existing recipients, and add those that have been recently submitted.
+        $message->sync_course_msg($course->id);
+
+        // Clear any existing additional emails, and add those that have been recently submitted.
+        $message->sync_additional_emails($additionalemails);
+
+        // If not scheduled for delivery later.
+        // if (!$message->get_to_send_in_future()) {
+        //     // Get the block's configured "send now threshold" setting.
+        //     $sendnowthreshold = (int) block_quickmail_config::get('send_now_threshold');
+
+        //     // If not configured to send as tasks OR the number of recipients is below the send now threshold.
+        //     if (!$sendastasks || (!empty($sendnowthreshold) && count($recipientuserids) <= $sendnowthreshold)) {
+        //         // Begin sending now.
+        //         $message->mark_as_sending();
+        //         $messenger = new self($message);
+        //         $messenger->send();
+
+        //         return $message->read();
+        //     }
+        // }
+
+        return $message;
+
+     }
     /**
      * Handles sending a given message to the given recipient user ids
      *
@@ -198,6 +248,7 @@ class messenger implements messenger_interface {
         $additionalemails,
         $recipientuserids = [],
         $sendastasks = true) {
+        
         // Handle saving and syncing of any uploaded file attachments.
         message_file_handler::handle_posted_attachments($message, $formdata, 'attachments');
 
@@ -576,6 +627,7 @@ class messenger implements messenger_interface {
                 // Verify the user still exists, edge cases have been found to have missing users.
                 $tempuserid = (int)$recipient->get('user_id');
                 $tempmsgid = (int)$recipient->get('message_id');
+
                 if ($recipient->account_exists($tempuserid)) {
                     $recipient->remove_recipient_from_message($tempmsgid, $tempuserid);
                     continue;

@@ -34,10 +34,11 @@ class sent_message_index_component extends component implements \renderable {
     public $messages;
     public $pagination;
     public $user;
-    public $courseid;
-    public $sortby;
-    public $sortdir;
-    public $usercoursearray;
+    public $course_id;
+    public $sort_by;
+    public $sort_dir;
+    public $user_course_array;
+    public $sent_edit_mode;
 
     public function __construct($params = []) {
         parent::__construct($params);

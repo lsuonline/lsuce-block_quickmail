@@ -37,7 +37,7 @@ if ($pageparams['course_id']) {
     // If we're scoping to the site level course.
     if ($pageparams['course_id'] == SITEID) {
         // Throw an exception if user does not have site-level capability for this block.
-        block_quickmail_plugin::require_user_has_course_message_access($USER, $pageparams['course_id']);
+        block_quickmail_plugin::require_user_has_course_message_access($USER, $pageparams['course_id'], 'create_alternate');
 
         // Otherwise, we're scoping to a course.
     } else {
