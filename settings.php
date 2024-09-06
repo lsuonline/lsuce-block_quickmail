@@ -279,7 +279,7 @@ if ($ADMIN->fulltree) {
             'block_quickmail_frozen_readonly_pages',
             block_quickmail_string::get('frozen_readonly_pages'),
             block_quickmail_string::get('frozen_readonly_pages_desc'),
-            'qm,sent,notifcations,signatures'
+            'qm,sent,notifications,signatures'
         )
     );
 }
