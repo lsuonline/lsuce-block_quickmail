@@ -27,8 +27,8 @@ $messageproviders = array (
 
     'quickmessage' => array (
         'defaults' => array(
-            'email' => MESSAGE_PERMITTED + MESSAGE_DEFAULT_LOGGEDIN + MESSAGE_DEFAULT_LOGGEDOFF,
-            'instantmessage' => MESSAGE_PERMITTED + MESSAGE_DEFAULT_LOGGEDIN + MESSAGE_DEFAULT_LOGGEDOFF,
+            'email' => MESSAGE_PERMITTED + MESSAGE_DEFAULT_ENABLED,
+            'instantmessage' => MESSAGE_PERMITTED + MESSAGE_DEFAULT_ENABLED,
             'anyotheroutput' => MESSAGE_PERMITTED,
         ),
     ),

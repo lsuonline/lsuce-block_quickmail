@@ -268,8 +268,8 @@ if ($ADMIN->fulltree) {
     $settings->add(
         new admin_setting_configmultiselect(
             'block_quickmail_frozen_readonly',
-            block_quickmail_string::get('selectable_roles'),
             block_quickmail_string::get('selectable_roles_readonly'),
+            block_quickmail_string::get('selectable_roles_readonly_desc'),
             $defaultroleskeys, // Default.
             $blockquickmailroleselectionoptions
         )
