@@ -189,30 +189,55 @@ class block_quickmail_plugin {
      * @return bool
      */
     public static function check_frozen_context($user, $context, $page) {
-        // Always allow site admins.
         global $CFG;
+        // Always allow site admins.
         if (is_siteadmin($user)) {
             return true;
         }
 
-        // Check whether context locking is enabled.
-        error_log("What is context locking: ". $CFG->contextlocking);
+        // Check if the course itself is context locked.
+        if ($context->locked == false) {
+            return true;
+        }
+
+        // Are we allowing quickmail access to frozen contexts?
         $pageaccess = explode(",", get_config('moodle', 'block_quickmail_frozen_readonly_pages'));
 
+        // Check to see if access to this page is explicitly checked.
         if (in_array($page, $pageaccess)) {
-            // Proceed if context locking is enabled.
-            if (!empty($CFG->contextlocking)) {
+
+            // Proceed to checks if context locking is enabled and turned on in this course.
+            if (!empty($CFG->contextlocking) && $context->locked == true) {
+
+                // Get the user's roles for this course.
                 $roles = get_user_roles($context, $user->id);
+
                 // Check roles against hand picked readonly roles in qm settings.
                 $roleoverride = explode(",", get_config('moodle', 'block_quickmail_frozen_readonly'));
+
+                // Loop through the roles and see if we get any that match the allowed roles.
                 foreach ($roleoverride as $thisrid) {
 
+                    // Search the array and see if we find allowed access.
                     $key = array_search($thisrid, array_column($roles, 'roleid'));
+
+                    // If we don't explicitly get a false, return true.
                     if ($key !== FALSE) {
                         return true;
                     }
                 }
+
+                // We did not get a true return, so assume no access.
+                return false;
+            } else {
+
+                // Context locking is either disabled or it is not enabled in this course.
+                return true;
             }
+        } else {
+
+            // We are nopt explicitly in a monitored page?
+            return true;
         }
     }
 
