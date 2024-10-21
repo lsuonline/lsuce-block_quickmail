@@ -200,9 +200,6 @@ class block_quickmail_plugin {
             return true;
         }
 
-        // Log whether context locking is enabled as a possibility.
-        error_log("What is context locking: ". $CFG->contextlocking);
-
         // Are we allowing quickmail access to frozen contexts?
         $pageaccess = explode(",", get_config('moodle', 'block_quickmail_frozen_readonly_pages'));
 
