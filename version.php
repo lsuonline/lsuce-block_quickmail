@@ -24,7 +24,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->version = 2024101701;
-$plugin->requires = 2016052300;
+$plugin->requires = 2022041900;
 $plugin->release = "v4.2.2";
 $plugin->maturity = MATURITY_STABLE;
 $plugin->component = 'block_quickmail';
