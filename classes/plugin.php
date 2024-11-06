@@ -42,7 +42,8 @@ class block_quickmail_plugin {
      * @throws required_capability_exception
      */
     public static function require_user_can_send($sendtype, $user, $context, $page) {
-        if (!self::user_can_send($sendtype, $user, $context, $page, false)) {
+        $includestudentaccess = -1 !== (int) get_config('moodle', 'block_quickmail_allowstudents');
+        if (!self::user_can_send($sendtype, $user, $context, $page, $includestudentaccess)) {
             $capability = $sendtype == 'broadcast' ? 'myaddinstance' : 'cansend';
 
             throw new required_capability_exception($context, 'block/quickmail:' . $capability, 'nopermissions', '');
