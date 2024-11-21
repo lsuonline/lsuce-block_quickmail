@@ -29,7 +29,7 @@ use block_quickmail\messenger\messenger;
 use block_quickmail\tasks\send_message_adhoc_task;
 use core\task\manager as task_manager;
 
-class block_quickmail_send_message_adhoc_task_testcase extends advanced_testcase {
+class send_message_adhoc_task_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,
@@ -70,6 +70,7 @@ class block_quickmail_send_message_adhoc_task_testcase extends advanced_testcase
         ]);
 
         // Schedule an email from the teacher to the students (as queued adhoc tasks).
+        $this->setUser($userteacher);
         $message = messenger::compose($userteacher, $course, $composeformdata, null, true);
 
         \phpunit_util::run_all_adhoc_tasks();
