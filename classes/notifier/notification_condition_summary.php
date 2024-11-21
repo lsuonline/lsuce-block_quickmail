@@ -34,7 +34,7 @@ class notification_condition_summary {
     public $params;
 
     public function __construct($langstringkey, $params = []) {
-        $this->lang_string_key = $langstringkey;
+        $this->langstringkey = $langstringkey;
         $this->params = $params;
     }
 
@@ -82,7 +82,7 @@ class notification_condition_summary {
             $langarray[$key] = $this->format_condition_value($key, $params);
         }
 
-        return block_quickmail_string::get($this->lang_string_key, (object) $langarray);
+        return block_quickmail_string::get($this->langstringkey, (object) $langarray);
     }
 
     /**
