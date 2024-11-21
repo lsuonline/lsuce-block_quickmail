@@ -166,7 +166,7 @@ class block_quickmail_course_recipient_send_factory_testcase extends advanced_te
         // Reset all changes automatically after this test.
         $this->resetAfterTest(true);
 
-        $this->update_system_config_value('block_quickmail_prepend_class', 'shortname');
+        set_config('block_quickmail_prepend_class', 'shortname');
 
         // Set up a course with a teacher and students.
         list($course, $userteacher, $userstudents) = $this->setup_course_with_teacher_and_students();
@@ -249,7 +249,7 @@ class block_quickmail_course_recipient_send_factory_testcase extends advanced_te
         // Reset all changes automatically after this test.
         $this->resetAfterTest(true);
 
-        $this->update_system_config_value('noreplyaddress', 'no@reply.com');
+        set_config('noreplyaddress', 'no@reply.com');
 
         // Set up a course with a teacher and students.
         list($course, $userteacher, $userstudents) = $this->setup_course_with_teacher_and_students();
@@ -275,7 +275,7 @@ class block_quickmail_course_recipient_send_factory_testcase extends advanced_te
         // Reset all changes automatically after this test.
         $this->resetAfterTest(true);
 
-        $this->update_system_config_value('noreplyaddress', 'no@reply.com');
+        set_config('noreplyaddress', 'no@reply.com');
 
         // Set up a course with a teacher and students.
         list($course, $userteacher, $userstudents) = $this->setup_course_with_teacher_and_students();
