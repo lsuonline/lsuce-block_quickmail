@@ -54,8 +54,8 @@ class block_quickmail_group_repo_testcase extends advanced_testcase {
         $this->assertArrayHasKey($yellowgroup->id, $groups);
         $this->assertArrayHasKey($bluegroup->id, $groups);
         $this->assertIsObject($firstgroup);
-        $this->assertObjectHasAttribute('id', $firstgroup);
-        $this->assertObjectHasAttribute('name', $firstgroup);
+        $this->assertObjectHasProperty('id', $firstgroup);
+        $this->assertObjectHasProperty('name', $firstgroup);
 
         $student = $enrolledusers['student'][0];
 
@@ -99,8 +99,8 @@ class block_quickmail_group_repo_testcase extends advanced_testcase {
         $this->assertArrayHasKey($yellowgroup->id, $groups);
         $this->assertArrayNotHasKey($bluegroup->id, $groups);
         $this->assertIsObject($firstgroup);
-        $this->assertObjectHasAttribute('id', $firstgroup);
-        $this->assertObjectHasAttribute('name', $firstgroup);
+        $this->assertObjectHasProperty('id', $firstgroup);
+        $this->assertObjectHasProperty('name', $firstgroup);
 
         $student = $enrolledusers['student'][38];
 
