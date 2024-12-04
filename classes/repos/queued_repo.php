@@ -215,8 +215,16 @@ class queued_repo extends repo implements queued_repo_interface {
 
         $now = time();
         
-        foreach ($syncthese as $cmsg) {            
-            $zeemsg = new message($cmsg->message_id);
+        foreach ($syncthese as $cmsg) {
+            // If the message gets deleted but not removed (which shouldn't happen) from the 
+            // quickmail_msg_course table then skip past it.
+            try {
+                $zeemsg = new message($cmsg->message_id);
+            } catch (\Exception $e) {
+                error_log("\n\nCourse ".$cmsg->course_id. " could not find message: ".$cmsg->message_id."\n");
+                continue;
+            }
+
             if ($zeemsg->get('to_send_at') <= $now) {
 
                 $zeemsg->populate_recip_course_msg();
@@ -237,11 +245,7 @@ class queued_repo extends repo implements queued_repo_interface {
     public static function get_all_messages_to_send() {
         global $DB;
 
-        try {
-            self::sync_course_recip_msgs();
-        } catch (\Exception $e) {
-            error_log("\n\nThere was an error trying to sync course msgs.\n");
-        }
+        self::sync_course_recip_msgs();
 
         $now = time();
 
