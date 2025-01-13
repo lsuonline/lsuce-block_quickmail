@@ -88,6 +88,10 @@ class group_repo extends repo implements group_repo_interface {
      * @return array   keyed by group id
      */
     public static function get_course_user_groups($course, $user, $coursecontext = null) {
+
+        if (!isset($user->id)) {
+            return [];
+        }
         // Get this user's group associations, by groupings.
         $groupingarray = groups_get_user_groups($course->id, $user->id);
 
