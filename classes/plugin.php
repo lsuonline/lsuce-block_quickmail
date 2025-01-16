@@ -139,8 +139,8 @@ class block_quickmail_plugin {
             return false;
         }
 
-        if (self::check_frozen_context($user, $context, $page)) {
-            return true;
+        if (!self::check_frozen_context($user, $context, $page)) {
+            return false;
         }
 
         if (self::user_has_capability('cansend', $user, $context)) {
