@@ -183,7 +183,7 @@ class message extends \block_quickmail\persistents\persistent {
         global $DB;
 
         $messageid = $this->get('id');
-        $cuser = $this->get('user_id');
+        $cuser = $DB->get_record('user', ['id' => $this->get('user_id')]);
         $course = $DB->get_record('course', ['id' => $this->get('course_id')]);
         $coursemsg = new message($messageid);
 
