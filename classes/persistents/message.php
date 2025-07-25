@@ -262,6 +262,8 @@ class message extends \block_quickmail\persistents\persistent {
         foreach ($recipients as $recip) {
             if ($this->quick_enrol_check($recip->get('user_id'), $this->get('course_id'))) {
                 $checkedrecipients[] = $recip;
+            } else {
+                $recip->remove_recipient_from_message($messageid, $recip->get('user_id'));
             }
         }
 
