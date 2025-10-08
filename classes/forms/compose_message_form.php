@@ -34,6 +34,7 @@ use block_quickmail_config;
 use block_quickmail\persistents\signature;
 use block_quickmail\persistents\alternate_email;
 use block_quickmail\messenger\message\substitution_code;
+use block_quickmail\repos\role_repo;
 
 class compose_message_form extends \moodleform {
 
@@ -742,8 +743,27 @@ class compose_message_form extends \moodleform {
 
     private function get_recipient_entities() {
         $results = [];
+        $found = false;
 
-        $results['all'] = block_quickmail_string::get('all_in_course');
+        $can_send = get_config('moodle', 'block_quickmail_misc_allow_student_sendall');
+        // If the setting is on then send to all in course regardless.
+        if ($can_send == "1") {
+            $results['all'] = block_quickmail_string::get('all_in_course');
+        } else {
+            // Setting is off so only teachers can send to all.
+            $roleids = role_repo::get_user_roles_in_course($this->user->id, $this->course->id);
+
+            foreach ($roleids as $dis_id) {
+                if ($dis_id == 5) {
+                    // user is a student, no 'All in course' option for them.
+                    $found = true;
+                }
+            }
+
+            if ($found == false) {
+                $results['all'] = block_quickmail_string::get('all_in_course');
+            }
+        }
 
         foreach (['role', 'group', 'user'] as $type) {
             foreach ($this->course_user_data[$type . 's'] as $entity) {
