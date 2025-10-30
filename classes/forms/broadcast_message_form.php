@@ -44,6 +44,10 @@ class broadcast_message_form extends \moodleform {
     public $userdefaultsignatureid;
     public $courseconfigarray;
     public $draftmessage;
+    public mixed $draft_message;
+    public mixed $course_config_array;
+    public mixed $user_default_signature_id;
+    private mixed $user_signature_array;
 
     /**
      * Instantiates and returns a compose message form

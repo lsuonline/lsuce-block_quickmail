@@ -37,6 +37,8 @@ class notification_index_component extends component implements \renderable {
     public $courseid;
     public $sortby;
     public $sortdir;
+    public mixed $sort_dir;
+    public mixed $sort_by;
 
     public function __construct($params = []) {
         parent::__construct($params);

@@ -32,6 +32,7 @@ class notification_condition_summary {
 
     public $langstringkey;
     public $params;
+    public mixed $lang_string_key;
 
     public function __construct($langstringkey, $params = []) {
         $this->lang_string_key = $langstringkey;
