@@ -77,11 +77,22 @@ class restore_quickmail_log_structure_step extends restore_structure_step {
     protected function process_block_level_setting($blocklevelsetting, $courseid) {
         global $DB;
         if ($blocklevelsetting['name']) {
+            // Get newest existing record from course we are importing/restoring TO ($courseid) for config name.
+            $existingconfigs = $DB->get_records('block_quickmail_config', ['coursesid' => $courseid, 'name' => $blocklevelsetting['name']], 'id DESC');
+            if (count($existingconfigs) > 0) {
+                // If imported/restored value is different than existing, update it.
+                $existingconfig = reset($existingconfigs);
+                if ($existingconfig->value != $blocklevelsetting['value']) {
+                    $existingconfig->value = $blocklevelsetting['value'];
+                    $DB->update_record('block_quickmail_config', $existingconfig);
+                }
+            } else {
                 $config = new stdClass;
                 $config->coursesid = $courseid;
                 $config->name = $blocklevelsetting['name'];
                 $config->value = $blocklevelsetting['value'];
                 $DB->insert_record('block_quickmail_config', $config);
+            }
         }
     }
 
