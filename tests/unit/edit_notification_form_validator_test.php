@@ -111,7 +111,7 @@ class block_quickmail_edit_notification_form_validator_testcase extends advanced
         // Reset all changes automatically after this test.
         $this->resetAfterTest(true);
 
-        $this->update_system_config_value('block_quickmail_message_types_available', 'email');
+        set_config('block_quickmail_message_types_available', 'email');
 
         $input = $this->get_notification_input(['message_type' => 'invalid']);
 

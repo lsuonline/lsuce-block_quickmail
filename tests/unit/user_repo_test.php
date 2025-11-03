@@ -61,9 +61,9 @@ class block_quickmail_user_repo_testcase extends advanced_testcase {
         $this->assertArrayHasKey($editingteacher->id, $users);
         $this->assertArrayHasKey($student->id, $users);
         $this->assertIsObject($firstuser);
-        $this->assertObjectHasAttribute('id', $firstuser);
-        $this->assertObjectHasAttribute('firstname', $firstuser);
-        $this->assertObjectHasAttribute('lastname', $firstuser);
+        $this->assertObjectHasProperty('id', $firstuser);
+        $this->assertObjectHasProperty('firstname', $firstuser);
+        $this->assertObjectHasProperty('lastname', $firstuser);
 
         // Should have limited access.
         $users = user_repo::get_course_user_selectable_users($course, $student, $coursecontext);
@@ -83,9 +83,9 @@ class block_quickmail_user_repo_testcase extends advanced_testcase {
 
         $firstuser = reset($users);
 
-        $this->assertObjectHasAttribute('id', $firstuser);
-        $this->assertObjectHasAttribute('firstname', $firstuser);
-        $this->assertObjectHasAttribute('lastname', $firstuser);
+        $this->assertObjectHasProperty('id', $firstuser);
+        $this->assertObjectHasProperty('firstname', $firstuser);
+        $this->assertObjectHasProperty('lastname', $firstuser);
 
         // Create course with enrolled users.
         list($course, $coursecontext, $users) = $this->setup_course_with_users();
@@ -107,9 +107,9 @@ class block_quickmail_user_repo_testcase extends advanced_testcase {
 
         $firstuser = reset($users);
 
-        $this->assertObjectHasAttribute('id', $firstuser);
-        $this->assertObjectHasAttribute('firstname', $firstuser);
-        $this->assertObjectHasAttribute('lastname', $firstuser);
+        $this->assertObjectHasProperty('id', $firstuser);
+        $this->assertObjectHasProperty('firstname', $firstuser);
+        $this->assertObjectHasProperty('lastname', $firstuser);
 
         // Get yellow group users.
         $users = user_repo::get_course_group_users($coursecontext, $groups['yellow']->id);
@@ -143,9 +143,9 @@ class block_quickmail_user_repo_testcase extends advanced_testcase {
 
         $firstuser = reset($users);
 
-        $this->assertObjectHasAttribute('id', $firstuser);
-        $this->assertObjectHasAttribute('firstname', $firstuser);
-        $this->assertObjectHasAttribute('lastname', $firstuser);
+        $this->assertObjectHasProperty('id', $firstuser);
+        $this->assertObjectHasProperty('firstname', $firstuser);
+        $this->assertObjectHasProperty('lastname', $firstuser);
 
         // Get teacher users.
         $users = user_repo::get_course_role_users($coursecontext, 4);
@@ -288,9 +288,9 @@ class block_quickmail_user_repo_testcase extends advanced_testcase {
 
         $firstmentor = reset($mentorusers);
 
-        $this->assertObjectHasAttribute('id', $firstmentor);
-        $this->assertObjectHasAttribute('firstname', $firstmentor);
-        $this->assertObjectHasAttribute('lastname', $firstmentor);
+        $this->assertObjectHasProperty('id', $firstmentor);
+        $this->assertObjectHasProperty('firstname', $firstmentor);
+        $this->assertObjectHasProperty('lastname', $firstmentor);
     }
 
     // Helpers.

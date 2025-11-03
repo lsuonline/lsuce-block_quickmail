@@ -38,13 +38,13 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
     public function test_find_or_null() {
         $this->resetAfterTest(true);
 
-        $queued = $this->create_message(true);
+        $queued = $this->create_message(1, 1, true);
 
         $foundqueued = queued_repo::find_or_null($queued->get('id'));
 
         $this->assertInstanceOf(message::class, $foundqueued);
 
-        $message = $this->create_message(false);
+        $message = $this->create_message(1, 1, false);
 
         $notfoundqueued = queued_repo::find_or_null($message->get('id'));
 
@@ -54,7 +54,7 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
     public function test_find_for_user_or_null() {
         $this->resetAfterTest(true);
 
-        $queued = $this->create_message(true);
+        $queued = $this->create_message(1, 1, true);
 
         $foundqueued = queued_repo::find_for_user_or_null($queued->get('id'), 1);
 
@@ -68,7 +68,7 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
 
         $this->assertNull($differentmessageidqueued);
 
-        $message = $this->create_message(false);
+        $message = $this->create_message(1, 1, false);
 
         $notfoundmessage = queued_repo::find_for_user_or_null($message->get('id'), 1);
 
@@ -78,7 +78,7 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
     public function test_find_for_user_course_or_null() {
         $this->resetAfterTest(true);
 
-        $queued = $this->create_message(true);
+        $queued = $this->create_message(1, 1, true);
 
         $foundqueued = queued_repo::find_for_user_course_or_null($queued->get('id'), 1, 1);
 
@@ -92,13 +92,13 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
 
         $this->assertNull($differentmessageidqueued);
 
-        $message = $this->create_message(false);
+        $message = $this->create_message(1, 1, false);
 
         $differentcoursequeued = queued_repo::find_for_user_course_or_null($queued->get('id'), 1, 2);
 
         $this->assertNull($differentcoursequeued);
 
-        $message = $this->create_message(false);
+        $message = $this->create_message(1, 1, false);
 
         $notfoundmessage = queued_repo::find_for_user_course_or_null($message->get('id'), 1, 1);
 
@@ -110,27 +110,27 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
         $this->resetAfterTest(true);
 
         // Create 3 queueds for user id: 1.
-        $queued1 = $this->create_message(true);
-        $queued2 = $this->create_message(true);
-        $queued3 = $this->create_message(true);
+        $queued1 = $this->create_message(1, 1, true);
+        $queued2 = $this->create_message(1, 1, true);
+        $queued3 = $this->create_message(1, 1, true);
 
         // Create 2 queueds for user id: 2.
-        $queued4 = $this->create_message(true);
+        $queued4 = $this->create_message(1, 1, true);
         $queued4->set('user_id', 2);
         $queued4->update();
-        $queued5 = $this->create_message(true);
+        $queued5 = $this->create_message(1, 1, true);
         $queued5->set('user_id', 2);
         $queued5->update();
 
         // Create a non-queued message for user id: 1.
-        $queued6 = $this->create_message();
+        $queued6 = $this->create_message(1, 1);
 
         // Create a soft-deleted message for user id: 1.
-        $queued7 = $this->create_message(true);
+        $queued7 = $this->create_message(1, 1, true);
         $queued7->soft_delete();
 
         // Create a message for user: 1, course: 2.
-        $queued8 = $this->create_message(true);
+        $queued8 = $this->create_message(1, 1, true);
         $queued8->set('course_id', 2);
         $queued8->update();
 
@@ -153,73 +153,76 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
     public function test_sorts_get_for_user() {
         $this->resetAfterTest(true);
 
-        $createdqueueds = $this->create_test_queueds();
+        $student = $this->getDataGenerator()->create_user();
+        $createdqueueds = $this->create_test_queueds($student->id);
+        $course1id = $createdqueueds[0]->course_id;
+        $course4id = $createdqueueds[1]->course_id;
 
         // Get all queueds for user: 1.
-        $queueds = queued_repo::get_for_user(1, 0);
+        $queueds = queued_repo::get_for_user($student->id, 0);
         $this->assertCount(7, $queueds->data);
         $this->assertEquals('date', $queueds->data[0]->get('subject'));
 
         // Sort by id.
-        $queueds = queued_repo::get_for_user(1, 0, [
+        $queueds = queued_repo::get_for_user($student->id, 0, [
             'sort' => 'id',
             'dir' => 'asc'
         ]);
         $this->assertEquals($createdqueueds[0]->id, $queueds->data[0]->get('id'));
 
-        $queueds = queued_repo::get_for_user(1, 0, [
+        $queueds = queued_repo::get_for_user($student->id, 0, [
             'sort' => 'id',
             'dir' => 'desc'
         ]);
         $this->assertEquals($createdqueueds[6]->id, $queueds->data[0]->get('id'));
 
         // Sort by course.
-        $queueds = queued_repo::get_for_user(1, 0, [
+        $queueds = queued_repo::get_for_user($student->id, 0, [
             'sort' => 'course',
             'dir' => 'asc'
         ]);
-        $this->assertEquals(1, $queueds->data[0]->get('course_id'));
+        $this->assertEquals($course1id, $queueds->data[0]->get('course_id'));
 
-        $queueds = queued_repo::get_for_user(1, 0, [
+        $queueds = queued_repo::get_for_user($student->id, 0, [
             'sort' => 'course',
             'dir' => 'desc'
         ]);
-        $this->assertEquals(5, $queueds->data[0]->get('course_id'));
+        $this->assertEquals($course4id, $queueds->data[0]->get('course_id'));
 
         // Sort by subject.
-        $queueds = queued_repo::get_for_user(1, 0, [
+        $queueds = queued_repo::get_for_user($student->id, 0, [
             'sort' => 'subject',
             'dir' => 'asc'
         ]);
         $this->assertEquals('apple', $queueds->data[0]->get('subject'));
 
-        $queueds = queued_repo::get_for_user(1, 0, [
+        $queueds = queued_repo::get_for_user($student->id, 0, [
             'sort' => 'subject',
             'dir' => 'desc'
         ]);
         $this->assertEquals('grape', $queueds->data[0]->get('subject'));
 
         // Sort by (time) created.
-        $queueds = queued_repo::get_for_user(1, 0, [
+        $queueds = queued_repo::get_for_user($student->id, 0, [
             'sort' => 'created',
             'dir' => 'asc'
         ]);
         $this->assertEquals(1111111111, $queueds->data[0]->get('timecreated'));
 
-        $queueds = queued_repo::get_for_user(1, 0, [
+        $queueds = queued_repo::get_for_user($student->id, 0, [
             'sort' => 'created',
             'dir' => 'desc'
         ]);
         $this->assertEquals(8888888888, $queueds->data[0]->get('timecreated'));
 
         // Sort by (time) scheduled.
-        $queueds = queued_repo::get_for_user(1, 0, [
+        $queueds = queued_repo::get_for_user($student->id, 0, [
             'sort' => 'scheduled',
             'dir' => 'asc'
         ]);
         $this->assertEquals(1010101010, $queueds->data[0]->get('to_send_at'));
 
-        $queueds = queued_repo::get_for_user(1, 0, [
+        $queueds = queued_repo::get_for_user($student->id, 0, [
             'sort' => 'scheduled',
             'dir' => 'desc'
         ]);
@@ -229,73 +232,75 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
     public function test_sorts_get_for_user_and_course() {
         $this->resetAfterTest(true);
 
-        $createdqueueds = $this->create_test_queueds();
+        $student = $this->getDataGenerator()->create_user();
+        $createdqueueds = $this->create_test_queueds($student->id);
+        $course1id = $createdqueueds[0]->course_id;
 
         // Get all queueds for user: 1, course: 1.
-        $queueds = queued_repo::get_for_user(1, 1);
+        $queueds = queued_repo::get_for_user($student->id, $course1id);
         $this->assertCount(4, $queueds->data);
         $this->assertEquals('date', $queueds->data[0]->get('subject'));
 
         // Sort by id.
-        $queueds = queued_repo::get_for_user(1, 1, [
+        $queueds = queued_repo::get_for_user($student->id, $course1id, [
             'sort' => 'id',
             'dir' => 'asc'
         ]);
         $this->assertEquals($createdqueueds[0]->id, $queueds->data[0]->get('id'));
 
-        $queueds = queued_repo::get_for_user(1, 1, [
+        $queueds = queued_repo::get_for_user($student->id, $course1id, [
             'sort' => 'id',
             'dir' => 'desc'
         ]);
         $this->assertEquals($createdqueueds[6]->id, $queueds->data[0]->get('id'));
 
         // Sort by course.
-        $queueds = queued_repo::get_for_user(1, 1, [
+        $queueds = queued_repo::get_for_user($student->id, $course1id, [
             'sort' => 'course',
             'dir' => 'asc'
         ]);
-        $this->assertEquals(1, $queueds->data[0]->get('course_id'));
+        $this->assertEquals($course1id, $queueds->data[0]->get('course_id'));
 
-        $queueds = queued_repo::get_for_user(1, 1, [
+        $queueds = queued_repo::get_for_user($student->id, $course1id, [
             'sort' => 'course',
             'dir' => 'desc'
         ]);
-        $this->assertEquals(1, $queueds->data[0]->get('course_id'));
+        $this->assertEquals($course1id, $queueds->data[0]->get('course_id'));
 
         // Sort by subject.
-        $queueds = queued_repo::get_for_user(1, 1, [
+        $queueds = queued_repo::get_for_user($student->id, $course1id, [
             'sort' => 'subject',
             'dir' => 'asc'
         ]);
         $this->assertEquals('apple', $queueds->data[0]->get('subject'));
 
-        $queueds = queued_repo::get_for_user(1, 1, [
+        $queueds = queued_repo::get_for_user($student->id, $course1id, [
             'sort' => 'subject',
             'dir' => 'desc'
         ]);
         $this->assertEquals('fig', $queueds->data[0]->get('subject'));
 
         // Sort by (time) created.
-        $queueds = queued_repo::get_for_user(1, 1, [
+        $queueds = queued_repo::get_for_user($student->id, $course1id, [
             'sort' => 'created',
             'dir' => 'asc'
         ]);
         $this->assertEquals(1111111111, $queueds->data[0]->get('timecreated'));
 
-        $queueds = queued_repo::get_for_user(1, 1, [
+        $queueds = queued_repo::get_for_user($student->id, $course1id, [
             'sort' => 'created',
             'dir' => 'desc'
         ]);
         $this->assertEquals(8888888888, $queueds->data[0]->get('timecreated'));
 
         // Sort by (time) scheduled.
-        $queueds = queued_repo::get_for_user(1, 1, [
+        $queueds = queued_repo::get_for_user($student->id, $course1id, [
             'sort' => 'scheduled',
             'dir' => 'asc'
         ]);
         $this->assertEquals(1010101010, $queueds->data[0]->get('to_send_at'));
 
-        $queueds = queued_repo::get_for_user(1, 1, [
+        $queueds = queued_repo::get_for_user($student->id, $course1id, [
             'sort' => 'scheduled',
             'dir' => 'desc'
         ]);
@@ -307,7 +312,7 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
 
         // Create 30 queueds for user id: 1.
         foreach (range(1, 30) as $i) {
-            $this->create_message(true);
+            $this->create_message(1, 1, true);
         }
 
         // Get all queueds for user: 1.
@@ -343,9 +348,10 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
 
     public function test_get_all_messages_to_send() {
         $this->resetAfterTest(true);
+        $student = $this->getDataGenerator()->create_user();
 
         // Should produce 6 queued messages with send times in the future AND 1 with scheduled time in the past.
-        $createdqueueds = $this->create_test_queueds();
+        $createdqueueds = $this->create_test_queueds($student->id);
 
         $messages = queued_repo::get_all_messages_to_send();
 
@@ -401,16 +407,16 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
     }
 
     // Helpers.
-    private function create_message($isqueued = false) {
+    private function create_message(int $userid, int $courseid, $isqueued = false) {
         $message = message::create_new([
-            'course_id' => 1,
-            'user_id' => 1,
+            'course_id' => $courseid,
+            'user_id' => $userid,
             'message_type' => 'email',
             'to_send_at' => $isqueued ? time() : 0
         ]);
 
         message_recipient::create_for_message($message, [
-            'user_id' => 1,
+            'user_id' => $userid,
             'sent_at' => 0,
         ]);
 
@@ -430,14 +436,21 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
      *
      * @return array
      */
-    private function create_test_queueds() {
+    private function create_test_queueds(int $userid) {
         global $DB;
 
         $queueds = [];
+        $course1 = $this->getDataGenerator()->create_course();
+        $this->getDataGenerator()->enrol_user($userid, $course1->id, 'student');
+        $course2 = $this->getDataGenerator()->create_course();
+        $this->getDataGenerator()->enrol_user($userid, $course2->id, 'student');
+        $course3 = $this->getDataGenerator()->create_course();
+        $this->getDataGenerator()->enrol_user($userid, $course3->id, 'student');
+        $course4 = $this->getDataGenerator()->create_course();
+        $this->getDataGenerator()->enrol_user($userid, $course4->id, 'student');
 
         // Id: 144000.
-        $queued1 = $this->create_message(true);
-        $queued1->set('course_id', 1);
+        $queued1 = $this->create_message($userid, $course1->id, true);
         $queued1->set('subject', 'date');
         $queued1->update();
         $queued = $queued1->to_record();
@@ -447,8 +460,7 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
         $queueds[] = $queued;
 
         // Id: 144001.
-        $queued2 = $this->create_message(true);
-        $queued2->set('course_id', 5);
+        $queued2 = $this->create_message($userid, $course4->id, true);
         $queued2->set('subject', 'elderberry');
         $queued2->update();
         $queued = $queued2->to_record();
@@ -458,8 +470,7 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
         $queueds[] = $queued;
 
         // Id: 144002.
-        $queued3 = $this->create_message(true);
-        $queued3->set('course_id', 3);
+        $queued3 = $this->create_message($userid, $course3->id, true);
         $queued3->set('subject', 'coconut');
         $queued3->update();
         $queued = $queued3->to_record();
@@ -469,8 +480,7 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
         $queueds[] = $queued;
 
         // Id: 144003.
-        $queued4 = $this->create_message(true);
-        $queued4->set('course_id', 1);
+        $queued4 = $this->create_message($userid, $course1->id, true);
         $queued4->set('subject', 'apple');
         $queued4->update();
         $queued = $queued4->to_record();
@@ -480,8 +490,7 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
         $queueds[] = $queued;
 
         // Id: 144004.
-        $queued5 = $this->create_message(true);
-        $queued5->set('course_id', 1);
+        $queued5 = $this->create_message($userid, $course1->id, true);
         $queued5->set('subject', 'banana');
         $queued5->update();
         $queued = $queued5->to_record();
@@ -491,8 +500,7 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
         $queueds[] = $queued;
 
         // Id: 144005.
-        $queued6 = $this->create_message(true);
-        $queued6->set('course_id', 2);
+        $queued6 = $this->create_message($userid, $course2->id, true);
         $queued6->set('subject', 'grape');
         $queued6->update();
         $queued = $queued6->to_record();
@@ -502,8 +510,7 @@ class block_quickmail_queued_repo_testcase extends advanced_testcase {
         $queueds[] = $queued;
 
         // Id: 144006.
-        $queued7 = $this->create_message(true);
-        $queued7->set('course_id', 1);
+        $queued7 = $this->create_message($userid, $course1->id, true);
         $queued7->set('subject', 'fig');
         $queued7->update();
         $queued = $queued7->to_record();

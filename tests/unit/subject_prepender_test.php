@@ -51,7 +51,7 @@ class block_quickmail_subject_prepender_testcase extends advanced_testcase {
 
         $subject = 'Hello world!';
 
-        $this->update_system_config_value('block_quickmail_prepend_class', 'idnumber');
+        set_config('block_quickmail_prepend_class', 'idnumber');
 
         $formattedsubject = subject_prepender::format_course_subject($course, $subject);
 
@@ -65,7 +65,7 @@ class block_quickmail_subject_prepender_testcase extends advanced_testcase {
 
         $subject = 'Hello world!';
 
-        $this->update_system_config_value('block_quickmail_prepend_class', 'shortname');
+        set_config('block_quickmail_prepend_class', 'shortname');
 
         $formattedsubject = subject_prepender::format_course_subject($course, $subject);
 
@@ -79,7 +79,7 @@ class block_quickmail_subject_prepender_testcase extends advanced_testcase {
 
         $subject = 'Hello world!';
 
-        $this->update_system_config_value('block_quickmail_prepend_class', 'fullname');
+        set_config('block_quickmail_prepend_class', 'fullname');
 
         $formattedsubject = subject_prepender::format_course_subject($course, $subject);
 

@@ -40,7 +40,7 @@ abstract class notification_model implements notification_model_interface {
     public notification_type_interface $notification_type_interface;
 
     public function __construct(notification_type_interface $notificationtypeinterface) {
-        $this->notification_type_interface = $notificationtypeinterface;
+        $this->notificationtypeinterface = $notificationtypeinterface;
         $this->notification = $notificationtypeinterface->get_notification();
         $this->condition = notification_condition::from_condition_string($this->notification->get('conditions'));
     }
