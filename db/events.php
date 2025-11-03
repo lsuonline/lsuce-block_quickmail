@@ -29,6 +29,12 @@ $observers = [
     [
         'eventname' => '\core\event\course_viewed',
         'callback' => '\block_quickmail\notifier\event_observer::course_viewed'
+    ],
+
+    // Course deleted.
+    [
+        'eventname' => '\core\event\course_deleted',
+        'callback' => '\block_quickmail\notifier\event_observer::course_deleted'
     ]
 
 ];

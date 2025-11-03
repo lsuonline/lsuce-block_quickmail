@@ -45,6 +45,15 @@ class event_observer {
         event_notification_handler::course_entered($userid, $courseid);
     }
 
+    public static function course_deleted(\core\event\course_deleted $event) {
+        global $DB;
+
+        // Course that was deleted.
+        $courseid = $event->courseid;
+
+        $DB->delete_records('block_quickmail_config', ['coursesid' => $courseid]);
+    }
+
     // For testing….
     /**
      * Send a test email from an arbitrary user to the given user_id
