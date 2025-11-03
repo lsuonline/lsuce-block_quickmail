@@ -53,6 +53,24 @@ trait sends_emails {
         return $message->$attr;
     }
 
+    /**
+     * Gets a list of messages in the sink and builds an array with an attribute provided.
+     *
+     * @param   phpunit_message_sink  $sink   Message sink.
+     * @param   string                $attr   Name of the attribute.
+     * @return  array                         List of the attributes.
+     */
+    public function email_in_sink_attr_all($sink, $attr) {
+        $result = [];
+        $messages = $sink->get_messages();
+        foreach ($messages as $message) {
+            if (!empty($message->$attr)) {
+                $result[] = $message->$attr;
+            }
+        }
+        return $result;
+    }
+
     public function email_in_sink_body_contains($sink, $index, $bodytext) {
         $messages = $sink->get_messages();
 
