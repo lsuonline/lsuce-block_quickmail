@@ -679,6 +679,11 @@ class messenger implements messenger_interface {
         // Send recipient_send_factory.
         $recipientsendfactory->send();
 
+        message_recipient::mark_as_sent(
+            $this->message,
+            (int)$recipient->get('user_id'),
+            $this->message->get('id')
+        );
         return true;
     }
 
@@ -833,5 +838,4 @@ class messenger implements messenger_interface {
 
         return block_quickmail_string::get('receipt_email_body', $data);
     }
-
 }
