@@ -218,7 +218,7 @@ class message extends \block_quickmail\persistents\persistent {
                     $userids_excluded[] = user_repo::get_user_in_course($user_type[1]);
                 } else if ($user_type[0] == "group") {
                     $groupids_excluded[] = user_repo::get_course_group_users($context, $user_type[1]);
-                    error_log("\n\n do some stuff");
+                    // error_log("\n\n do some stuff");
                 }
             }
             // There could be multiple arrays of groups, combine!
