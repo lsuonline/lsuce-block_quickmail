@@ -1137,20 +1137,24 @@ function xmldb_block_quickmail_upgrade($oldversion) {
         }
     }
 
-    if ($oldversion < 2024101702) {
+    if ($oldversion < 2025102302) {
 
-        // Define index msgrec (not unique) to be added to block_quickmail_msg_course.
-        $table = new xmldb_table('block_quickmail_msg_course');
-        $index = new xmldb_index('msgrec', XMLDB_INDEX_NOTUNIQUE, ['sent_at']);
+        $table = new xmldb_table('block_quickmail_messages');
 
-        // Conditionally launch add index msgrec.
-        if (!$dbman->index_exists($table, $index)) {
-            $dbman->add_index($table, $index);
+        $exfield = new xmldb_field(
+            'excluded',
+            XMLDB_TYPE_TEXT,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+
+        // Check if the field exists before adding to prevent errors on re-run
+        if (!$dbman->field_exists($table, $exfield)) {
+            $dbman->add_field($table, $exfield);
         }
-
-        // Quickmail savepoint reached.
-        upgrade_block_savepoint(true, 2024101702, 'quickmail');
     }
-
     return $result;
 }

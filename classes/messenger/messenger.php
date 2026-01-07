@@ -679,6 +679,11 @@ class messenger implements messenger_interface {
         // Send recipient_send_factory.
         $recipientsendfactory->send();
 
+        message_recipient::mark_as_sent(
+            $this->message,
+            (int)$recipient->get('user_id'),
+            $this->message->get('id')
+        );
         return true;
     }
 
@@ -688,6 +693,7 @@ class messenger implements messenger_interface {
      * @return void
      */
     public function handle_message_post_send() {
+        global $DB;
         // Send to any additional emails (if any).
         $this->send_message_additional_emails();
 
@@ -695,11 +701,23 @@ class messenger implements messenger_interface {
         if ($this->message->should_send_receipt()) {
             $this->send_message_receipt();
         }
-
+        $now = time();
         // Update message as having been sent.
         $this->message->set('is_sending', 0);
-        $this->message->set('sent_at', time());
+        $this->message->set('sent_at', $now);
         $this->message->update();
+
+        // Clean up any ALL course msgs.
+        $msgexists = $DB->get_record('block_quickmail_msg_course', [
+            'message_id' => $this->message->get('id')
+        ]);
+
+        if ($msgexists) {   
+            $DB->update_record(
+                'block_quickmail_msg_course',
+                array('id' => $msgexists->id, 'sent_at' => $now)
+            );
+        }
     }
 
     /**
@@ -820,5 +838,4 @@ class messenger implements messenger_interface {
 
         return block_quickmail_string::get('receipt_email_body', $data);
     }
-
 }

@@ -282,4 +282,21 @@ if ($ADMIN->fulltree) {
             'qm,sent,notifications,signatures'
         )
     );
+
+    // Miscellaneous Stuffs.
+    $settings->add(
+        new admin_setting_heading(
+            'misc_settings_heading',
+            block_quickmail_string::get('misc_settings_heading_title'),
+            ''
+        )
+    );
+    $settings->add(
+        new admin_setting_configcheckbox(
+            'block_quickmail_misc_allow_student_sendall',
+            block_quickmail_string::get('misc_settings_allow_student_sendall_title'),
+            block_quickmail_string::get('misc_settings_allow_student_sendall_desc'),
+            0   // Default.
+        )
+    );
 }

@@ -1,3 +1,12 @@
+## v1.4.2
+- Removed error_log line.
+- Fixed bug for students not being able to send a message due to context freezing check.
+
+## v1.4.1
+- Added a new table for to send keep track of messages sent to all students. When cron runs this will take the current enrollments of the course and then send the message. This fixes the issue of sending emails to students who had dropped the course or enrolled after it was scheduled.
+- Added a setting to allow certain roles access to parts when the course is frozen.
+- Fixed other bugs and warnings.
+
 ## v1.4.0
 - Added two DB fields for status of message (whether it sent or not) and the ids of those it failed to send to
 - Added alternative name fields for moodle 2.6 compatibility issues, and changed get_context_instance methods to context::instance_by_id

@@ -473,3 +473,8 @@ $string['selectable_roles_readonly'] = 'Read Only Roles for Context Freezing';
 $string['selectable_roles_readonly_desc'] = 'Which roles can still view sent emails after the course has been frozen.';
 $string['frozen_readonly_pages'] = 'Page Access for Roles';
 $string['frozen_readonly_pages_desc'] = 'When the context is frozen these pages will have read only access from the above roles';
+
+// Miscellaneous settings.
+$string['misc_settings_heading_title'] = 'Miscellaneous settings';
+$string['misc_settings_allow_student_sendall_title'] = 'Student Send All';
+$string['misc_settings_allow_student_sendall_desc'] = 'Allow students to send to All users in the course. If not enabled then students will be restricted to instructors and students in their section.';

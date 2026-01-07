@@ -88,8 +88,15 @@ class group_repo extends repo implements group_repo_interface {
      * @return array   keyed by group id
      */
     public static function get_course_user_groups($course, $user, $coursecontext = null) {
+
+        // Scheduled task could pass in user id as user, check.
+        if (gettype($user) == "string") {
+            $userid = $user;
+        } else {
+            $userid = $user->id;
+        }
         // Get this user's group associations, by groupings.
-        $groupingarray = groups_get_user_groups($course->id, $user->id);
+        $groupingarray = groups_get_user_groups($course->id, $userid);
 
         // Transform this array to an array of groups.
         $groups = self::transform_grouping_array_to_groups($groupingarray);
