@@ -34,13 +34,6 @@ class broadcast_recipient_filter_results_component extends component implements 
     public $displayusers;
     public $sortby;
     public $sortdir;
-    public mixed $sort_dir;
-    public mixed $sort_by;
-    public mixed $page;
-    public $draft_id;
-    public $display_users;
-    public $result_user_count;
-    public mixed $broadcast_recipient_filter;
 
     public function __construct($params = []) {
         parent::__construct($params);

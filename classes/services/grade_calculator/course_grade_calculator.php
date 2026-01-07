@@ -36,9 +36,6 @@ class course_grade_calculator {
     public $courseid;
     public $coursecontext;
     public $coursegradeitem;
-    public $course_grade_item;
-    public $course_context;
-    public int $course_id;
 
     /**
      * Constructs the course grade calculator

@@ -37,7 +37,6 @@ abstract class notification_model implements notification_model_interface {
     public $notificationtypeinterface;
     public $notification;
     public $condition;
-    public notification_type_interface $notification_type_interface;
 
     public function __construct(notification_type_interface $notificationtypeinterface) {
         $this->notification_type_interface = $notificationtypeinterface;
