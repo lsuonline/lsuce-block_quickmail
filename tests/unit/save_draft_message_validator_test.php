@@ -296,7 +296,7 @@ class block_quickmail_save_draft_message_validator_testcase extends advanced_tes
         // Specify recipients.
         $recipients['included']['user'] = $this->get_user_ids_from_user_array($userstudents);
 
-        $this->update_system_config_value('block_quickmail_message_types_available', 'email');
+        set_config('block_quickmail_message_types_available', 'email');
 
         // Get a compose form submission.
         $composeformdata = $this->get_compose_message_form_submission($recipients, 'message');

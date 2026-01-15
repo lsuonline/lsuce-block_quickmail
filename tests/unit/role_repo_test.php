@@ -48,9 +48,9 @@ class block_quickmail_role_repo_testcase extends advanced_testcase {
         $this->assertIsArray($roles);
         $this->assertArrayHasKey(3, $roles);
         $this->assertIsObject($roles[3]);
-        $this->assertObjectHasAttribute('id', $roles[3]);
-        $this->assertObjectHasAttribute('name', $roles[3]);
-        $this->assertObjectHasAttribute('shortname', $roles[3]);
+        $this->assertObjectHasProperty('id', $roles[3]);
+        $this->assertObjectHasProperty('name', $roles[3]);
+        $this->assertObjectHasProperty('shortname', $roles[3]);
 
         // Update the course's settings to exclude editingteacher.
         $newparams = [
@@ -74,9 +74,9 @@ class block_quickmail_role_repo_testcase extends advanced_testcase {
         $this->assertIsArray($roles);
         $this->assertArrayHasKey(4, $roles);
         $this->assertIsObject($roles[4]);
-        $this->assertObjectHasAttribute('id', $roles[4]);
-        $this->assertObjectHasAttribute('name', $roles[4]);
-        $this->assertObjectHasAttribute('shortname', $roles[4]);
+        $this->assertObjectHasProperty('id', $roles[4]);
+        $this->assertObjectHasProperty('name', $roles[4]);
+        $this->assertObjectHasProperty('shortname', $roles[4]);
     }
 
     public function test_get_alternate_email_role_selection_array() {

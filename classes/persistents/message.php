@@ -359,7 +359,7 @@ class message extends \block_quickmail\persistents\persistent {
         }
 
         $recipientids = array_reduce($checkedrecipients, function ($carry, $recipient) {
-            $carry[] = $checkedrecipients->get('user_id');
+            $carry[] = $recipient->get('user_id');
 
             return $carry;
         }, []);
