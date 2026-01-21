@@ -2,7 +2,7 @@
   "name": "moodle-block_quickmail",
   "repository": {
     "type": "git",
-    "url": "git://github.com/lsuits/block_quickmail.git"
+    "url": "git://github.com/lsuonline/block_quickmail.git"
   },
   "devDependencies": {
     "async": "1.5.2",
