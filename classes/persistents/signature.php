@@ -92,71 +92,6 @@ class signature extends \block_quickmail\persistents\persistent {
         return true;
     }
 
-    // Hooks.
-    /**
-     * Take appropriate actions before creating a new signature, including:
-     *
-     *   - if new signature is not default, and user has no signatures, make it the default
-     *
-     * @return void
-     */
-    protected function before_create() {
-        $existinguserdefault = self::get_default_signature_for_user($this->get('user_id'));
-
-        if (!$this->is_default() && empty($existinguserdefault)) {
-            $this->set('default_flag', 1);
-        }
-    }
-
-    /**
-     * Take appropriate actions after creating a new signature, including:
-     *
-     *   - if new signature is default, and user has an existing default signature, make the existing default NOT default
-     *
-     * @return void
-     */
-    protected function after_create() {
-        $existinguserdefault = self::get_default_signature_for_user($this->get('user_id'));
-
-        if ($this->is_default() && ! empty($existinguserdefault)) {
-            $existinguserdefault->set('default_flag', 0);
-            $existinguserdefault->update();
-        }
-    }
-
-    /**
-     * Take appropriate actions after updating a signature, including:
-     *
-     *   - if this updated signature is now default, flag all others (if any), as non-default
-     *   - if this updated signature is NOT default, make sure there is at least one default
-     *
-     * @param bool  $result  whether or not the update was successful
-     * @return void
-     */
-    protected function after_update($result) {
-        if ($result) {
-            if ($this->is_default()) {
-                global $DB;
-
-                $sql = 'UPDATE {block_quickmail_signatures}
-                        SET default_flag = 0
-                        WHERE id <> ? AND user_id = ?';
-
-                $DB->execute($sql, [
-                    $this->get('id'),
-                    $this->get('user_id'),
-                ]);
-            } else {
-                $existinguserdefault = self::get_default_signature_for_user($this->get('user_id'));
-
-                if (empty($existinguserdefault)) {
-                    $this->set('default_flag', 1);
-                    $this->update();
-                }
-            }
-        }
-    }
-
     /**
      * Take appropriate actions before deleting a signature, including:
      *
@@ -286,4 +221,24 @@ class signature extends \block_quickmail\persistents\persistent {
         );
     }
 
+    /**
+     * Take appropriate actions before creating a new signature, including:
+     *  - If new signature is default, and user has an existing default signature, make the existing default NOT default.
+     *  - If new signature is not default, and user has no signatures, make it the default.
+     *
+     * @return void
+     */
+    protected function before_create() {
+        $existinguserdefault = self::get_default_signature_for_user($this->get('user_id'));
+        if ($this->is_default()) {
+            if (!empty($existinguserdefault)) {
+                $existinguserdefault->set('default_flag', 0);
+                $existinguserdefault->update();
+            }
+        } else {
+            if (empty($existinguserdefault)) {
+                $this->set('default_flag', 1);
+            }
+        }
+    }
 }
