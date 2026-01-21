@@ -38,6 +38,7 @@ class migrator {
     public static $olddraftstable = 'block_quickmail_drafts';
     public static $oldlogtable = 'block_quickmail_log';
     public static $messagetable = 'block_quickmail_messages';
+    public static $messageattachtable = 'block_quickmail_msg_attach';
     public static $draftrecipienttable = 'block_quickmail_draft_recips';
     public static $messagerecipienttable = 'block_quickmail_msg_recips';
     public static $additionalemailtable = 'block_quickmail_msg_ad_email';
@@ -211,6 +212,44 @@ class migrator {
         // If original message had any additional emails.
         if (!empty($oldrecord->additional_emails)) {
             $this->create_additional_emails_for_message($isadminmessage, $messageid, $oldrecord);
+        }
+
+        // If original message had any attached files.
+        $params = array(
+            'itemid' => $oldrecord->id,
+            'component' => 'block_quickmail',
+            'filearea' => $isdraft ? 'attachment_drafts' : 'attachment_log'
+        );
+
+        $sql = "SELECT *
+                  FROM {files}
+                 WHERE itemid = :itemid
+                   AND component = :component
+                   AND filearea = :filearea
+                   AND filename != '.'
+                ";
+
+        $files = $this->db->get_records_sql($sql, $params);
+        foreach ($files as $file) {
+            $file->itemid = $messageid;
+            $file->filearea = 'attachments';
+            $file->pathnamehash = sha1("/$file->contextid/$file->component/$file->filearea/$file->itemid" . $file->filepath . $file->filename);
+
+            // Update attached file record.
+            $this->db->update_record("files", $file);
+
+            // Construct a new message attach record.
+            $msgattach = (object) [
+                'message_id' => $messageid,
+                'path' => $file->filepath,
+                'filename' => $file->filename,
+                'usermodified' => $file->userid,
+                'timecreated' => $file->timecreated,
+                'timemodified' => $file->timemodified
+            ];
+
+            // Insert record as message attach, returning message attach id.
+            $messageattachid = $this->db->insert_record(self::$messageattachtable, $msgattach);
         }
     }
 
