@@ -397,17 +397,17 @@ class message extends \block_quickmail\persistents\persistent {
      */
     public function get_broadcast_draft_recipient_filter() {
         if ($this->get_message_scope() !== 'broadcast') {
-            return '';
+            return array();
         }
 
         $recipients = $this->get_message_draft_recipients();
 
         if (!$recip = reset($recipients)) {
-            return '';
+            return array();
         }
 
         if (!$filter = $recip->get('recipient_filter')) {
-            return '';
+            return array();
         }
 
         return @unserialize($filter);
