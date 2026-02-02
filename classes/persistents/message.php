@@ -289,11 +289,53 @@ class message extends \block_quickmail\persistents\persistent {
         }
     }
 
+    /**
+     * block_roles_sending option is to block particular roles from getting messages in QM.
+     *
+     * @param  array  $recipients
+     * @return array  $updated
+     */
+    public function check_blocked_roles($recipients) {
+        
+        $blockedrole = explode(",", get_config('moodle', 'block_quickmail_block_roles_sending'));
+        // Loop through the roles and see if we get any that match the allowed roles.
+        $updated = [];
+        foreach ($recipients as $recip) {
+            $context = \context_course::instance($this->get('course_id'));
+            $userid = $recip->get('user_id');
+            $roles = get_user_roles($context, $userid, true);
+            $found = false;
+            foreach ($blockedrole as $br) {
+
+                // Search the array and see if we find allowed access.
+                $key = array_search($br, array_column($roles, 'roleid'));
+
+                // If we don't explicitly get a false, return true.
+                if ($key !== FALSE) {
+                    $found = true;
+                }
+            }
+
+            if (!$found) {
+                $updated[] = $recip;
+            }
+        }
+        return $updated;
+    }
+
+    /**
+     * A quick check to make sure the user is enrolled as timely messages could have drops.
+     *
+     * @param  int  $user_id
+     * @param  int  $course_id
+     * @return bool
+     */
     public function quick_enrol_check($user_id, $course_id) {
         $context = \context_course::instance($course_id);
         $enrolled = is_enrolled($context, $user_id, '', true);
         return $enrolled;
     }
+
     /**
      * Returns the message recipients of a given status that are associated with this message
      *
@@ -326,6 +368,7 @@ class message extends \block_quickmail\persistents\persistent {
             // Do a quick check and see if this particular message is meant for ALL.
             if ($checkall) {
                 $recipients = $this->get_message_recipients_all();
+                $recipients = $this->check_blocked_roles($recipients);
                 return $recipients;
             }
 
@@ -348,6 +391,9 @@ class message extends \block_quickmail\persistents\persistent {
             $recordset->close();
         }
         $checkedrecipients = [];
+
+        $recipients = $this->check_blocked_roles($recipients);
+        
         foreach ($recipients as $recip) {
             if ($this->quick_enrol_check($recip->get('user_id'), $this->get('course_id'))) {
                 $checkedrecipients[] = $recip;
@@ -735,7 +781,7 @@ class message extends \block_quickmail\persistents\persistent {
             'no_reply' => $notification->get('no_reply'),
             'send_to_mentors' => $notification->get('send_to_mentors'),
             'is_draft' => 0,
-            'excluded' => $data->excluded
+            'excluded' => null
         ]);
 
         $message->sync_recipients($recipientuserids);

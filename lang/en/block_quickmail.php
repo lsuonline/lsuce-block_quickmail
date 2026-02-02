@@ -474,6 +474,10 @@ $string['selectable_roles_readonly_desc'] = 'Which roles can still view sent ema
 $string['frozen_readonly_pages'] = 'Page Access for Roles';
 $string['frozen_readonly_pages_desc'] = 'When the context is frozen these pages will have read only access from the above roles';
 
+// Block Roles from sending emails.
+$string['selectable_block_roles'] = 'Emails will not be sent to these roles';
+$string['selectable_block_roles_desc'] = 'Before a message is sent, the selected role(s) will be removed from the message queue.';
+
 // Miscellaneous settings.
 $string['misc_settings_heading_title'] = 'Miscellaneous settings';
 $string['misc_settings_allow_student_sendall_title'] = 'Student Send All';

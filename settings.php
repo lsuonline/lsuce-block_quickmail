@@ -299,4 +299,13 @@ if ($ADMIN->fulltree) {
             0   // Default.
         )
     );
+    $settings->add(
+        new admin_setting_configmultiselect(
+            'block_quickmail_block_roles_sending',
+            block_quickmail_string::get('selectable_block_roles'),
+            block_quickmail_string::get('selectable_block_roles_desc'),
+            null, // $defaultroleskeys, // Default.
+            $blockquickmailroleselectionoptions
+        )
+    );
 }
