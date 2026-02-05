@@ -21,11 +21,18 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace block_quickmail;
+
+use advanced_testcase;
+use block_quickmail_emailer;
+use has_general_helpers;
+use sends_emails;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
-class block_quickmail_emailer_testcase extends advanced_testcase {
+final class emailer_test extends advanced_testcase {
 
     use has_general_helpers,
         sends_emails;

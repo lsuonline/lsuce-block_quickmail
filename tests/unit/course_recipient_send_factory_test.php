@@ -21,15 +21,21 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace block_quickmail;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
-use block_quickmail\messenger\factories\course_recipient_send\recipient_send_factory;
+use advanced_testcase;
 use block_quickmail\messenger\factories\course_recipient_send\email_recipient_send_factory;
 use block_quickmail\messenger\factories\course_recipient_send\message_recipient_send_factory;
+use block_quickmail\messenger\factories\course_recipient_send\recipient_send_factory;
+use creates_message_records;
+use has_general_helpers;
+use sets_up_courses;
 
-class block_quickmail_course_recipient_send_factory_testcase extends advanced_testcase {
+final class course_recipient_send_factory_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,

@@ -21,13 +21,19 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace block_quickmail;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
+use advanced_testcase;
 use block_quickmail\messenger\message\message_body_constructor;
+use creates_message_records;
+use has_general_helpers;
+use sets_up_courses;
 
-class block_quickmail_parses_compose_message_body_testcase extends advanced_testcase {
+final class formats_message_recipient_compose_message_body_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,
