@@ -21,14 +21,19 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace block_quickmail;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
+use advanced_testcase;
 use block_quickmail\messenger\message\signature_appender;
 use block_quickmail\persistents\signature;
+use has_general_helpers;
+use sets_up_courses;
 
-class block_quickmail_signature_appender_testcase extends advanced_testcase {
+final class signature_appender_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses;

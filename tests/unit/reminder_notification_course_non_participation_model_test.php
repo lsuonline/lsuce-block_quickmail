@@ -21,15 +21,22 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace block_quickmail;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
-use block_quickmail\persistents\notification;
+use advanced_testcase;
 use block_quickmail\notifier\models\notification_model_helper;
 use block_quickmail\notifier\models\reminder\course_non_participation_model;
+use block_quickmail\persistents\notification;
+use has_general_helpers;
+use sets_up_courses;
+use sets_up_notification_models;
+use sets_up_notifications;
 
-class block_quickmail_reminder_notification_course_non_participation_model_testcase extends advanced_testcase {
+final class reminder_notification_course_non_participation_model_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,

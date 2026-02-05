@@ -21,13 +21,19 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace block_quickmail;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
+use advanced_testcase;
 use block_quickmail\notifier\event_notification_handler;
+use has_general_helpers;
+use sets_up_courses;
+use sets_up_notifications;
 
-class block_quickmail_event_notification_handler_testcase extends advanced_testcase {
+final class event_notification_handler_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,

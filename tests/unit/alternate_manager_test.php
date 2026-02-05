@@ -21,15 +21,21 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace block_quickmail;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
-use block_quickmail\services\alternate_manager;
-use block_quickmail\persistents\alternate_email;
+use advanced_testcase;
 use block_quickmail\exceptions\validation_exception;
+use block_quickmail\persistents\alternate_email;
+use block_quickmail\services\alternate_manager;
+use has_general_helpers;
+use sends_emails;
+use sets_up_courses;
 
-class block_quickmail_alternate_manager_testcase extends advanced_testcase {
+final class alternate_manager_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses,

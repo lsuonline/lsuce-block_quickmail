@@ -21,13 +21,17 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace block_quickmail;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
+use advanced_testcase;
 use block_quickmail\persistents\schedule;
+use has_general_helpers;
 
-class block_quickmail_schedule_persistent_testcase extends advanced_testcase {
+final class schedule_persistent_test extends advanced_testcase {
 
     use has_general_helpers;
 

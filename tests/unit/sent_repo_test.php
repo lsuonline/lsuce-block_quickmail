@@ -21,15 +21,20 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace block_quickmail;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once(dirname(__FILE__) . '/traits/unit_testcase_traits.php');
 
-use block_quickmail\repos\sent_repo;
+use advanced_testcase;
 use block_quickmail\persistents\message;
 use block_quickmail\repos\pagination\paginated;
+use block_quickmail\repos\sent_repo;
+use has_general_helpers;
+use sets_up_courses;
 
-class block_quickmail_sent_repo_testcase extends advanced_testcase {
+final class sent_repo_test extends advanced_testcase {
 
     use has_general_helpers,
         sets_up_courses;
