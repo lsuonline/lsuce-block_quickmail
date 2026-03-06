@@ -24,9 +24,36 @@
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/blocks/quickmail/backup/moodle2/backup_quickmail_stepslib.php');
+require_once($CFG->dirroot . '/lib/blocklib.php');
 
 class backup_quickmail_block_task extends backup_block_task {
     protected function define_my_settings() {
+        global $OUTPUT, $SESSION;
+        
+        // If a user has multiple tabs open when adding blocks to their course page it's possible
+        // to add multiple instances of the Quickmail block which breaks the backup process.
+        // This will remvoe the extras.
+        if ($this->check_block_instances()) {
+            // Because a looped call is coming from backup/moodle2/backup_plan_builder.class.php
+            // the session variable is used to keep track.
+            if ($SESSION->qm_multi_block_inst->counter == 1) {
+                echo $OUTPUT->notification(get_string('multi_block_checker', 'block_quickmail'), 'notifywarning');
+                $SESSION->qm_multi_block_inst->counter++;
+            } else {
+
+                if ($SESSION->qm_multi_block_inst->counter == $SESSION->qm_multi_block_inst->count) {
+                    // We've hit the last block_instance_id, let's now cleanup.
+                    foreach ($SESSION->qm_multi_block_inst->remove as $r) {
+                        blocks_delete_instance($r);
+                    }
+                    unset($SESSION->qm_multi_block_inst);
+                    return;
+                }
+
+                $SESSION->qm_multi_block_inst->counter++;
+                return;
+            }
+        }
         $includehistory = new backup_generic_setting('include_quickmail_log', base_setting::IS_BOOLEAN, false);
         $includehistory->get_ui()->set_label(get_string('backup_history', 'block_quickmail'));
         $this->add_setting($includehistory);
@@ -57,5 +84,54 @@ class backup_quickmail_block_task extends backup_block_task {
     public static function encode_content_links($content) {
         // TODO: Perhaps needing this when moving away from email zip attaches.
         return $content;
+    }
+    /**
+     * A check to see if there are multiple block instances 
+    */
+    public function check_block_instances() {
+        global $DB, $SESSION;
+
+        $now = time();
+        // During backup each call should be microseconds,
+        // check if it's greater than 10 seconds for older, possible, sessions.
+        if (isset($SESSION->qm_multi_block_inst)  && ($now - $SESSION->qm_multi_block_inst->stamp) < 10) {
+            // Yup we are doing a backup and there are multiple block instances.
+            return true;
+        } else {
+
+            // Get how many block instances there are.
+            $sql = "SELECT bi.*
+            FROM
+                {block_instances} bi
+            JOIN
+                {context} c
+                    ON c.id = bi.parentcontextid
+            WHERE
+                c.contextlevel = 50
+                AND c.instanceid = ".$this->plan->get_courseid().
+                " AND bi.blockname = 'quickmail'
+            ORDER BY
+                bi.id";
+
+            $result = $DB->get_records_sql($sql);
+
+            $temp = new stdClass();
+            $temp->stamp = time();
+            $temp->count = count($result);
+            $temp->counter = 1;
+
+            // Skip the first block instance and keep track of the rest.
+            $first = true;
+            foreach ($result as $b) {
+                if ($first) {
+                    $first = false;
+                    continue;
+                }
+                $temp->remove[] = $b;
+            }
+
+            $SESSION->qm_multi_block_inst = $temp;
+            return true;
+        }
     }
 }

@@ -257,6 +257,16 @@ class block_quickmail extends block_list {
         $this->content->items[] = $item;
     }
 
+    
+    /**
+     * Controls whether multiple block instances are allowed.
+     *
+     * @return bool
+     */
+    public function instance_allow_multiple(): bool {
+        return false;
+    }
+
     /**
      * Builds a content item (link) for the given params
      *

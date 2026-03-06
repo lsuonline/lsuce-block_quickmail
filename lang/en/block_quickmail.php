@@ -415,6 +415,8 @@ $string['backup_history'] = 'Include Quickmail History';
 $string['backup_block_configuration'] = 'Backup Quickmail Block Level Configuration Settings (Such as [Allow Students to use Quickmail])';
 $string['restore_history'] = 'Restore Quickmail History';
 $string['overwrite_history'] = 'Overwrite Quickmail History';
+$string['multi_block_checker'] = 'One or more blocks appear multiple times in this course. This has been corrected.';
+
 
 // Email templates.
 $string['alternate_body'] = '

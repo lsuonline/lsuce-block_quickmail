@@ -1,4 +1,8 @@
 
+## v4.5.4+
+ - If multiple instances of the quickmail block is added to a course a quick check is done during backup process to remove
+ the extra blocks.
+
 ## v4.5.4
  - Fixed a depracated variable message in notifications.
  - Added the ability to select multiple roles to stop receiving emails.
