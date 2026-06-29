@@ -55,11 +55,18 @@ class block_quickmail_external extends external_api {
 
         $datachunk = json_decode($datachunk);
 
-        $classobj = isset($datachunk->class) ? $datachunk->class : null;
         $function = isset($datachunk->call) ? $datachunk->call : null;
         $params = isset($datachunk->params) ? $datachunk->params : null;
         $path = isset($datachunk->path) ? $datachunk->path : null;
         $qmajax = null;
+        $classobj = clean_param($datachunk->class, PARAM_ALPHANUMEXT);
+
+        // List out the accessible classes available (currently only 1).
+        $allowed = ['sent_messages_ctrl'];
+
+        if (!in_array($classobj, $allowed, true)) {
+            throw new moodle_exception('invalidclass');
+        }
 
         if (!isset($params)) {
             $params = array("empty" => "true");
@@ -73,13 +80,13 @@ class block_quickmail_external extends external_api {
         } else {
             debugging("\n ERROR: classobj not set ". $classobj. " \n");
         }
-
         // Now let's call the method.
         $retobjdata = null;
         if (method_exists($qmajax, $function)) {
             $retobjdata = call_user_func(array($qmajax, $function), $params);
         } else {
             debugging("\n ERROR: Did not find ". $function. " to call in: ". $qmajax. " \n");
+            $retobjdata = ["success" => "FAIL", "msg" => "ERROR: Did not find func: ". $function. " to call in: ". $qmajax];
         }
 
         $retjsondata = [

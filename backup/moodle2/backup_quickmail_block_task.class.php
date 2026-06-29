@@ -115,10 +115,19 @@ class backup_quickmail_block_task extends backup_block_task {
 
             $result = $DB->get_records_sql($sql);
 
+            // If there's only, get outta here and make sure any sessions are dead.
+            if (count($result) <= 1) {
+                if (isset($SESSION->qm_multi_block_inst)) {
+                    unset($SESSION->qm_multi_block_inst);
+                }
+                return false;
+            }
+            
             $temp = new stdClass();
             $temp->stamp = time();
             $temp->count = count($result);
             $temp->counter = 1;
+            $temp->backupid = $this->plan->get_backupid();
 
             // Skip the first block instance and keep track of the rest.
             $first = true;
