@@ -55,10 +55,14 @@ $qmnode = $coursenode->add(get_string('pluginname', 'block_quickmail'),
 $qmnode->make_active();
 
 // Construct the links.
-$composelink = html_writer::link(new moodle_url('/blocks/quickmail/compose.php',
-                                 array('courseid' => $courseid)),
-                                 block_quickmail_string::get('ms_compose'),
-                                 array('class' => 'qml compose'));
+$composelink = $courseid == SITEID
+    ? html_writer::link(new moodle_url('/blocks/quickmail/broadcast.php'),
+                        block_quickmail_string::get('open_broadcast'),
+                        array('class' => 'qml compose'))
+    : html_writer::link(new moodle_url('/blocks/quickmail/compose.php',
+                        array('courseid' => $courseid)),
+                        block_quickmail_string::get('ms_compose'),
+                        array('class' => 'qml compose'));
 $draftlink = html_writer::link(new moodle_url('/blocks/quickmail/drafts.php',
                                array('courseid' => $courseid)),
                                block_quickmail_string::get('ms_drafts'),
