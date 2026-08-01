@@ -6,7 +6,7 @@ Quickmail is a Moodle block plugin that provides selective, bulk messaging for M
 
 Quickmail is a convenient way to select enrolled users in your Moodle course and message them. You can select (or exclude) recipients individually, by role, or even by group. Additionally, you can use Quickmail at the administrative level to select and message users within the entire site.
 
-**Please note that these are the docs for Quickmail v2**. This second version is much different than the original version in the way it operates and saves data. If you are wanting to install the original version, please see the [Quickmail v1 branch](https://github.com/lsuits/block_quickmail/tree/dev-30)  of this plugin.
+**Please note that these are the docs for Quickmail v2**. This second version is much different than the original version in the way it operates and saves data. If you are wanting to install the original version, please see the [Quickmail v1 branch](https://github.com/lsuonline/block_quickmail/tree/dev-30)  of this plugin.
 
 It is highly recommended that you review the features below and make sure this plugin will work for you, and that you backup any existing data before installing!!
 
@@ -66,7 +66,7 @@ If you are upgrading from v1 to v2, a data migration script is included in this 
 
 ## Contributions
 
-Contributions of any form are welcome. GitHub pull requests are preferred. Report any bugs or requests through our GitHub [issue tracker](https://github.com/lsuits/quickmail/issues).
+Contributions of any form are welcome. GitHub pull requests are preferred. Report any bugs or requests through our GitHub [issue tracker](https://github.com/lsuonline/quickmail/issues).
 
 ## Tests
 
