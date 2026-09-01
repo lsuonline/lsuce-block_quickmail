@@ -478,3 +478,11 @@ $string['frozen_readonly_pages_desc'] = 'When the context is frozen these pages 
 $string['misc_settings_heading_title'] = 'Miscellaneous settings';
 $string['misc_settings_allow_student_sendall_title'] = 'Student Send All';
 $string['misc_settings_allow_student_sendall_desc'] = 'Allow students to send to All users in the course. If not enabled then students will be restricted to instructors and students in their section.';
+// Message removal outcomes.
+$string['messages_removed'] = 'The messages have been successfully removed';
+$string['messages_removed_some_notfound'] = 'The messages have been successfully removed with errors. Some messages were not found.';
+$string['messages_removed_some_usercantdelete'] = 'The messages have been successfully removed with errors. Some messages could not be deleted due to permissions.';
+$string['messages_removed_some_notfound_usercantdelete'] = 'The messages have been successfully removed with errors. Some messages were not found and some messages could not be deleted due to permissions.';
+$string['messages_removed_failed_notfound'] = 'The messages could not be found';
+$string['messages_removed_failed_usercantdelete'] = 'The user does not have permission to delete the messages';
+$string['messages_removed_failed_notfound_usercantdelete'] = 'The messages could not be removed. The messages were not found and/or could not be deleted due to permissions';

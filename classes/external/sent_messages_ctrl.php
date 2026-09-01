@@ -28,28 +28,49 @@ class sent_messages_ctrl {
         // Authentication.
         require_login();
 
-        $success = "success";
-        $failmsg = "The messages have been successfully removed";
+        $success = false;
+        $msgnotfound = false;
+        $usercantdelete = false;
         foreach ($data->ids as $id) {
-
             // Check that the message has not been deleted.
             if (!$message = \block_quickmail\persistents\message::find_or_null($id)) {
-                $success = "error";
-                $failmsg = "Cannot find this sent message";
+                $msgnotfound = true;
+                continue;
             }
 
             // Check that the user can delete this message.
-            if ($message->get('user_id') !== $USER->id) {
-                $success = "error";
-                $failmsg = "This user cannot delete the sent message(s)";
+            if ((int) $message->get('user_id') !== (int) $USER->id) {
+                $usercantdelete = true;
+                continue;
             }
 
             $message->mark_as_deleted();
+            $success = true;
         }
 
-        return array(
-            'success' => $success,
-            'msg' => $failmsg
-        );
+        $langstringkey = 'messages_removed';
+
+        if ($success) {
+            if (in_array(true, [$msgnotfound, $usercantdelete])) {
+                $langstringkey = 'messages_removed_some_notfound_usercantdelete';
+                if ($msgnotfound && !$usercantdelete) {
+                    $langstringkey = 'messages_removed_some_notfound';
+                } else if (!$msgnotfound && $usercantdelete) {
+                    $langstringkey = 'messages_removed_some_usercantdelete';
+                }
+            }
+        } else {
+            $langstringkey = 'messages_removed_failed_notfound_usercantdelete';
+            if ($msgnotfound && !$usercantdelete) {
+                $langstringkey = 'messages_removed_failed_notfound';
+            } else if (!$msgnotfound && $usercantdelete) {
+                $langstringkey = 'messages_removed_failed_usercantdelete';
+            }
+        }
+
+        return [
+            'success' => $success ? 'success' : 'error',
+            'msg' => get_string($langstringkey, 'block_quickmail'),
+        ];
     }
 }
