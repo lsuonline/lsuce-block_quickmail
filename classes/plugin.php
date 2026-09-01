@@ -141,12 +141,12 @@ class block_quickmail_plugin {
             return false;
         }
 
-        $usercapa = self::user_has_capability('cansend', $user, $context);
-        if ($usercapa) {
-            return true;
+        // Frozen-context handling must not grant access on its own.
+        if (!self::check_frozen_context($user, $context, $page)) {
+            return false;
         }
 
-        if (self::check_frozen_context($user, $context, $page) && $usercapa) {
+        if (self::user_has_capability('cansend', $user, $context)) {
             return true;
         }
 
@@ -199,8 +199,8 @@ class block_quickmail_plugin {
         }
 
         // Check if the course itself is context locked.
-        if ($context->locked == false) {
-            return true;
+        if ($context->locked) {
+            return false;
         }
 
         // Are we allowing quickmail access to frozen contexts?
