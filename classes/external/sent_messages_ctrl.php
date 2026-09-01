@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace block_quickmail\external;
+
 /**
  * @package    block_quickmail
  * @copyright  2008 onwards Louisiana State University
