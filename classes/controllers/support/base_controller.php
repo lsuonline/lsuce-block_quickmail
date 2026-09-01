@@ -80,6 +80,7 @@ class base_controller {
 
         // If action is relevant to controller.
         if (in_array($action, static::$actions)) {
+            // require_sesskey();
             return $controller->call_action($action, $request);
         }
 

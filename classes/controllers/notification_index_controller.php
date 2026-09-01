@@ -110,10 +110,6 @@ class notification_index_controller extends base_controller {
      * @return void
      */
     public function action_delete(controller_request $request) {
-        // if ($notification = notification::find_or_null($this->props->page_params['notificationid'])) {
-        //     $notification->delete_self();
-        // }
-
         $notification = notification_repo::get_notification_for_course_user_or_null(
             $this->props->page_params['notificationid'],
             $this->props->course->id,
