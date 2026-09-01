@@ -171,8 +171,8 @@ class view_message_component extends component implements \renderable {
      * @return array
      */
     private function transform_recipient_users($users) {
-        return array_values(array_map(function($user) {
-            return $user->firstname . ' ' . $user->lastname . ' (' . $user->email . ')';
+        return array_values(array_map(function ($user) {
+            return s($user->firstname) . ' ' . s($user->lastname) . ' (' . s($user->email) . ')';
         }, $users));
     }
 
