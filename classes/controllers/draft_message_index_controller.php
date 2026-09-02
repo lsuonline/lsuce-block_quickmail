@@ -97,6 +97,8 @@ class draft_message_index_controller extends base_controller {
      * @return mixed
      */
     public function action_delete(controller_request $request) {
+        require_sesskey();
+
         // Validate params.
         if ( ! $this->props->page_params['message_id']) {
             // Unset the action param.
@@ -128,6 +130,8 @@ class draft_message_index_controller extends base_controller {
      * @return mixed
      */
     public function action_duplicate(controller_request $request) {
+        require_sesskey();
+
         // Validate params.
         if ( ! $this->props->page_params['message_id']) {
             // Unset the action param.

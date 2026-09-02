@@ -97,6 +97,7 @@ class queued_message_index_controller extends base_controller {
      * @return mixed
      */
     public function action_unqueue(controller_request $request) {
+        require_sesskey();
         // Validate params.
         if (!$this->props->page_params['message_id']) {
             // Unset the action param.
@@ -128,6 +129,7 @@ class queued_message_index_controller extends base_controller {
      * @return mixed
      */
     public function action_send(controller_request $request) {
+        require_sesskey();
         // Validate params.
         if (!$this->props->page_params['message_id']) {
             // Unset the action param.

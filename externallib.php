@@ -47,43 +47,45 @@ class block_quickmail_external extends external_api {
     }
 
     /**
-     * Returns welcome message
-     * @return string welcome message
+     * Handles quickmail AJAX requests.
+     *
+     * @param string $datachunk encoded params
+     * @return array response data
      */
-    public static function qm_ajax($datachunk) {
-        global $CFG, $USER;
-
+    public static function qm_ajax(string $datachunk) {
         $datachunk = json_decode($datachunk);
 
-        $classobj = isset($datachunk->class) ? $datachunk->class : null;
+        $classname = isset($datachunk->class) ? $datachunk->class : null;
         $function = isset($datachunk->call) ? $datachunk->call : null;
         $params = isset($datachunk->params) ? $datachunk->params : null;
-        $path = isset($datachunk->path) ? $datachunk->path : null;
         $qmajax = null;
 
         if (!isset($params)) {
-            $params = array("empty" => "true");
+            $params = ['empty' => 'true'];
         }
 
         // It could be either GET or POST, let's check.
-        if (isset($classobj)) {
-            $thisfile = $CFG->dirroot. '/blocks/quickmail/classes/external/'. $classobj. '.php';
-            require_once($thisfile);
-            $qmajax = new $classobj();
+        if (isset($classname)) {
+            $class = '\\block_quickmail\\external\\' . $classname;
+            try {
+                $qmajax = new $class();
+            } catch (Exception $e) {
+                debugging("\n ERROR: Could not find class {$class}");
+            }
         } else {
-            debugging("\n ERROR: classobj not set ". $classobj. " \n");
+            debugging("\n ERROR: class not set. \n");
         }
 
         // Now let's call the method.
         $retobjdata = null;
         if (method_exists($qmajax, $function)) {
-            $retobjdata = call_user_func(array($qmajax, $function), $params);
+            $retobjdata = call_user_func([$qmajax, $function], $params);
         } else {
-            debugging("\n ERROR: Did not find ". $function. " to call in: ". $qmajax. " \n");
+            debugging("\n ERROR: Did not find {$function} to call in: {$qmajax} \n");
         }
 
         $retjsondata = [
-            'data' => json_encode($retobjdata)
+            'data' => json_encode($retobjdata),
         ];
         return $retjsondata;
     }

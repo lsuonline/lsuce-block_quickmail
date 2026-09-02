@@ -110,13 +110,28 @@ class notification_index_controller extends base_controller {
      * @return void
      */
     public function action_delete(controller_request $request) {
-        if ($notification = notification::find_or_null($this->props->page_params['notificationid'])) {
-            $notification->delete_self();
-        }
+        $notification = notification_repo::get_notification_for_course_user_or_null(
+            $this->props->page_params['notificationid'],
+            $this->props->course->id,
+            $this->props->user->id,
+        );
 
-        // Redirect back to index as success.
-        $request->redirect_as_success(block_quickmail_string::get('notification_deleted'),
-            static::$baseuri, $this->get_form_url_params());
+        if (is_null($notification)) {
+            $request->redirect_as_error(
+                block_quickmail_string::get('notification_not_found'),
+                static::$baseuri,
+                $this->get_form_url_params(),
+            );
+        } else {
+            $notification->delete_self();
+
+            // Redirect back to index as success.
+            $request->redirect_as_success(
+                block_quickmail_string::get('notification_deleted'),
+                static::$baseuri,
+                $this->get_form_url_params(),
+            );
+        }
     }
 
     /**
