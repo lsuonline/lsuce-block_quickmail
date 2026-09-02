@@ -30,6 +30,8 @@
         {{/ userCourseArray }}
     </select>
 
+    <input type="hidden" id="sesskey" value="{{{sesskey}}}">
+
     <table class="table table-hover">
         <thead>
             <tr>
@@ -100,8 +102,8 @@
                     <td>{{ lastModifiedAt }}</td>
                     <td>
                         <a href="{{ openUrl }}" class="btn btn-primary btn-sm">{{# str }} edit {{/ str }}</a>
-                        <a href="?action=duplicate&id={{ id }}" class="btn btn-info btn-sm btn-duplicate-draft">{{# str }} duplicate {{/ str }}</a>
-                        <a href="?action=delete&id={{ id }}" class="btn btn-danger btn-sm btn-delete-draft">{{# str }} delete {{/ str }}</a>
+                        <a data-action='duplicate' data-id='{{id}}' class="btn btn-info btn-sm btn-duplicate-draft">{{# str }} duplicate {{/ str }}</a>
+                        <a data-action='delete' data-id='{{id}}' class="btn btn-danger btn-sm btn-delete-draft">{{# str }} delete {{/ str }}</a>
                     </td>
                 </tr>
             {{/ tableRows }}

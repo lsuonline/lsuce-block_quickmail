@@ -80,7 +80,6 @@ class base_controller {
 
         // If action is relevant to controller.
         if (in_array($action, static::$actions)) {
-            require_sesskey(); // This check is currently redundant as there are no available actions in this area.
             return $controller->call_action($action, $request);
         }
 

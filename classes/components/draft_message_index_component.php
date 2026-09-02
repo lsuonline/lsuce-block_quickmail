@@ -71,6 +71,7 @@ class draft_message_index_component extends component implements \renderable {
         $data->modifiedIsSorted = $this->is_attr_sorted('modified');
         $data = $this->include_pagination($data, $this->pagination);
         $data->tableRows = [];
+        $data->sesskey = sesskey();
 
         foreach ($this->messages as $message) {
             $data->tableRows[] = [
