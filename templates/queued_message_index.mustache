@@ -23,6 +23,7 @@
 -->
 
 <div class="block_quickmail_queued_message_index">
+    <input type="hidden" id="sesskey" value="{{{sesskey}}}">
     <select id="select_course_filter">
         <option value="0">{{# str }} fulllistofcourses {{/ str }}</option>
         {{# userCourseArray }}
@@ -100,8 +101,8 @@
                     <td>{{ scheduledSendAt }}</td>
                     <td>
                         <a href="{{ viewMessageUrl }}" class="btn btn-info btn-sm">{{# str }} view, block_quickmail {{/ str }}</a>
-                        <a href="?action=send&id={{ id }}" class="btn btn-success btn-sm">{{# str }} send_now, block_quickmail {{/ str }}</a>
-                        <a href="?action=unqueue&id={{ id }}" class="btn btn-warning btn-sm">{{# str }} unqueue, block_quickmail {{/ str }}</a>
+                        <a data-action="send" data-id="{{id}}" class="btn btn-success btn-sm">{{# str }} send_now, block_quickmail {{/ str }}</a>
+                        <a data-action="unqueue" data-id="{{id}}" class="btn btn-warning btn-sm">{{# str }} unqueue, block_quickmail {{/ str }}</a>
                     </td>
                 </tr>
             {{/ tableRows }}

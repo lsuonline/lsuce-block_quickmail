@@ -68,6 +68,7 @@ class queued_message_index_component extends component implements \renderable {
         $data->scheduledIsSorted = $this->is_attr_sorted('scheduled');
         $data = $this->include_pagination($data, $this->pagination);
         $data->tableRows = [];
+        $data->sesskey = sesskey();
 
         foreach ($this->messages as $message) {
             $data->tableRows[] = [
