@@ -29,6 +29,7 @@ class sent_messages_ctrl {
         global $USER;
         // Authentication.
         require_login();
+        require_sesskey();
 
         $success = false;
         $msgnotfound = false;
