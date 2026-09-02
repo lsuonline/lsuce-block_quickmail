@@ -47,10 +47,12 @@ class block_quickmail_external extends external_api {
     }
 
     /**
-     * Returns welcome message
-     * @return string welcome message
+     * Handles quickmail AJAX requests.
+     *
+     * @param string $datachunk encoded params
+     * @return array response data
      */
-    public static function qm_ajax(\stdClass $datachunk) {
+    public static function qm_ajax(string $datachunk) {
         $datachunk = json_decode($datachunk);
 
         $classname = isset($datachunk->class) ? $datachunk->class : null;
@@ -59,7 +61,7 @@ class block_quickmail_external extends external_api {
         $qmajax = null;
 
         if (!isset($params)) {
-            $params = array("empty" => "true");
+            $params = ['empty' => 'true'];
         }
 
         // It could be either GET or POST, let's check.
@@ -77,13 +79,13 @@ class block_quickmail_external extends external_api {
         // Now let's call the method.
         $retobjdata = null;
         if (method_exists($qmajax, $function)) {
-            $retobjdata = call_user_func(array($qmajax, $function), $params);
+            $retobjdata = call_user_func([$qmajax, $function], $params);
         } else {
-            debugging("\n ERROR: Did not find ". $function. " to call in: ". $qmajax. " \n");
+            debugging("\n ERROR: Did not find {$function} to call in: {$qmajax} \n");
         }
 
         $retjsondata = [
-            'data' => json_encode($retobjdata)
+            'data' => json_encode($retobjdata),
         ];
         return $retjsondata;
     }
