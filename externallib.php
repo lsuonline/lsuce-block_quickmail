@@ -59,13 +59,14 @@ class block_quickmail_external extends external_api {
         $params = isset($datachunk->params) ? $datachunk->params : null;
         $path = isset($datachunk->path) ? $datachunk->path : null;
         $qmajax = null;
-        $classobj = clean_param($datachunk->class, PARAM_ALPHANUMEXT);
+        $rawclass = isset($datachunk->class) ? $datachunk->class : '';
+        $classobj = clean_param($rawclass, PARAM_ALPHANUMEXT);
 
         // List out the accessible classes available (currently only 1).
         $allowed = ['sent_messages_ctrl'];
 
         if (!in_array($classobj, $allowed, true)) {
-            throw new moodle_exception('invalidclass');
+            throw new moodle_exception('invalidclass', 'block_quickmail');
         }
 
         if (!isset($params)) {

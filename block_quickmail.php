@@ -268,6 +268,38 @@ class block_quickmail extends block_list {
     }
 
     /**
+     * Drop this instance if the course already has one.
+     *
+     * get_addable_blocks() hides Quickmail once a course has an instance, but the
+     * check and the insert are not atomic: two tabs can both render the block list
+     * while the count is zero and both then add. MD-2137.
+     *
+     * @return bool False when this instance was a duplicate and has been removed.
+     */
+    public function instance_create() {
+        global $DB;
+        
+        $siblings = $DB->get_records(
+            'block_instances',
+            ['blockname' => 'quickmail', 'parentcontextid' => $this->instance->parentcontextid],
+            'id ASC',
+            'id',
+            0,
+            2
+        );
+        if (count($siblings) < 2) {
+            return true;
+        }
+        // Keep the oldest instance, which is the one already on the page.
+        $keep = reset($siblings);
+        if ((int) $keep->id === (int) $this->instance->id) {
+            return true;
+        }
+        blocks_delete_instance($this->instance);
+        return false;
+    }
+
+    /**
      * Builds a content item (link) for the given params
      *
      * @param  array $params  [lang_key, icon_key, page, query_string]
